@@ -1,26 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Wg-ry-S6t">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--Practice Front View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Navigation Controller-->
+        <scene sceneID="k7X-pV-FCP">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="PracticeFrontViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="1Wg-ry-S6t" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8T1-pM-JTZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="TrP-6r-dnR" kind="relationship" relationship="rootViewController" id="S4x-CO-FBo"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BS3-2t-Xur" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-432" y="333"/>
+        </scene>
+        <!--Practice Front View Controller-->
+        <scene sceneID="0eY-EQ-Fyb">
+            <objects>
+                <viewController id="TrP-6r-dnR" customClass="PracticeFrontViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="rSR-B0-9vq"/>
+                        <viewControllerLayoutGuide type="bottom" id="bxm-pQ-w2e"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="GJj-9n-Rl2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ecf-Ua-itT" customClass="RunMapView" customModule="Run" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="600" height="480"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I72-Nv-lS5">
+                                <rect key="frame" x="0.0" y="544" width="600" height="56"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ecf-Ua-itT" firstAttribute="top" secondItem="rSR-B0-9vq" secondAttribute="bottom" id="28O-yW-ca4"/>
+                            <constraint firstAttribute="trailing" secondItem="I72-Nv-lS5" secondAttribute="trailing" id="6sw-Bi-0dW"/>
+                            <constraint firstAttribute="trailing" secondItem="ecf-Ua-itT" secondAttribute="trailing" id="GfE-gl-8Gy"/>
+                            <constraint firstItem="I72-Nv-lS5" firstAttribute="top" secondItem="ecf-Ua-itT" secondAttribute="bottom" id="H03-2Q-BMs"/>
+                            <constraint firstItem="ecf-Ua-itT" firstAttribute="leading" secondItem="GJj-9n-Rl2" secondAttribute="leading" id="SpL-YF-CK6"/>
+                            <constraint firstItem="bxm-pQ-w2e" firstAttribute="top" secondItem="I72-Nv-lS5" secondAttribute="bottom" id="UZD-CY-qVG"/>
+                            <constraint firstItem="ecf-Ua-itT" firstAttribute="height" secondItem="GJj-9n-Rl2" secondAttribute="height" multiplier="0.8" id="gnV-EP-t8j"/>
+                            <constraint firstItem="I72-Nv-lS5" firstAttribute="leading" secondItem="GJj-9n-Rl2" secondAttribute="leading" id="z4F-sA-AXj"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="sgp-pD-lIZ"/>
+                    <connections>
+                        <outlet property="topMapView" destination="ecf-Ua-itT" id="uAJ-cm-5d9"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MYx-B2-05J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="212" y="333"/>
         </scene>
     </scenes>
 </document>

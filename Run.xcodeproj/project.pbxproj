@@ -17,6 +17,7 @@
 		ED9FE8F61C991FE600DB731D /* RunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE8F51C991FE600DB731D /* RunTests.swift */; };
 		ED9FE9011C991FE600DB731D /* RunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE9001C991FE600DB731D /* RunUITests.swift */; };
 		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
+		EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		ED9FE9001C991FE600DB731D /* RunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunUITests.swift; sourceTree = "<group>"; };
 		ED9FE9021C991FE600DB731D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
+		EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunMapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,11 +120,11 @@
 			children = (
 				ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */,
 				ED9FE8DF1C991FE600DB731D /* PracticeFrontViewController.swift */,
+				EDCE6CAE1C992A6A004C8BD1 /* UI Classes */,
 				ED9FE8E11C991FE600DB731D /* Main.storyboard */,
-				ED9FE8E71C991FE600DB731D /* Assets.xcassets */,
 				ED9FE8E91C991FE600DB731D /* LaunchScreen.storyboard */,
-				ED9FE8EC1C991FE600DB731D /* Info.plist */,
 				ED9FE8E41C991FE600DB731D /* Run.xcdatamodeld */,
+				ED9FE8E71C991FE600DB731D /* Assets.xcassets */,
 				EDCE6CA81C992529004C8BD1 /* Supporting Files */,
 			);
 			path = Run;
@@ -149,9 +151,18 @@
 		EDCE6CA81C992529004C8BD1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ED9FE8EC1C991FE600DB731D /* Info.plist */,
 				EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EDCE6CAE1C992A6A004C8BD1 /* UI Classes */ = {
+			isa = PBXGroup;
+			children = (
+				EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */,
+			);
+			name = "UI Classes";
 			sourceTree = "<group>";
 		};
 		F1CC372971B15B9BDCCCF50F /* Pods */ = {
@@ -176,6 +187,7 @@
 				ED9FE8D81C991FE600DB731D /* Resources */,
 				70B3B5C64BD2E78CDC22F467 /* Embed Pods Frameworks */,
 				951324C309EED2167A806F51 /* Copy Pods Resources */,
+				EDCE6CAD1C992924004C8BD1 /* Update Build Number */,
 			);
 			buildRules = (
 			);
@@ -338,6 +350,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Run/Pods-Run-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EDCE6CAD1C992924004C8BD1 /* Update Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "version=`/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $PRODUCT_SETTINGS_PATH`\nversion=`expr $version + 1`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $version\" $PRODUCT_SETTINGS_PATH";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -345,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */,
 				EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */,
 				ED9FE8E01C991FE600DB731D /* PracticeFrontViewController.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
