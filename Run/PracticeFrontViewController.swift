@@ -31,8 +31,6 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     
     // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
-    // TODO: done - ADD A BEAUTIFUL "START" BUTTON
-    // TODO: NO NEED TO DO - ADD AN ARROW(UP/DOWN) TO SHOW THE SPEED/TIME COMPARING TO LAST TIME
     // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
     
     override func viewDidLoad() {

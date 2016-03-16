@@ -24,6 +24,7 @@
 		EDCE6CB61C9973B0004C8BD1 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CB51C9973B0004C8BD1 /* CircleView.swift */; };
 		EDCE6CB81C9973F6004C8BD1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CB71C9973F6004C8BD1 /* PaddingLabel.swift */; };
 		EDCE6CBC1C997705004C8BD1 /* Topsquare.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */; };
+		EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		EDCE6CB51C9973B0004C8BD1 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		EDCE6CB71C9973F6004C8BD1 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Topsquare.ttf; sourceTree = "<group>"; };
+		EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			children = (
 				ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */,
 				EDCE6CBA1C9976B7004C8BD1 /* Practice View Controllers */,
+				EDCE6CBF1C997CB1004C8BD1 /* Data Classes */,
 				EDCE6CAE1C992A6A004C8BD1 /* UI Classes */,
 				ED9FE8E11C991FE600DB731D /* Main.storyboard */,
 				ED9FE8E91C991FE600DB731D /* LaunchScreen.storyboard */,
@@ -197,6 +200,14 @@
 				EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */,
 			);
 			name = "Practice View Controllers";
+			sourceTree = "<group>";
+		};
+		EDCE6CBF1C997CB1004C8BD1 /* Data Classes */ = {
+			isa = PBXGroup;
+			children = (
+				EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */,
+			);
+			name = "Data Classes";
 			sourceTree = "<group>";
 		};
 		F1CC372971B15B9BDCCCF50F /* Pods */ = {
@@ -413,6 +424,7 @@
 				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
+				EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */,
 				EDCE6CB21C99731F004C8BD1 /* CheckpointPopupView.swift in Sources */,
 				EDCE6CB41C99738C004C8BD1 /* TimelineView.swift in Sources */,
 				EDCE6CB81C9973F6004C8BD1 /* PaddingLabel.swift in Sources */,
