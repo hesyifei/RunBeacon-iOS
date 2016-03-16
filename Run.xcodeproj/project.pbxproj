@@ -246,6 +246,7 @@
 				TargetAttributes = {
 					ED9FE8D91C991FE600DB731D = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 77T9PEZRU7;
 					};
 					ED9FE8F01C991FE600DB731D = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -518,7 +519,9 @@
 			baseConfigurationReference = CD660E1835EF2DB530E01698 /* Pods-Run.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Run/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.arefly.Run;
@@ -531,7 +534,9 @@
 			baseConfigurationReference = E2B5A2BC9D37DC77CA7DA0FA /* Pods-Run.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Run/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.arefly.Run;
 				PRODUCT_NAME = "$(TARGET_NAME)";
