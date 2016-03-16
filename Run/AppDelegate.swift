@@ -3,11 +3,13 @@
 //  Run
 //
 //  Created by Jason Ho on 16/3/2016.
-//  Copyright © 2016年 Arefly. All rights reserved.
+//  Copyright © 2016 Arefly. All rights reserved.
 //
 
 import UIKit
 import CoreData
+import Foundation
+import CocoaLumberjack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +18,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        /**** Log & Log Color START ****/
+        setenv("XcodeColors", "YES", 0)
+        
+        
+        #if DEBUG
+            let logLevel = DDLogLevel.All
+        #else
+            let logLevel = DDLogLevel.Info
+        #endif
+        
+        DDLog.addLogger(DDTTYLogger.sharedInstance(), withLevel: logLevel) // TTY = Xcode console
+        DDLog.addLogger(DDASLLogger.sharedInstance(), withLevel: logLevel) // ASL = Apple System Logs
+        
+        DDTTYLogger.sharedInstance().logFormatter = CustomLogFormatter()
+        
+        DDTTYLogger.sharedInstance().colorsEnabled = true
+        DDTTYLogger.sharedInstance().setForegroundColor(UIColor.lightGrayColor(), backgroundColor: nil, forFlag: .Verbose)
+        DDTTYLogger.sharedInstance().setForegroundColor(UIColor.grayColor(), backgroundColor: nil, forFlag: .Debug)
+        DDTTYLogger.sharedInstance().setForegroundColor(UIColor.blackColor(), backgroundColor: nil, forFlag: .Info)
+        
+        
+        let fileLogger: DDFileLogger = DDFileLogger() // File Logger
+        fileLogger.rollingFrequency = 60*60*24  // 24 hours
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
+        DDLog.addLogger(fileLogger, withLevel: .Warning)
+        /**** Log & Log Color END ****/
+        
         return true
     }
 

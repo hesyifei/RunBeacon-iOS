@@ -16,6 +16,7 @@
 		ED9FE8EB1C991FE600DB731D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED9FE8E91C991FE600DB731D /* LaunchScreen.storyboard */; };
 		ED9FE8F61C991FE600DB731D /* RunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE8F51C991FE600DB731D /* RunTests.swift */; };
 		ED9FE9011C991FE600DB731D /* RunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE9001C991FE600DB731D /* RunUITests.swift */; };
+		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		ED9FE8FC1C991FE600DB731D /* RunUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED9FE9001C991FE600DB731D /* RunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunUITests.swift; sourceTree = "<group>"; };
 		ED9FE9021C991FE600DB731D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				ED9FE8E91C991FE600DB731D /* LaunchScreen.storyboard */,
 				ED9FE8EC1C991FE600DB731D /* Info.plist */,
 				ED9FE8E41C991FE600DB731D /* Run.xcdatamodeld */,
+				EDCE6CA81C992529004C8BD1 /* Supporting Files */,
 			);
 			path = Run;
 			sourceTree = "<group>";
@@ -141,6 +144,14 @@
 				ED9FE9021C991FE600DB731D /* Info.plist */,
 			);
 			path = RunUITests;
+			sourceTree = "<group>";
+		};
+		EDCE6CA81C992529004C8BD1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F1CC372971B15B9BDCCCF50F /* Pods */ = {
@@ -334,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */,
 				ED9FE8E01C991FE600DB731D /* ViewController.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
@@ -481,6 +493,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Run/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.arefly.Run;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
