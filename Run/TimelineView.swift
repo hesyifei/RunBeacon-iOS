@@ -30,7 +30,7 @@ class TimelineView: UIView {
     override func drawRect(rect: CGRect) {
         // Drawing code
         
-        print("No. \(number): \(isTop), \(isBottom) \(rect.height)")
+        DDLogVerbose("準備 TimelineView drawRect: No. \(number), \(isTop), \(isBottom) \(rect.height)")
         
         // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
         // TODO: ADD A BEAUTIFUL "START" BUTTON

@@ -65,30 +65,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let loc = locations.last
         let speed = loc?.speed
-        print("speed: \(speed)")
+        DDLogVerbose("已獲取用戶目前速度：\(speed)")
         bottomLabel.text = "YA \(speed)"
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        
-        
-        vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: ("sayHello"), userInfo: nil, repeats: true)
-        
-        
-        
-        topMapView.delegate = self
-        topMapView.selectAnnotation(topMapView.allAnnotations[2], animated: true)
-        
-        
-        
+        DDLogInfo("Practice Running View Controller 之 super.viewDidLoad() 已加載")
         
         
         tableView.delegate = self
@@ -97,15 +81,23 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         tableView.separatorStyle = .None
         
         
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        
+        
+        topMapView.delegate = self
         
         
         
-        bottomBar.backgroundColor = navigationColor
+        vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: ("sayHello"), userInfo: nil, repeats: true)
         
-        let topBorder = CALayer()
-        topBorder.frame = CGRectMake(0, 0, bottomBar.frame.size.width, 1.0)
-        topBorder.backgroundColor = UIColor.blackColor().CGColor
-        bottomBar.layer.addSublayer(topBorder)
+        
+        
+        let closeNavButton = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "closeAction")
+        self.navigationItem.leftBarButtonItems = [closeNavButton]
+        
         
         
         
@@ -119,12 +111,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
+        bottomBar.backgroundColor = navigationColor
         
+        let bottomBarTopBorder = CALayer()
+        bottomBarTopBorder.frame = CGRectMake(0, 0, bottomBar.frame.size.width, 1.0)
+        bottomBarTopBorder.backgroundColor = UIColor.blackColor().CGColor
+        bottomBar.layer.addSublayer(bottomBarTopBorder)
         
-        
-        
-        let closeNavButton = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "closeAction")
-        self.navigationItem.leftBarButtonItems = [closeNavButton]
     }
     
     func closeAction() {
@@ -261,7 +254,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             speedCurrentLabel = cell?.contentView.viewWithTag(tagIDs["speedCurrentLabel"]!) as! PaddingLabel
             speedBestLabel = cell?.contentView.viewWithTag(tagIDs["speedBestLabel"]!) as! PaddingLabel
         } else {
-            print("目前Cell \(indexPath.row)為nil，即將創建新Cell")
+            DDLogVerbose("目前Cell \(indexPath.row)為nil，即將創建新Cell")
             
             cell = UITableViewCell(style: .Default, reuseIdentifier: cellID)
             
@@ -420,7 +413,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
-        print("DONE \(cell?.contentView.subviews)")
+        //print("DONE \(cell?.contentView.subviews)")
         /*** 初始化TableCell結束 ***/
          
          
@@ -458,15 +451,10 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func timelineTap(sender: UITapGestureRecognizer) {
         let tapLocation = sender.locationInView(self.tableView)
         
-        //using the tapLocation, we retrieve the corresponding indexPath
         let indexPath = self.tableView.indexPathForRowAtPoint(tapLocation)
+        DDLogDebug("用戶已點擊 \(indexPath) 的 timeline")
         
-        //finally, we print out the value
-        print(indexPath)
-        
-        //we could even get the cell from the index, too
         let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
-        
         
         topMapView.selectAnnotation(topMapView.allAnnotations[indexPath!.row], animated: true)
     }
@@ -474,8 +462,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        //mapView.selectAnnotation(annotations[indexPath.row], animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
