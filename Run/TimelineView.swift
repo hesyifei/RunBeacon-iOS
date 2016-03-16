@@ -28,15 +28,7 @@ class TimelineView: UIView {
     }
     
     override func drawRect(rect: CGRect) {
-        // Drawing code
-        
         DDLogVerbose("準備 TimelineView drawRect: No. \(number), \(isTop), \(isBottom) \(rect.height)")
-        
-        // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
-        // TODO: ADD A BEAUTIFUL "START" BUTTON
-        // TODO: NO NEED TO DO - ADD AN ARROW(UP/DOWN) TO SHOW THE SPEED/TIME COMPARING TO LAST TIME
-        // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
-        
         
         
         let rectConfig: [String: CGFloat] = [

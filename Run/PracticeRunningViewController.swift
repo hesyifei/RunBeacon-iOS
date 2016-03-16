@@ -28,6 +28,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet var bottomLabel: UILabel!
     
     
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    var locationManager: CLLocationManager!
+    
+    
     var popupController: KLCPopup = KLCPopup()
     
     var timesCurrent = ["03:00", "00:25", "00:00"]
@@ -46,20 +52,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var vibrationTimer: NSTimer?
     var vibrationCounter = 0
     
-    func sayHello() {
-        vibrationCounter = vibrationCounter+1
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-        
-        if(vibrationCounter >= 4){
-            vibrationTimer!.invalidate()
-            vibrationTimer = nil
-        }
-    }
     
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
-    var locationManager: CLLocationManager!
     
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -91,11 +85,11 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
-        vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: ("sayHello"), userInfo: nil, repeats: true)
+        vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: ("doVibration"), userInfo: nil, repeats: true)
         
         
         
-        let closeNavButton = UIBarButtonItem(title: "Close", style: .Done, target: self, action: "closeAction")
+        let closeNavButton = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "closeAction")
         self.navigationItem.leftBarButtonItems = [closeNavButton]
         
         
@@ -124,6 +118,15 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func doVibration() {
+        vibrationCounter = vibrationCounter+1
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
+        if(vibrationCounter >= 4){
+            vibrationTimer!.invalidate()
+            vibrationTimer = nil
+        }
+    }
     
     
     
@@ -413,7 +416,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
-        //print("DONE \(cell?.contentView.subviews)")
+        //DDLogVerbose("DONE \(cell?.contentView.subviews)")
         /*** 初始化TableCell結束 ***/
          
          

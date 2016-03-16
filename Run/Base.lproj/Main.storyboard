@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Wg-ry-S6t">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -22,7 +21,7 @@
             </objects>
             <point key="canvasLocation" x="-432" y="333"/>
         </scene>
-        <!--Practice Front View Controller-->
+        <!--Practice-->
         <scene sceneID="0eY-EQ-Fyb">
             <objects>
                 <viewController id="TrP-6r-dnR" customClass="PracticeFrontViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
@@ -57,8 +56,9 @@
                             <constraint firstItem="I72-Nv-lS5" firstAttribute="leading" secondItem="GJj-9n-Rl2" secondAttribute="leading" id="z4F-sA-AXj"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="sgp-pD-lIZ"/>
+                    <navigationItem key="navigationItem" title="Practice" id="sgp-pD-lIZ"/>
                     <connections>
+                        <outlet property="startButton" destination="I72-Nv-lS5" id="zxp-PB-oU5"/>
                         <outlet property="topMapView" destination="ecf-Ua-itT" id="uAJ-cm-5d9"/>
                     </connections>
                 </viewController>
@@ -82,7 +82,7 @@
             </objects>
             <point key="canvasLocation" x="844" y="333"/>
         </scene>
-        <!--Title-->
+        <!--Running-->
         <scene sceneID="Qp7-gC-syk">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="Gdd-cw-7Ym" customClass="PracticeRunningViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
@@ -115,7 +115,7 @@
                                     <constraint firstAttribute="height" constant="44" id="wD5-PN-O5C"/>
                                 </constraints>
                             </view>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DU1-Yf-isv" customClass="RunMapView" customModule="RunningTestTest" customModuleProvider="target">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DU1-Yf-isv" customClass="RunMapView" customModule="Run" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="600" height="240"/>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00.000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWs-vE-ZZL">
@@ -151,7 +151,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="Qbz-Sp-Dq9"/>
+                    <navigationItem key="navigationItem" title="Running" id="Qbz-Sp-Dq9"/>
                     <connections>
                         <outlet property="bottomBar" destination="jDu-UZ-9XV" id="ukd-OK-shs"/>
                         <outlet property="bottomLabel" destination="B6O-hS-e7A" id="bJ8-hZ-rxb"/>
