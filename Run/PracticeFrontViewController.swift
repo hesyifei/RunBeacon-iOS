@@ -11,7 +11,9 @@ import CoreLocation
 import Foundation
 import MapKit
 import Async
+import Alamofire
 import CocoaLumberjack
+import SwiftyJSON
 
 class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -24,6 +26,8 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     var locationManager: CLLocationManager!
     
     
+    var checkpointsData = [Checkpoint]()
+    
     var highlightedPoints = [               // For testing only
         CLLocationCoordinate2DMake(22.215606, 114.214801),
         CLLocationCoordinate2DMake(22.216758, 114.214811),
@@ -32,6 +36,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
     // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
+    // TODO: USE UIIMAGEVIEW TO SHOW REDCROSS/WATER IN ASSES VIEW
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +55,30 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         startButton.titleLabel?.text = "Start"
         startButton.titleLabel?.font = UIFont(name: (startButton.titleLabel?.font?.fontName)!, size: 30.0)
         startButton.backgroundColor = UIColor.greenColor()
+        
+        
+        
+        initCheckpointsData()
+    }
+    
+    func initCheckpointsData() {
+        Alamofire.request(.GET, "http://areflys-mac.local/checkpoints.json")
+            .response { request, response, data, error in
+                /*print(request)
+                print(response)
+                print(data)
+                print(error)*/
+                if let error = error {
+                    DDLogError("Checkpoints數據獲取錯誤：\(error)")
+                } else {
+                    let json = JSON(data: data!)
+                    for (_, subJson): (String, JSON) in json["checkpoints"] {
+                        self.checkpointsData.append(Checkpoint(json: subJson))
+                    }
+                    
+                    self.topMapView.setAnnotations(self.checkpointsData)
+                }
+        }
     }
     
     

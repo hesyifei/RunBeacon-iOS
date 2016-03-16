@@ -11,6 +11,7 @@ import Foundation
 import MapKit
 import Async
 import CocoaLumberjack
+import SwiftyJSON
 
 enum CheckpointService {
     case Water
@@ -19,17 +20,17 @@ enum CheckpointService {
 
 class Checkpoint: NSObject, MKAnnotation {
     let id: Int
-    let name: String
-    let detail: String
-    let services: [CheckpointService]
+    let name: String?
+    let detail: String?
+    //let services: [CheckpointService]?
     let coordinate: CLLocationCoordinate2D
     
-    init(id: Int, name: String, detail: String, services: [CheckpointService], coordinate: CLLocationCoordinate2D) {
-        self.id = id
-        self.name = name
-        self.detail = detail
-        self.services = services
-        self.coordinate = coordinate
+    init(json: JSON) {
+        self.id = json["id"].intValue
+        self.name = json["name"].string
+        self.detail = json["detail"].string
+        //self.services = json["services"].string
+        self.coordinate = CLLocationCoordinate2DMake(json["latitude"].doubleValue, json["longitude"].doubleValue)
         
         super.init()
     }

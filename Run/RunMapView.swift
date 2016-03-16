@@ -16,20 +16,12 @@ class RunMapView: MKMapView {
     
     let initLocation = CLLocation(latitude: 22.215417, longitude: 114.214779)
     
-    var points = [
-        CLLocationCoordinate2DMake(22.215606, 114.214801),
-        CLLocationCoordinate2DMake(22.214672, 114.215133),
-        CLLocationCoordinate2DMake(22.214791, 114.215884),
-        CLLocationCoordinate2DMake(22.215944, 114.215766),
-        CLLocationCoordinate2DMake(22.216758, 114.214811),
-    ]
-    
     
     
     let regionRadius: CLLocationDistance = 200
     
     var allAnnotations = [MKPointAnnotation]()
-    
+    var allPoints = [CLLocationCoordinate2D]()
     
     
     override init(frame: CGRect) {
@@ -49,11 +41,15 @@ class RunMapView: MKMapView {
     func mapViewInit() {
         self.mapType = .Satellite
         
-        for point in points {
+        self.centerMapOnLocation(initLocation)
+    }
+    
+    func setAnnotations(checkpoints: [Checkpoint]) {
+        for checkpoint in checkpoints {
             let objectAnnotation = MKPointAnnotation()
-            objectAnnotation.coordinate = CLLocation(latitude: point.latitude, longitude: point.longitude).coordinate
-            objectAnnotation.title = "#1 Big Field"
-            objectAnnotation.subtitle = ""
+            objectAnnotation.coordinate = checkpoint.coordinate
+            objectAnnotation.title = "#\(checkpoint.id) \(checkpoint.name)"
+            objectAnnotation.subtitle = checkpoint.detail
             Async.main {
                 self.addAnnotation(objectAnnotation)
             }
@@ -61,13 +57,16 @@ class RunMapView: MKMapView {
             allAnnotations.append(objectAnnotation)
         }
         
+        print(allAnnotations)
         
-        var allPoints = points + [points[0]]
-        let geodesic = MKGeodesicPolyline(coordinates: &allPoints[0], count: allPoints.count)
+        allPoints = allAnnotations.map {
+            annotation -> CLLocationCoordinate2D in
+            return annotation.coordinate
+        }
+        
+        var allPointsWithFinish = allPoints + [allPoints[0]]
+        let geodesic = MKGeodesicPolyline(coordinates: &allPointsWithFinish[0], count: allPointsWithFinish.count)
         self.addOverlay(geodesic)
-        
-        
-        self.centerMapOnLocation(initLocation)
     }
     
     func centerMapOnLocation(location: CLLocation) {
