@@ -8,6 +8,7 @@ target 'Run' do
     pod 'Alamofire', '~> 3.0'
     pod 'CocoaLumberjack/Swift'
     pod 'MBProgressHUD', '~> 0.9.2'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
     pod 'KLCPopup', :head
 end
 
