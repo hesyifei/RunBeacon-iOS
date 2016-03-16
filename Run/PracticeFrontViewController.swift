@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Foundation
 import MapKit
 import Async
 import CocoaLumberjack

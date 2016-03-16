@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import MapKit
 import Async
 import CocoaLumberjack
@@ -108,14 +109,13 @@ class RunMapView: MKMapView {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.animatesDrop = true
-            pinView!.pinTintColor = pinColor
             
             let accessoryButton = UIButton(type: .DetailDisclosure)
             pinView!.rightCalloutAccessoryView = accessoryButton
         } else {
             pinView!.annotation = annotation
-            pinView!.pinTintColor = pinColor
         }
+        pinView!.pinTintColor = pinColor
         
         return pinView
     }

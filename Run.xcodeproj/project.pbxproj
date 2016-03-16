@@ -18,6 +18,11 @@
 		ED9FE9011C991FE600DB731D /* RunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE9001C991FE600DB731D /* RunUITests.swift */; };
 		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
 		EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */; };
+		EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */; };
+		EDCE6CB21C99731F004C8BD1 /* CheckpointPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CB11C99731F004C8BD1 /* CheckpointPopupView.swift */; };
+		EDCE6CB41C99738C004C8BD1 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CB31C99738C004C8BD1 /* TimelineView.swift */; };
+		EDCE6CB61C9973B0004C8BD1 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CB51C9973B0004C8BD1 /* CircleView.swift */; };
+		EDCE6CB81C9973F6004C8BD1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CB71C9973F6004C8BD1 /* PaddingLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +62,11 @@
 		ED9FE9021C991FE600DB731D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
 		EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunMapView.swift; sourceTree = "<group>"; };
+		EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRunningViewController.swift; sourceTree = "<group>"; };
+		EDCE6CB11C99731F004C8BD1 /* CheckpointPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckpointPopupView.swift; sourceTree = "<group>"; };
+		EDCE6CB31C99738C004C8BD1 /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		EDCE6CB51C9973B0004C8BD1 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		EDCE6CB71C9973F6004C8BD1 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +130,7 @@
 			children = (
 				ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */,
 				ED9FE8DF1C991FE600DB731D /* PracticeFrontViewController.swift */,
+				EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */,
 				EDCE6CAE1C992A6A004C8BD1 /* UI Classes */,
 				ED9FE8E11C991FE600DB731D /* Main.storyboard */,
 				ED9FE8E91C991FE600DB731D /* LaunchScreen.storyboard */,
@@ -161,8 +172,20 @@
 			isa = PBXGroup;
 			children = (
 				EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */,
+				EDCE6CB11C99731F004C8BD1 /* CheckpointPopupView.swift */,
+				EDCE6CB31C99738C004C8BD1 /* TimelineView.swift */,
+				EDCE6CB91C997428004C8BD1 /* Supporting */,
 			);
 			name = "UI Classes";
+			sourceTree = "<group>";
+		};
+		EDCE6CB91C997428004C8BD1 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				EDCE6CB51C9973B0004C8BD1 /* CircleView.swift */,
+				EDCE6CB71C9973F6004C8BD1 /* PaddingLabel.swift */,
+			);
+			name = Supporting;
 			sourceTree = "<group>";
 		};
 		F1CC372971B15B9BDCCCF50F /* Pods */ = {
@@ -375,8 +398,13 @@
 				EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */,
 				EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */,
 				ED9FE8E01C991FE600DB731D /* PracticeFrontViewController.swift in Sources */,
+				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
+				EDCE6CB21C99731F004C8BD1 /* CheckpointPopupView.swift in Sources */,
+				EDCE6CB41C99738C004C8BD1 /* TimelineView.swift in Sources */,
+				EDCE6CB81C9973F6004C8BD1 /* PaddingLabel.swift in Sources */,
+				EDCE6CB61C9973B0004C8BD1 /* CircleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,7 +549,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Run/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.arefly.Run;
@@ -536,7 +564,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Run/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.arefly.Run;
 				PRODUCT_NAME = "$(TARGET_NAME)";
