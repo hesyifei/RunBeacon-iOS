@@ -43,9 +43,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
     
-    //var vibrationTimer: NSTimer?
-    //var vibrationCounter = 0
-    
     var timer: NSTimer!
     var timerCount = 0
     
@@ -76,7 +73,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         locationManager.startUpdatingLocation()
         
         
-        //vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "doVibration", userInfo: nil, repeats: true)
         doVibration()
         
         
@@ -97,7 +93,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         timeLabel.textColor = UIColor.blackColor()
         timeLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         
-        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 60.0)
+        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 80.0)
         
         
         bottomBar.backgroundColor = navigationColor
@@ -108,19 +104,10 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         bottomBar.layer.addSublayer(bottomBarTopBorder)
         
         
-        
         initCheckpoints()
         
         
-        
-        
-        
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "countTime", userInfo: nil, repeats: true)
-    }
-    
-    func countTime() {
-        timerCount += 1
-        timeLabel.text = millisecondsToFormattedTime(Double(timerCount))
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -134,16 +121,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         speedsGood = ["10 m/s"] + speedsGood
         totalTime = ["08:30"] + totalTime
         
-        self.tableView.beginUpdates()
-        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
-        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
-        self.tableView.endUpdates()*/
+        tableView.beginUpdates()
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
+        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
+        tableView.endUpdates()*/
         
         //showPopupWithStyle()
-        
-        
-        
-        
         
     }
     
@@ -159,7 +142,55 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         let speed = loc?.speed
         DDLogVerbose("已獲取用戶目前速度：\(speed)")
         bottomLabel.text = "YA \(speed)"
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedAlways {
+            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    startScanning()
+                }
+            }
+        }
+        if status == .Denied || status == .Restricted {
+            DDLogWarn("定位服務未允許/未開啟，無法檢測iBeacon！")
+        }
+    }
+    
+    var currentBeacon = [String]()
+    func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        if beacons.count > 0 {
+            // 這裡可能會產生bug（直接提取[0]似乎有問題）
+            let beacon = beacons[0]
+            if(currentBeacon == [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]){
+                DDLogVerbose("繼續維持在Beacon（\(beacon.major), \(beacon.minor), \(beacon.proximity.rawValue)）的範圍內")
+            }else{
+                DDLogInfo("已進入新Beacon（\(beacon.major), \(beacon.minor), \(beacon.proximity.rawValue)）範圍")
+                
+                runChecks = [RunCheck(checkpointId: beacon.minor.integerValue, time: NSDate())] + runChecks
+                
+                tableView.beginUpdates()
+                tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
+                tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
+                tableView.endUpdates()
+                
+                currentBeacon = [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]
+            }
+        } else {
+            // 一個iBeacon都沒有
+        }
+    }
+    
+    func startScanning() {
+        DDLogInfo("開始掃描iBeacon")
         
+        // 所有iBeacon均應設置為這一UUID
+        let uuid = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
+        let beaconRegion = CLBeaconRegion(proximityUUID: uuid!, identifier: "CheckpointBeacon")
+        
+        beaconRegion.notifyEntryStateOnDisplay = true
+        
+        locationManager.startRangingBeaconsInRegion(beaconRegion)
     }
     
     
@@ -474,22 +505,21 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func doVibration() {
-        //vibrationCounter = vibrationCounter+1
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        
-        /*if(vibrationCounter >= 4){
-            vibrationTimer!.invalidate()
-            vibrationTimer = nil
-        }*/
+    }
+    
+    func countTime() {
+        timerCount += 1
+        timeLabel.text = millisecondsToFormattedTime(Double(timerCount))
     }
     
     func timelineTap(sender: UITapGestureRecognizer) {
-        let tapLocation = sender.locationInView(self.tableView)
+        let tapLocation = sender.locationInView(tableView)
         
-        let indexPath = self.tableView.indexPathForRowAtPoint(tapLocation)
+        let indexPath = tableView.indexPathForRowAtPoint(tapLocation)
         DDLogDebug("用戶已點擊 Cell \(indexPath?.row) 的 timeline")
         
-        let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
+        let cell = tableView.cellForRowAtIndexPath(indexPath!)
         let tag = cell?.tag
         
         topMapView.selectAnnotation(topMapView.allAnnotations[tag!], animated: true)
