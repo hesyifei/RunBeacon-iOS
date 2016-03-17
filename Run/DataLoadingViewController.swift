@@ -66,7 +66,7 @@ class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
                         }
                         DDLogVerbose("已從伺服器獲取checkpointsData：\(checkpointsData)")
                         
-                        DefaultsFunc().saveCheckpoints(checkpointsData)
+                        CheckpointFunc().saveCheckpoints(checkpointsData)
                         
                         
                         self.defaults.setDouble(json["init"]["latitude"].doubleValue, forKey: "initLatitude")

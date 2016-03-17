@@ -77,7 +77,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     // MARK: - Data func
     func initCheckpoints() {
-        checkpointsData = DefaultsFunc().getCheckpoints()
+        checkpointsData = CheckpointFunc().getCheckpoints()
         topMapView.loadCheckpoints(checkpointsData)
     }
     

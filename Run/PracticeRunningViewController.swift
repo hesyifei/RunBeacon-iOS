@@ -140,7 +140,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     // MARK: - Data func
     func initCheckpoints() {
-        checkpointsData = DefaultsFunc().getCheckpoints()
+        checkpointsData = CheckpointFunc().getCheckpoints()
         topMapView.loadCheckpoints(checkpointsData)
     }
     

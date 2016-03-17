@@ -1,5 +1,5 @@
 //
-//  DefaultsFunc.swift
+//  CheckpointFunc.swift
 //  Run
 //
 //  Created by Jason Ho on 17/3/2016.
@@ -11,7 +11,7 @@ import Foundation
 import Async
 import CocoaLumberjack
 
-class DefaultsFunc {
+class CheckpointFunc {
     
     let defaults = NSUserDefaults.standardUserDefaults()
     let checkpointsDataKey = "checkpointsData"
