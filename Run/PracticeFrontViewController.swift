@@ -64,8 +64,6 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         DDLogInfo("Practice Front View Controller 之 super.viewWillAppear() 已加載")
-        
-        self.navigationItem.setHidesBackButton(true, animated: false)
     }
     
     func initCheckpointsData() {

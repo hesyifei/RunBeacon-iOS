@@ -32,7 +32,9 @@ class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
         
         
         initCheckpointsData({
-            self.performSegueWithIdentifier("showPracticeView", sender: self)
+            Async.main {
+                self.performSegueWithIdentifier("showPracticeView", sender: self)
+            }
         })
     }
     
