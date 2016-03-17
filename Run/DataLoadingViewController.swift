@@ -50,33 +50,12 @@ class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Data func
     func initCheckpointsData(completion: () -> Void) {
-        /*if(DefaultsFunc().getCheckpoints().count > 0){
+        if(CheckpointFunc().getCheckpoints().count > 0){
             completion()
-        }else{*/
-            Alamofire.request(.GET, "http://areflys-mac.local/checkpoints.json")
-                .response { request, response, data, error in
-                    if let error = error {
-                        DDLogError("checkpoints伺服器數據獲取錯誤：\(error)")
-                    } else {
-                        let json = JSON(data: data!)
-                        var checkpointsData = [Checkpoint]()
-                        
-                        for (_, subJson): (String, JSON) in json["checkpoints"] {
-                            checkpointsData.append(Checkpoint(json: subJson))
-                        }
-                        DDLogVerbose("已從伺服器獲取checkpointsData：\(checkpointsData)")
-                        
-                        CheckpointFunc().saveCheckpoints(checkpointsData)
-                        
-                        
-                        self.defaults.setDouble(json["init"]["latitude"].doubleValue, forKey: "initLatitude")
-                        self.defaults.setDouble(json["init"]["longitude"].doubleValue, forKey: "initLongitude")
-                        self.defaults.setDouble(json["init"]["radius"].doubleValue, forKey: "initRadius")
-                        
-                        
-                        completion()
-                    }
-            }
-        //}
+        }else{
+            CheckpointFunc().loadCheckpointsDataFromServer({
+                completion()
+            })
+        }
     }
 }

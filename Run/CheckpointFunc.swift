@@ -9,7 +9,9 @@
 import UIKit
 import Foundation
 import Async
+import Alamofire
 import CocoaLumberjack
+import SwiftyJSON
 
 class CheckpointFunc {
     
@@ -39,4 +41,34 @@ class CheckpointFunc {
         DDLogWarn("可能原因：第一次開啟App、checkpoints數據未設定")
         return []
     }
+    
+    
+    func loadCheckpointsDataFromServer(completion: () -> Void) {
+        Alamofire.request(.GET, "http://areflys-mac.local/checkpoints.json")
+            .response { request, response, data, error in
+                if let error = error {
+                    DDLogError("checkpoints伺服器數據獲取錯誤：\(error)")
+                } else {
+                    let json = JSON(data: data!)
+                    var checkpointsData = [Checkpoint]()
+                    
+                    for (_, subJson): (String, JSON) in json["checkpoints"] {
+                        checkpointsData.append(Checkpoint(json: subJson))
+                    }
+                    DDLogVerbose("已從伺服器獲取checkpointsData：\(checkpointsData)")
+                    
+                    CheckpointFunc().saveCheckpoints(checkpointsData)
+                    
+                    
+                    self.defaults.setDouble(json["init"]["latitude"].doubleValue, forKey: "initLatitude")
+                    self.defaults.setDouble(json["init"]["longitude"].doubleValue, forKey: "initLongitude")
+                    self.defaults.setDouble(json["init"]["radius"].doubleValue, forKey: "initRadius")
+                    DDLogVerbose("已從伺服器獲取init數據")
+                    
+                    
+                    completion()
+                }
+        }
+    }
+    
 }
