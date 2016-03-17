@@ -44,28 +44,30 @@ class RunMapView: MKMapView {
         self.centerMapOnLocation(initLocation)
     }
     
-    func setAnnotations(checkpoints: [Checkpoint]) {
-        for checkpoint in checkpoints {
-            let objectAnnotation = MKPointAnnotation()
-            objectAnnotation.coordinate = checkpoint.coordinate
-            objectAnnotation.title = "#\(checkpoint.id) \(checkpoint.name)"
-            objectAnnotation.subtitle = checkpoint.detail
-            Async.main {
-                self.addAnnotation(objectAnnotation)
+    func loadCheckpoints(checkpoints: [Checkpoint]) {
+        if(checkpoints.count > 0){
+            for checkpoint in checkpoints {
+                let objectAnnotation = MKPointAnnotation()
+                objectAnnotation.coordinate = checkpoint.coordinate
+                objectAnnotation.title = "#\(checkpoint.id) \(checkpoint.name)"
+                objectAnnotation.subtitle = checkpoint.detail
+                Async.main {
+                    self.addAnnotation(objectAnnotation)
+                }
+                
+                allAnnotations.append(objectAnnotation)
             }
             
-            allAnnotations.append(objectAnnotation)
+            
+            allPoints = allAnnotations.map {
+                annotation -> CLLocationCoordinate2D in
+                return annotation.coordinate
+            }
+            
+            var allPointsWithFinish = allPoints + [allPoints[0]]
+            let geodesic = MKGeodesicPolyline(coordinates: &allPointsWithFinish[0], count: allPointsWithFinish.count)
+            self.addOverlay(geodesic)
         }
-        
-        
-        allPoints = allAnnotations.map {
-            annotation -> CLLocationCoordinate2D in
-            return annotation.coordinate
-        }
-        
-        var allPointsWithFinish = allPoints + [allPoints[0]]
-        let geodesic = MKGeodesicPolyline(coordinates: &allPointsWithFinish[0], count: allPointsWithFinish.count)
-        self.addOverlay(geodesic)
     }
     
     func centerMapOnLocation(location: CLLocation) {

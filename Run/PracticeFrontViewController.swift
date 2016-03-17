@@ -43,12 +43,12 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         DDLogInfo("Practice Front View Controller 之 super.viewDidLoad() 已加載")
         
         
+        
         topMapView.delegate = self
         
         
         locationManager = CLLocationManager()
         locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
         
         
         
@@ -61,24 +61,16 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         initCheckpointsData()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        DDLogInfo("Practice Front View Controller 之 super.viewWillAppear() 已加載")
+        
+        self.navigationItem.setHidesBackButton(true, animated: false)
+    }
+    
     func initCheckpointsData() {
-        Alamofire.request(.GET, "http://areflys-mac.local/checkpoints.json")
-            .response { request, response, data, error in
-                /*print(request)
-                print(response)
-                print(data)
-                print(error)*/
-                if let error = error {
-                    DDLogError("Checkpoints數據獲取錯誤：\(error)")
-                } else {
-                    let json = JSON(data: data!)
-                    for (_, subJson): (String, JSON) in json["checkpoints"] {
-                        self.checkpointsData.append(Checkpoint(json: subJson))
-                    }
-                    
-                    self.topMapView.setAnnotations(self.checkpointsData)
-                }
-        }
+        checkpointsData = DefaultsFunc().getCheckpoints()
+        topMapView.loadCheckpoints(checkpointsData)
     }
     
     

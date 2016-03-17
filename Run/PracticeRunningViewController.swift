@@ -53,6 +53,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var vibrationCounter = 0
     
     
+    var checkpointsData = [Checkpoint]()
     
     
     
@@ -112,7 +113,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         bottomBarTopBorder.backgroundColor = UIColor.blackColor().CGColor
         bottomBar.layer.addSublayer(bottomBarTopBorder)
         
+        
+        initCheckpointsData()
     }
+    
+    func initCheckpointsData() {
+        checkpointsData = DefaultsFunc().getCheckpoints()
+        topMapView.loadCheckpoints(checkpointsData)
+    }
+    
+    
     
     func closeAction() {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -455,7 +465,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         let tapLocation = sender.locationInView(self.tableView)
         
         let indexPath = self.tableView.indexPathForRowAtPoint(tapLocation)
-        DDLogDebug("用戶已點擊 \(indexPath) 的 timeline")
+        DDLogDebug("用戶已點擊 Cell \(indexPath?.row) 的 timeline")
         
         let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
         

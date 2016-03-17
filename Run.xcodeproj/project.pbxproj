@@ -17,6 +17,7 @@
 		ED9FE8F61C991FE600DB731D /* RunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE8F51C991FE600DB731D /* RunTests.swift */; };
 		ED9FE9011C991FE600DB731D /* RunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE9001C991FE600DB731D /* RunUITests.swift */; };
 		EDB1DB6F1C9A5EB800E3CF8B /* DataLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB6E1C9A5EB800E3CF8B /* DataLoadingViewController.swift */; };
+		EDB1DB711C9A631000E3CF8B /* DefaultsFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB701C9A631000E3CF8B /* DefaultsFunc.swift */; };
 		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
 		EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */; };
 		EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */; };
@@ -64,6 +65,7 @@
 		ED9FE9001C991FE600DB731D /* RunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunUITests.swift; sourceTree = "<group>"; };
 		ED9FE9021C991FE600DB731D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDB1DB6E1C9A5EB800E3CF8B /* DataLoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoadingViewController.swift; sourceTree = "<group>"; };
+		EDB1DB701C9A631000E3CF8B /* DefaultsFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultsFunc.swift; sourceTree = "<group>"; };
 		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
 		EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunMapView.swift; sourceTree = "<group>"; };
 		EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRunningViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */,
 				EDB1DB6E1C9A5EB800E3CF8B /* DataLoadingViewController.swift */,
 				EDCE6CBA1C9976B7004C8BD1 /* Practice View Controllers */,
+				EDB1DB721C9A631500E3CF8B /* Function Classes */,
 				EDCE6CBF1C997CB1004C8BD1 /* Data Classes */,
 				EDCE6CAE1C992A6A004C8BD1 /* UI Classes */,
 				ED9FE8E11C991FE600DB731D /* Main.storyboard */,
@@ -164,6 +167,14 @@
 				ED9FE9021C991FE600DB731D /* Info.plist */,
 			);
 			path = RunUITests;
+			sourceTree = "<group>";
+		};
+		EDB1DB721C9A631500E3CF8B /* Function Classes */ = {
+			isa = PBXGroup;
+			children = (
+				EDB1DB701C9A631000E3CF8B /* DefaultsFunc.swift */,
+			);
+			name = "Function Classes";
 			sourceTree = "<group>";
 		};
 		EDCE6CA81C992529004C8BD1 /* Supporting Files */ = {
@@ -425,6 +436,7 @@
 				EDB1DB6F1C9A5EB800E3CF8B /* DataLoadingViewController.swift in Sources */,
 				EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */,
 				ED9FE8E01C991FE600DB731D /* PracticeFrontViewController.swift in Sources */,
+				EDB1DB711C9A631000E3CF8B /* DefaultsFunc.swift in Sources */,
 				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
