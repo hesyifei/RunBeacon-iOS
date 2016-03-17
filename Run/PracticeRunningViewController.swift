@@ -12,6 +12,7 @@ import CoreLocation
 import Foundation
 import MapKit
 import Async
+import Alamofire
 import CocoaLumberjack
 import KLCPopup
 
@@ -75,8 +76,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         locationManager.startUpdatingLocation()
         
         
-        doVibration()
-        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -130,6 +129,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         tableView.endUpdates()*/
         
         //showPopupWithStyle()
+        
+        
+        
+        let parameters = [
+            "userId": "2015206",
+            "tripId": 1,
+            "checkpointId": 999,
+        ]
+        
+        
+        Alamofire.request(.POST, BasicConfig.runCheckPostUrl, parameters: parameters, encoding: .JSON)
+        
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -184,6 +195,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 tableView.endUpdates()
                 
                 showCheckpointPopup()
+                doVibration()
+                // TODO: read out
+                
                 
                 currentBeacon = [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]
             }

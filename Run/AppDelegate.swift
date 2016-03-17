@@ -11,6 +11,10 @@ import CoreData
 import Foundation
 import CocoaLumberjack
 
+struct BasicConfig {
+    static let runCheckPostUrl = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/post_beacon"
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

@@ -72,7 +72,7 @@ class CheckpointPopupView: UIView {
         
         
         timeLabel = UILabel()
-        timeLabel.font = UIFont(name: (timeLabel.font?.fontName)!, size: 80.0)
+        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 80.0)
         timeLabel.textColor = UIColor.redColor()
         timeLabel.textAlignment = .Center
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
