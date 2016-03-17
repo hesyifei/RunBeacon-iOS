@@ -43,7 +43,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
     
-    var timer: NSTimer!
+    var timer: NSTimer?
     var timerCount = 0
     
     
@@ -108,6 +108,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "countTime", userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -127,7 +128,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         tableView.endUpdates()*/
         
         //showPopupWithStyle()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        DDLogInfo("Practice Running View Controller 之 super.viewDidDisappear() 已加載")
         
+        timer!.invalidate()
+        timer = nil
     }
     
     override func didReceiveMemoryWarning() {
@@ -461,18 +469,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         numberLabel.font = UIFont(name: (numberLabel.font?.fontName)!, size: 15.0)
         
         
-        var totalTime: NSTimeInterval = 0
-        if(row < (runChecks.count-1)){
-            totalTime = runChecks[row].time.timeIntervalSinceDate(runChecks[runChecks.count-1].time)
-        }
+        let totalTime = getRunCheckTimeDifference(row, comparingIndex: runChecks.count-1)
         totalTimeLabel.text = "\(secondsToFormattedTime(totalTime))"
         totalTimeLabel.font = UIFont(name: (totalTimeLabel.font?.fontName)!, size: 8.0)
         
         
-        var timeDifference: NSTimeInterval = 0
-        if(row < (runChecks.count-1)){
-            timeDifference = runChecks[row].time.timeIntervalSinceDate(runChecks[row+1].time)
-        }
+        let timeDifference = getRunCheckTimeDifference(row, comparingIndex: row+1)
         timeCurrentLabel.text = "\(secondsToFormattedTime(timeDifference))"
         timeCurrentLabel.font = UIFont(name: (timeCurrentLabel.font?.fontName)!, size: 28.0)
         
@@ -496,6 +498,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         /*** 修改數據結束 ***/
         
         return cell
+    }
+    
+    func getRunCheckTimeDifference(currentIndex: Int, comparingIndex: Int) -> NSTimeInterval {
+        var totalTime: NSTimeInterval = 0
+        if(currentIndex < (runChecks.count-1)){
+            totalTime = runChecks[currentIndex].time.timeIntervalSinceDate(runChecks[comparingIndex].time)
+        }
+        return totalTime
     }
     
     
@@ -525,7 +535,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         topMapView.selectAnnotation(topMapView.allAnnotations[tag!], animated: true)
     }
     
-    func showPopupWithStyle() {
+    func showPopup() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         
         let customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
