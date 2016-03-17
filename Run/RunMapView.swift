@@ -57,7 +57,6 @@ class RunMapView: MKMapView {
             allAnnotations.append(objectAnnotation)
         }
         
-        print(allAnnotations)
         
         allPoints = allAnnotations.map {
             annotation -> CLLocationCoordinate2D in
