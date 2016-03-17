@@ -465,11 +465,10 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         //timelineView.backgroundColor = UIColor.blueColor()
         //DDLogVerbose("DONE \(cell?.contentView.subviews)")
         /*** 初始化TableCell結束 ***/
-         
-         
-         
-         
-         /*** 修改數據開始 ***/
+
+        
+        
+        /*** 修改數據開始 ***/
         let row = indexPath.row
         
         cell.tag = runChecks[row].checkpointId           // 供timelineTap使用
@@ -600,9 +599,11 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func uploadRunCheckData(runCheck: RunCheck) {
         let parameters = [
             "userId": "2015206",
-            "tripId": "\(tripId)",
+            "tripId": "\(tripId!)",
             "checkpointId": "\(runCheck.checkpointId)",
         ]
+        
+        DDLogDebug("準備上傳RunCheck數據：\(parameters)")
         
         Alamofire.request(.POST, BasicConfig.RunCheckPostURL, parameters: parameters, encoding: .JSON)
             .response { request, response, data, error in

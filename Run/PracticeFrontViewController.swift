@@ -21,7 +21,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
     // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
     // TODO: USE UIIMAGEVIEW TO SHOW REDCROSS/WATER IN MKANNOTION ASSES VIEW
-    // TODO: 通過json寫入每段距離/標準時間/標準速度etc
+    // TODO: 【討論】通過json寫入每段距離/標準時間/標準速度etc
     
     
     // MARK: - IBOutlet var
@@ -78,8 +78,10 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let destinationVC = segue.destinationViewController as? PracticeRunningViewController {
-            destinationVC.tripId = self.tripId
+        if segue.identifier == "showPracticeRunningView"{
+            let destViewController = segue.destinationViewController as! UINavigationController
+            let targetController = destViewController.topViewController as! PracticeRunningViewController
+            targetController.tripId = self.tripId
         }
     }
     
