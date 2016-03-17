@@ -43,9 +43,11 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
     
-    var vibrationTimer: NSTimer?
-    var vibrationCounter = 0
+    //var vibrationTimer: NSTimer?
+    //var vibrationCounter = 0
     
+    var timer: NSTimer!
+    var timerCount = 0
     
     
     // MARK: - Override func
@@ -74,8 +76,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         locationManager.startUpdatingLocation()
         
         
-        vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: ("doVibration"), userInfo: nil, repeats: true)
-        
+        //vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "doVibration", userInfo: nil, repeats: true)
+        doVibration()
         
         
         tableView.delegate = self
@@ -95,7 +97,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         timeLabel.textColor = UIColor.blackColor()
         timeLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         
-        timeLabel.font = UIFont(name: (timeLabel.font?.fontName)!, size: 60.0)
+        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 60.0)
         
         
         bottomBar.backgroundColor = navigationColor
@@ -108,6 +110,17 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         initCheckpoints()
+        
+        
+        
+        
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "countTime", userInfo: nil, repeats: true)
+    }
+    
+    func countTime() {
+        timerCount += 1
+        timeLabel.text = millisecondsToFormattedTime(Double(timerCount))
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -421,7 +434,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         if(row < (runChecks.count-1)){
             totalTime = runChecks[row].time.timeIntervalSinceDate(runChecks[runChecks.count-1].time)
         }
-        totalTimeLabel.text = "\(doubleToFormattedTime(totalTime))"
+        totalTimeLabel.text = "\(secondsToFormattedTime(totalTime))"
         totalTimeLabel.font = UIFont(name: (totalTimeLabel.font?.fontName)!, size: 8.0)
         
         
@@ -429,7 +442,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         if(row < (runChecks.count-1)){
             timeDifference = runChecks[row].time.timeIntervalSinceDate(runChecks[row+1].time)
         }
-        timeCurrentLabel.text = "\(doubleToFormattedTime(timeDifference))"
+        timeCurrentLabel.text = "\(secondsToFormattedTime(timeDifference))"
         timeCurrentLabel.font = UIFont(name: (timeCurrentLabel.font?.fontName)!, size: 28.0)
         
         
@@ -461,13 +474,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func doVibration() {
-        vibrationCounter = vibrationCounter+1
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        //vibrationCounter = vibrationCounter+1
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         
-        if(vibrationCounter >= 4){
+        /*if(vibrationCounter >= 4){
             vibrationTimer!.invalidate()
             vibrationTimer = nil
-        }
+        }*/
     }
     
     func timelineTap(sender: UITapGestureRecognizer) {
@@ -505,13 +518,23 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         popupController.showWithLayout(layout, duration: 15.0)
     }
     
-    func doubleToFormattedTime(seconds: Double) -> String {
-        let roundSeconds = round(seconds)
+    func secondsToFormattedTime(inputSeconds: Double) -> String {
+        let roundSeconds = round(inputSeconds)
         
         let minutes = Int(roundSeconds/60)
         let seconds = Int(roundSeconds%60)
         
         return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
+    }
+    
+    func millisecondsToFormattedTime(inputMilliseconds: Double) -> String {
+        let roundMilliseconds = round(inputMilliseconds)
+        
+        let minutes = Int((roundMilliseconds/100)/60)
+        let seconds = Int((roundMilliseconds/100)%60)
+        let milliseconds = Int(roundMilliseconds%100)
+        
+        return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds)).\(String(format: "%02d", milliseconds))"
     }
     
     func getSpeed(seconds: Double, distance: Double) -> Double {
