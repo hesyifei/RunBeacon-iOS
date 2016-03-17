@@ -15,17 +15,6 @@ import Async
 import CocoaLumberjack
 import KLCPopup
 
-class RunCheck: NSObject {
-    let checkpointId: Int
-    let time: NSDate
-    
-    init(checkpointId: Int, time: NSDate){
-        self.checkpointId = checkpointId
-        self.time = time
-        super.init()
-    }
-}
-
 class PracticeRunningViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
     // MARK: - IBOutlet var
