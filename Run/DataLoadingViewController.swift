@@ -7,20 +7,15 @@
 //
 
 import UIKit
-import CoreLocation
 import Foundation
 import Async
 import Alamofire
 import CocoaLumberjack
-import SwiftyJSON
 
-class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
+class DataLoadingViewController: UIViewController {
     
     // MARK: - Basic var
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
-    var locationManager: CLLocationManager!
-    
     let defaults = NSUserDefaults.standardUserDefaults()
     
     
@@ -29,15 +24,10 @@ class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         DDLogInfo("Data Loading View Controller 之 super.viewDidLoad() 已加載")
         
-        
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        
-        
         initCheckpointsData({
             Async.main {
-                self.performSegueWithIdentifier("showPracticeView", sender: self)
+                //self.performSegueWithIdentifier("showLoginView", sender: self)
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         })
     }
@@ -50,12 +40,8 @@ class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Data func
     func initCheckpointsData(completion: () -> Void) {
-        if(CheckpointFunc().getCheckpoints().count > 0){
+        CheckpointFunc().loadCheckpointsDataFromServer({
             completion()
-        }else{
-            CheckpointFunc().loadCheckpointsDataFromServer({
-                completion()
-            })
-        }
+        })
     }
 }

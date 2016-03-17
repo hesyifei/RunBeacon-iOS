@@ -203,9 +203,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func startScanning() {
         DDLogInfo("開始掃描iBeacon")
         
-        // 所有iBeacon均應設置為這一UUID
-        let uuid = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
-        let beaconRegion = CLBeaconRegion(proximityUUID: uuid!, identifier: "CheckpointBeacon")
+        // 所有iBeacon均應設置為同一UUID
+        let beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
         
         beaconRegion.notifyEntryStateOnDisplay = true
         
@@ -524,12 +523,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         Async.background {
             let totalTime = round(self.getRunCheckTimeDifference(0, comparingIndex: self.runChecks.count-1))
             let totalTimeString = "\(Int(totalTime/60)) minutes \(Int(totalTime%60)) seconds"
-            let speechString = "Good job! You have just arrived Checkpoint \(runCheck.checkpointId). The time now is is \(totalTimeString)"
+            let speechString = "Good job! You have just arrived Checkpoint \(runCheck.checkpointId). You have run for \(totalTimeString)"
             DDLogDebug("即將讀出檢查站提示字句：\(speechString)")
             
             let speechsynt = AVSpeechSynthesizer()
             let speech = AVSpeechUtterance(string: speechString)
-            speech.voice = AVSpeechSynthesisVoice(language: "en-US")
+            speech.voice = AVSpeechSynthesisVoice(language: "en-GB")
             speech.rate = 0.45
             speechsynt.speakUtterance(speech)
         }
