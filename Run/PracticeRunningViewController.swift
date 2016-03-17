@@ -17,24 +17,30 @@ import KLCPopup
 
 class PracticeRunningViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    @IBOutlet var topMapView: RunMapView!
-    
-    
+    // MARK: - IBOutlet var
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var topMapView: RunMapView!
     @IBOutlet var timeLabel: UILabel!
     
     @IBOutlet var bottomBar: UIView!
     @IBOutlet var bottomLabel: UILabel!
     
     
-    
+    // MARK: - Basic var
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var locationManager: CLLocationManager!
     
     
+    // MARK: UI var
     var popupController: KLCPopup = KLCPopup()
+    
+    let navigationColor = UIColor(red: 247.0/250.0, green: 247.0/250.0, blue: 247.0/250.0, alpha: 1.0)
+    
+    
+    // MARK: - Data/Init var
+    var checkpointsData = [Checkpoint]()
     
     var timesCurrent = ["03:00", "00:25", "00:00"]
     var timesGood = ["03:20", "00:20", ""]
@@ -44,36 +50,15 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     var totalTime = ["03:25", "00:25", "00:00"]
     
-    
-    let navigationColor = UIColor(red: 247.0/250.0, green: 247.0/250.0, blue: 247.0/250.0, alpha: 1.0)
-    
-    
-    
     var vibrationTimer: NSTimer?
     var vibrationCounter = 0
     
     
-    var checkpointsData = [Checkpoint]()
     
-    
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let loc = locations.last
-        let speed = loc?.speed
-        DDLogVerbose("已獲取用戶目前速度：\(speed)")
-        bottomLabel.text = "YA \(speed)"
-        
-    }
-    
+    // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogInfo("Practice Running View Controller 之 super.viewDidLoad() 已加載")
-        
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.separatorStyle = .None
         
         
         locationManager = CLLocationManager()
@@ -82,28 +67,28 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         locationManager.startUpdatingLocation()
         
         
-        topMapView.delegate = self
-        
-        
-        
         vibrationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: ("doVibration"), userInfo: nil, repeats: true)
         
         
         
-        let closeNavButton = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "closeAction")
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.separatorStyle = .None
+        
+        
+        topMapView.delegate = self
+        
+        
+        
+        let closeNavButton = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "closeView")
         self.navigationItem.leftBarButtonItems = [closeNavButton]
-        
-        
-        
-        
         
         
         timeLabel.textColor = UIColor.blackColor()
         timeLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         
         timeLabel.font = UIFont(name: (timeLabel.font?.fontName)!, size: 60.0)
-        
-        
         
         
         bottomBar.backgroundColor = navigationColor
@@ -114,59 +99,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         bottomBar.layer.addSublayer(bottomBarTopBorder)
         
         
-        initCheckpointsData()
-    }
-    
-    func initCheckpointsData() {
-        checkpointsData = DefaultsFunc().getCheckpoints()
-        topMapView.loadCheckpoints(checkpointsData)
-    }
-    
-    
-    
-    func closeAction() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func doVibration() {
-        vibrationCounter = vibrationCounter+1
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         
-        if(vibrationCounter >= 4){
-            vibrationTimer!.invalidate()
-            vibrationTimer = nil
-        }
+        initCheckpoints()
     }
-    
-    
-    
-    func showPopupWithStyle() {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        
-        let customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
-        customView.backgroundLabel.text = "12"
-        customView.timeLabel.text = "02:02"
-        customView.speedLabel.text = "5 m/s"
-        customView.leftBottomLargeLabel.text = "01:50"
-        customView.leftBottomSmallLabel.text = "Suggest Time"
-        customView.rightBottomLargeLabel.text = "7 m/s"
-        customView.rightBottomSmallLabel.text = "Suggest Speed"
-        
-        popupController = KLCPopup(contentView: customView)
-        popupController.shouldDismissOnContentTouch = false
-        popupController.shouldDismissOnBackgroundTouch = true
-        popupController.maskType = .Dimmed
-        popupController.showType = .SlideInFromBottom
-        popupController.dismissType = .SlideOutToBottom
-        
-        let layout = KLCPopupLayoutMake(.Center, .BelowCenter)
-        popupController.showWithLayout(layout, duration: 15.0)
-    }
-    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        DDLogInfo("Practice Running View Controller 之 super.viewDidAppear() 已加載")
         
         
         timesCurrent = ["05:05"] + timesCurrent
@@ -183,7 +122,30 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         showPopupWithStyle()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
+    
+    // MARK: - LocationManager func
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let loc = locations.last
+        let speed = loc?.speed
+        DDLogVerbose("已獲取用戶目前速度：\(speed)")
+        bottomLabel.text = "YA \(speed)"
+        
+    }
+    
+    
+    // MARK: - Data func
+    func initCheckpoints() {
+        checkpointsData = DefaultsFunc().getCheckpoints()
+        topMapView.loadCheckpoints(checkpointsData)
+    }
+    
+    
+    // MARK: - MapView func
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         self.performSegueWithIdentifier("showCheckpointDetail", sender: self)
     }
@@ -201,19 +163,21 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     
-    
-    
-    
-    
-    
-    
-    
+    // MARK: - TableView func
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return timesCurrent.count
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 85.0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -461,6 +425,22 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         return cell
     }
     
+    
+    // MARK: - General func
+    func closeView() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func doVibration() {
+        vibrationCounter = vibrationCounter+1
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        
+        if(vibrationCounter >= 4){
+            vibrationTimer!.invalidate()
+            vibrationTimer = nil
+        }
+    }
+    
     func timelineTap(sender: UITapGestureRecognizer) {
         let tapLocation = sender.locationInView(self.tableView)
         
@@ -472,18 +452,26 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         topMapView.selectAnnotation(topMapView.allAnnotations[indexPath!.row], animated: true)
     }
     
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 85.0
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func showPopupWithStyle() {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        let customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
+        customView.backgroundLabel.text = "12"
+        customView.timeLabel.text = "02:02"
+        customView.speedLabel.text = "5 m/s"
+        customView.leftBottomLargeLabel.text = "01:50"
+        customView.leftBottomSmallLabel.text = "Suggest Time"
+        customView.rightBottomLargeLabel.text = "7 m/s"
+        customView.rightBottomSmallLabel.text = "Suggest Speed"
+        
+        popupController = KLCPopup(contentView: customView)
+        popupController.shouldDismissOnContentTouch = false
+        popupController.shouldDismissOnBackgroundTouch = true
+        popupController.maskType = .Dimmed
+        popupController.showType = .SlideInFromBottom
+        popupController.dismissType = .SlideOutToBottom
+        
+        let layout = KLCPopupLayoutMake(.Center, .BelowCenter)
+        popupController.showWithLayout(layout, duration: 15.0)
     }
 }

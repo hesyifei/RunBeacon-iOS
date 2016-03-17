@@ -14,11 +14,16 @@ import CocoaLumberjack
 
 class RunMapView: MKMapView {
     
-    let initLocation = CLLocation(latitude: 22.215417, longitude: 114.214779)
+    /*let initLocation = CLLocation(latitude: 22.215417, longitude: 114.214779)
+    
+    let regionRadius: CLLocationDistance = 200*/
+    
+    var defaults = NSUserDefaults()
     
     
+    var initLocation = CLLocation()
+    var regionRadius = CLLocationDistance()
     
-    let regionRadius: CLLocationDistance = 200
     
     var allAnnotations = [MKPointAnnotation]()
     var allPoints = [CLLocationCoordinate2D]()
@@ -37,9 +42,23 @@ class RunMapView: MKMapView {
     }
     
     
+    func varInit() {
+        defaults = NSUserDefaults.standardUserDefaults()
+        
+        initLocation = CLLocation(latitude: self.defaults.doubleForKey("initLatitude"), longitude: self.defaults.doubleForKey("initLongitude"))
+        
+        regionRadius = self.defaults.doubleForKey("initRadius")
+        if(regionRadius == 0){
+            regionRadius = 200.0
+        }
+    }
     
     func mapViewInit() {
+        varInit()
+        
+        
         self.mapType = .Satellite
+        
         
         self.centerMapOnLocation(initLocation)
     }

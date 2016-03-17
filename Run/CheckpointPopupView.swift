@@ -16,9 +16,8 @@ class CheckpointPopupView: UIView {
     private let cornerRadius: CGFloat = 10.0
     
     
-    
     var backgroundLabel: UILabel!
-    
+
     
     private var topView: UIView!
     var timeLabel: UILabel!

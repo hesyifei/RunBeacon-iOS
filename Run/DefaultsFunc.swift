@@ -17,6 +17,7 @@ class DefaultsFunc {
     let checkpointsDataKey = "checkpointsData"
     
     
+    
     func saveCheckpoints(checkpoints: [Checkpoint]) {
         // 儲存checkpoints數據（參見：http://stackoverflow.com/a/26233274/2603230）
         let arrayOfObjectsData = NSKeyedArchiver.archivedDataWithRootObject(checkpoints)
@@ -34,8 +35,8 @@ class DefaultsFunc {
                 return arrayOfObjectsUnarchived
             }
         }
-        DDLogWarn("從defaults獲取checkpoints數據失敗、返回空值")
-        DDLogWarn("可能原因：checkpoints數據未設定")
+        DDLogWarn("從defaults獲取checkpoints數據失敗、將返回空值")
+        DDLogWarn("可能原因：第一次開啟App、checkpoints數據未設定")
         return []
     }
 }

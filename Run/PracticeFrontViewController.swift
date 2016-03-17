@@ -17,15 +17,23 @@ import SwiftyJSON
 
 class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
+    // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
+    // TODO: USE UIIMAGEVIEW TO SHOW REDCROSS/WATER IN ASSES VIEW
+    
+    
+    // MARK: - IBOutlet var
     @IBOutlet var topMapView: RunMapView!
     @IBOutlet var startButton: UIButton!
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    // MARK: - Basic var
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var locationManager: CLLocationManager!
     
     
+    // MARK: - Data var
     var checkpointsData = [Checkpoint]()
     
     var highlightedPoints = [               // For testing only
@@ -34,14 +42,11 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     ]
     
     
-    // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
-    // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
-    // TODO: USE UIIMAGEVIEW TO SHOW REDCROSS/WATER IN ASSES VIEW
     
+    // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogInfo("Practice Front View Controller 之 super.viewDidLoad() 已加載")
-        
         
         
         topMapView.delegate = self
@@ -51,14 +56,12 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         locationManager.delegate = self
         
         
-        
         startButton.titleLabel?.text = "Start"
         startButton.titleLabel?.font = UIFont(name: (startButton.titleLabel?.font?.fontName)!, size: 30.0)
         startButton.backgroundColor = UIColor.greenColor()
         
         
-        
-        initCheckpointsData()
+        initCheckpoints()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -66,12 +69,20 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         DDLogInfo("Practice Front View Controller 之 super.viewWillAppear() 已加載")
     }
     
-    func initCheckpointsData() {
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // MARK: - Data func
+    func initCheckpoints() {
         checkpointsData = DefaultsFunc().getCheckpoints()
         topMapView.loadCheckpoints(checkpointsData)
     }
     
     
+    // MARK: - MapView func
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         return topMapView.funcRenderForOverlay(mapView, rendererForOverlay: overlay)
     }
@@ -82,11 +93,5 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         topMapView.funcRegionDidChangeAnimated(mapView, regionDidChangeAnimated: animated)
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

@@ -16,11 +16,15 @@ import SwiftyJSON
 
 class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
     
+    // MARK: - Basic var
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let defaults = NSUserDefaults.standardUserDefaults()
     
     var locationManager: CLLocationManager!
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
+    
+    // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogInfo("Data Loading View Controller 之 super.viewDidLoad() 已加載")
@@ -38,11 +42,17 @@ class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
         })
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
+    
+    // MARK: - Data func
     func initCheckpointsData(completion: () -> Void) {
-        if(DefaultsFunc().getCheckpoints().count > 0){
+        /*if(DefaultsFunc().getCheckpoints().count > 0){
             completion()
-        }else{
+        }else{*/
             Alamofire.request(.GET, "http://areflys-mac.local/checkpoints.json")
                 .response { request, response, data, error in
                     if let error = error {
@@ -58,16 +68,15 @@ class DataLoadingViewController: UIViewController, CLLocationManagerDelegate {
                         
                         DefaultsFunc().saveCheckpoints(checkpointsData)
                         
+                        
+                        self.defaults.setDouble(json["init"]["latitude"].doubleValue, forKey: "initLatitude")
+                        self.defaults.setDouble(json["init"]["longitude"].doubleValue, forKey: "initLongitude")
+                        self.defaults.setDouble(json["init"]["radius"].doubleValue, forKey: "initRadius")
+                        
+                        
                         completion()
                     }
             }
-        }
-    }
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        //}
     }
 }
