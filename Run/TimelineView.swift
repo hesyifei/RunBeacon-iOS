@@ -14,7 +14,6 @@ import CocoaLumberjack
 @IBDesignable
 class TimelineView: UIView {
     
-    var number = -1
     var isTop = false
     var isBottom = false
     
@@ -28,7 +27,7 @@ class TimelineView: UIView {
     }
     
     override func drawRect(rect: CGRect) {
-        DDLogVerbose("準備 TimelineView drawRect: No. \(number), \(isTop), \(isBottom) \(rect.height)")
+        DDLogVerbose("準備 TimelineView drawRect: \(isTop), \(isBottom) \(rect.height)")
         
         
         let rectConfig: [String: CGFloat] = [

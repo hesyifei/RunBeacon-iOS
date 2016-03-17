@@ -19,7 +19,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
     // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
-    // TODO: USE UIIMAGEVIEW TO SHOW REDCROSS/WATER IN ASSES VIEW
+    // TODO: USE UIIMAGEVIEW TO SHOW REDCROSS/WATER IN MKANNOTION ASSES VIEW
     
     
     // MARK: - IBOutlet var

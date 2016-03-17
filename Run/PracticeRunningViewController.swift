@@ -15,6 +15,17 @@ import Async
 import CocoaLumberjack
 import KLCPopup
 
+class RunCheck: NSObject {
+    let checkpointId: Int
+    let time: NSDate
+    
+    init(checkpointId: Int, time: NSDate){
+        self.checkpointId = checkpointId
+        self.time = time
+        super.init()
+    }
+}
+
 class PracticeRunningViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
     // MARK: - IBOutlet var
@@ -40,15 +51,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     // MARK: - Data/Init var
+    var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
-    
-    var timesCurrent = ["03:00", "00:25", "00:00"]
-    var timesGood = ["03:20", "00:20", ""]
-    
-    var speedsCurrent = ["3.4 m/s", "5.6 m/s", ""]
-    var speedsGood = ["3 m/s", "6 m/s", ""]
-    
-    var totalTime = ["03:25", "00:25", "00:00"]
     
     var vibrationTimer: NSTimer?
     var vibrationCounter = 0
@@ -59,6 +63,20 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogInfo("Practice Running View Controller 之 super.viewDidLoad() 已加載")
+        
+        
+        runChecks = [
+            RunCheck(checkpointId: 2, time: NSDate()),
+            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-60)),
+            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-120)),
+            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-180)),
+            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-200)),
+            RunCheck(checkpointId: 0, time: NSDate().dateByAddingTimeInterval(-210)),
+        ]
+        
+        
+        
+        
         
         
         locationManager = CLLocationManager()
@@ -108,7 +126,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         DDLogInfo("Practice Running View Controller 之 super.viewDidAppear() 已加載")
         
         
-        timesCurrent = ["05:05"] + timesCurrent
+        /*timesCurrent = ["05:05"] + timesCurrent
         timesGood = ["02:03"] + timesGood
         speedsCurrent = ["3 m/s"] + speedsCurrent
         speedsGood = ["10 m/s"] + speedsGood
@@ -117,9 +135,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         self.tableView.beginUpdates()
         self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
         self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
-        self.tableView.endUpdates()
+        self.tableView.endUpdates()*/
         
-        showPopupWithStyle()
+        //showPopupWithStyle()
+        
+        
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -168,23 +191,23 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         return 1
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 85.0
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return timesCurrent.count
+        return runChecks.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 85.0
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         /*** 初始化TableCell開始 ***/
         let cellID = "RunningCell"
-        let tagIDs: [String: Int] = [               // 謹記不能為0（否則於cell.tag重複）
+        let tagIDs: [String: Int] = [               // 謹記不能為0（否則於cell.tag重複）或小於100（可能於其後cell.tag設置後重複）
             "leftView": 100,
             "timelineView": 110,
             "numberLabel": 120,
@@ -376,8 +399,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         timelineView = TimelineView()
         timelineView.tag = tagIDs["timelineView"]!
         timelineView.isTop = indexPath.row == 0
-        timelineView.isBottom = indexPath.row == timesCurrent.count-1
-        //timelineView.backgroundColor = UIColor.blueColor()
+        timelineView.isBottom = indexPath.row == runChecks.count-1
         timelineView.translatesAutoresizingMaskIntoConstraints = false
         leftView.addSubview(timelineView)
         
@@ -389,7 +411,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             ])
         
         
-        
+        //timelineView.backgroundColor = UIColor.blueColor()
         //DDLogVerbose("DONE \(cell?.contentView.subviews)")
         /*** 初始化TableCell結束 ***/
          
@@ -399,23 +421,41 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
          /*** 修改數據開始 ***/
         let row = indexPath.row
         
-        numberLabel.text = "#\((timesCurrent.count-1) - indexPath.row)"
+        cell.tag = runChecks[row].checkpointId           // 供timelineTap使用
+        
+        
+        numberLabel.text = "#\(runChecks[row].checkpointId)"
         numberLabel.font = UIFont(name: (numberLabel.font?.fontName)!, size: 15.0)
         
-        timeCurrentLabel.text = timesCurrent[row]
+        
+        var totalTime: NSTimeInterval = 0
+        if(row < (runChecks.count-1)){
+            totalTime = runChecks[row].time.timeIntervalSinceDate(runChecks[runChecks.count-1].time)
+        }
+        totalTimeLabel.text = "\(doubleToFormattedTime(totalTime))"
+        totalTimeLabel.font = UIFont(name: (totalTimeLabel.font?.fontName)!, size: 8.0)
+        
+        
+        var timeDifference: NSTimeInterval = 0
+        if(row < (runChecks.count-1)){
+            timeDifference = runChecks[row].time.timeIntervalSinceDate(runChecks[row+1].time)
+        }
+        timeCurrentLabel.text = "\(doubleToFormattedTime(timeDifference))"
         timeCurrentLabel.font = UIFont(name: (timeCurrentLabel.font?.fontName)!, size: 28.0)
         
-        timeBestLabel.text = timesGood[row]
-        timeBestLabel.textColor = UIColor.grayColor()
         
-        speedCurrentLabel.text = speedsCurrent[row]
+        let speed = getSpeed(timeDifference, distance: 5.0)
+        speedCurrentLabel.text = "\(speed) m/s"
         speedCurrentLabel.font = UIFont(name: (speedCurrentLabel.font?.fontName)!, size: 28.0)
         
-        speedBestLabel.text = speedsGood[row]
-        speedBestLabel.textColor = UIColor.grayColor()
         
-        totalTimeLabel.text = totalTime[row]
-        totalTimeLabel.font = UIFont(name: (totalTimeLabel.font?.fontName)!, size: 8.0)
+        /*timeBestLabel.text = timesGood[row]
+        timeBestLabel.textColor = UIColor.grayColor()
+        
+        
+        
+        speedBestLabel.text = speedsGood[row]
+        speedBestLabel.textColor = UIColor.grayColor()*/
         
         let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineTap:")
         leftView.addGestureRecognizer(timelineTapGesture)
@@ -448,8 +488,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         DDLogDebug("用戶已點擊 Cell \(indexPath?.row) 的 timeline")
         
         let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
+        let tag = cell?.tag
         
-        topMapView.selectAnnotation(topMapView.allAnnotations[indexPath!.row], animated: true)
+        topMapView.selectAnnotation(topMapView.allAnnotations[tag!], animated: true)
     }
     
     func showPopupWithStyle() {
@@ -473,5 +514,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         let layout = KLCPopupLayoutMake(.Center, .BelowCenter)
         popupController.showWithLayout(layout, duration: 15.0)
+    }
+    
+    func doubleToFormattedTime(seconds: Double) -> String {
+        let roundSeconds = round(seconds)
+        
+        let minutes = Int(roundSeconds/60)
+        let seconds = Int(roundSeconds%60)
+        
+        return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
+    }
+    
+    func getSpeed(seconds: Double, distance: Double) -> Double {
+        return round(seconds)/distance
     }
 }
