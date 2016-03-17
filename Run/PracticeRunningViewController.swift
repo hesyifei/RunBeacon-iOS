@@ -43,6 +43,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
     
+    var currentBeacon = [String]()
+    
     var timer: NSTimer?
     var timerCount = 0
     
@@ -165,7 +167,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
-    var currentBeacon = [String]()
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
         if beacons.count > 0 {
             // 這裡可能會產生bug（直接提取[0]似乎有問題）
@@ -181,6 +182,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
                 tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
                 tableView.endUpdates()
+                
+                showCheckpointPopup()
                 
                 currentBeacon = [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]
             }
@@ -479,8 +482,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         timeCurrentLabel.font = UIFont(name: (timeCurrentLabel.font?.fontName)!, size: 28.0)
         
         
-        let speed = getSpeed(timeDifference, distance: 5.0)
-        speedCurrentLabel.text = "\(speed) m/s"
+        let speed = getSpeedText(timeDifference, distance: 5.0)
+        speedCurrentLabel.text = "\(speed)"
         speedCurrentLabel.font = UIFont(name: (speedCurrentLabel.font?.fontName)!, size: 28.0)
         
         
@@ -498,14 +501,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         /*** 修改數據結束 ***/
         
         return cell
-    }
-    
-    func getRunCheckTimeDifference(currentIndex: Int, comparingIndex: Int) -> NSTimeInterval {
-        var totalTime: NSTimeInterval = 0
-        if(currentIndex < (runChecks.count-1)){
-            totalTime = runChecks[currentIndex].time.timeIntervalSinceDate(runChecks[comparingIndex].time)
-        }
-        return totalTime
     }
     
     
@@ -535,13 +530,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         topMapView.selectAnnotation(topMapView.allAnnotations[tag!], animated: true)
     }
     
-    func showPopup() {
+    func showCheckpointPopup() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         
         let customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
-        customView.backgroundLabel.text = "12"
-        customView.timeLabel.text = "02:02"
-        customView.speedLabel.text = "5 m/s"
+        customView.backgroundLabel.text = "\(runChecks[0].checkpointId)"
+        
+        let timeDifference = getRunCheckTimeDifference(0, comparingIndex: 1)
+        customView.timeLabel.text = "\(secondsToFormattedTime(timeDifference))"
+        customView.speedLabel.text = "\(getSpeedText(timeDifference, distance: 1))"
+        
         customView.leftBottomLargeLabel.text = "01:50"
         customView.leftBottomSmallLabel.text = "Suggest Time"
         customView.rightBottomLargeLabel.text = "7 m/s"
@@ -579,5 +577,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     func getSpeed(seconds: Double, distance: Double) -> Double {
         return round(seconds)/distance
+    }
+    func getSpeedText(seconds: Double, distance: Double) -> String {
+        return "\(getSpeed(seconds, distance: distance)) m/s"
+    }
+    
+    func getRunCheckTimeDifference(currentIndex: Int, comparingIndex: Int) -> NSTimeInterval {
+        var totalTime: NSTimeInterval = 0
+        if(currentIndex < (runChecks.count-1)){
+            totalTime = runChecks[currentIndex].time.timeIntervalSinceDate(runChecks[comparingIndex].time)
+        }
+        return totalTime
     }
 }
