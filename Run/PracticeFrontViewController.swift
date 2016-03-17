@@ -99,7 +99,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
                     DDLogDebug("已從服務器獲取此次TripId：\(self.tripId)")
                     self.performSegueWithIdentifier("showPracticeRunningView", sender: self)
                 }else{
-                    DDLogError("從服務器獲取TripId失敗")
+                    DDLogError("從服務器獲取TripId失敗：\(response.result.error?.localizedDescription)")
                 }
                 MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
         }

@@ -600,7 +600,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func uploadRunCheckData(runCheck: RunCheck) {
         let parameters = [
             "userId": "2015206",
-            "tripId": "1",
+            "tripId": "\(tripId)",
             "checkpointId": "\(runCheck.checkpointId)",
         ]
         
