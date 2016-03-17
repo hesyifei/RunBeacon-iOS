@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import AudioToolbox
 import CoreLocation
 import Foundation
@@ -188,7 +189,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 
                 showCheckpointPopup()
                 doVibration()
-                // TODO: read out
+                readSpeech(runChecks[0])
                 
                 uploadRunCheckData(runChecks[0])
                 
@@ -517,6 +518,21 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     func doVibration() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
+    func readSpeech(runCheck: RunCheck) {
+        Async.background {
+            let totalTime = round(self.getRunCheckTimeDifference(0, comparingIndex: self.runChecks.count-1))
+            let totalTimeString = "\(Int(totalTime/60)) minutes \(Int(totalTime%60)) seconds"
+            let speechString = "Good job! You have just arrived Checkpoint \(runCheck.checkpointId). The time now is is \(totalTimeString)"
+            DDLogDebug("即將讀出檢查站提示字句：\(speechString)")
+            
+            let speechsynt = AVSpeechSynthesizer()
+            let speech = AVSpeechUtterance(string: speechString)
+            speech.voice = AVSpeechSynthesisVoice(language: "en-US")
+            speech.rate = 0.45
+            speechsynt.speakUtterance(speech)
+        }
     }
     
     func countTime() {
