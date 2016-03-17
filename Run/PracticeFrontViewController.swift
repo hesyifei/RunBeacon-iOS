@@ -14,6 +14,7 @@ import Async
 import Alamofire
 import CocoaLumberjack
 import SwiftyJSON
+import MBProgressHUD
 
 class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -35,6 +36,8 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     
     // MARK: - Data var
+    var tripId = ""
+    
     var checkpointsData = [Checkpoint]()
     
     var highlightedPoints = [               // For testing only
@@ -48,6 +51,10 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogInfo("Practice Front View Controller 之 super.viewDidLoad() 已加載")
+        
+        
+        startButton.addTarget(self, action: "startButtonAction", forControlEvents: .TouchUpInside)
+
         
         
         topMapView.delegate = self
@@ -70,9 +77,32 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         DDLogInfo("Practice Front View Controller 之 super.viewWillAppear() 已加載")
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let destinationVC = segue.destinationViewController as? PracticeRunningViewController {
+            destinationVC.tripId = self.tripId
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // MARK: - Action func
+    func startButtonAction() {
+        MBProgressHUD.showHUDAddedTo(self.navigationController?.view, animated: true)
+        Alamofire.request(.GET, BasicConfig.RunCheckTripIdGetURL)
+            .responseString { response in
+                if(response.result.isSuccess){
+                    self.tripId = response.result.value!
+                    DDLogDebug("已從服務器獲取此次TripId：\(self.tripId)")
+                    self.performSegueWithIdentifier("showPracticeRunningView", sender: self)
+                }else{
+                    DDLogError("從服務器獲取TripId失敗")
+                }
+                MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
+        }
     }
     
     

@@ -69,9 +69,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I72-Nv-lS5">
                                 <rect key="frame" x="0.0" y="544" width="600" height="56"/>
                                 <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="bwH-Qh-0VH" kind="showDetail" id="2Md-DF-lKo"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -90,6 +87,7 @@
                     <connections>
                         <outlet property="startButton" destination="I72-Nv-lS5" id="zxp-PB-oU5"/>
                         <outlet property="topMapView" destination="ecf-Ua-itT" id="uAJ-cm-5d9"/>
+                        <segue destination="bwH-Qh-0VH" kind="showDetail" identifier="showPracticeRunningView" id="nBS-AG-8xv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MYx-B2-05J" userLabel="First Responder" sceneMemberID="firstResponder"/>

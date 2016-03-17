@@ -12,7 +12,8 @@ import Foundation
 import CocoaLumberjack
 
 struct BasicConfig {
-    static let runCheckPostUrl = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/post_beacon"
+    static let RunCheckPostURL = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/post_beacon"
+    static let RunCheckTripIdGetURL = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/get_tripId"
 }
 
 @UIApplicationMain

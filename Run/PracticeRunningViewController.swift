@@ -41,6 +41,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     // MARK: - Data/Init var
+    var tripId: String?
+    
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
     
@@ -131,16 +133,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         //showPopupWithStyle()
         
         
-        
-        let parameters = [
-            "userId": "2015206",
-            "tripId": 1,
-            "checkpointId": 999,
-        ]
-        
-        
-        Alamofire.request(.POST, BasicConfig.runCheckPostUrl, parameters: parameters, encoding: .JSON)
-        
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -198,6 +190,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 doVibration()
                 // TODO: read out
                 
+                uploadRunCheckData(runChecks[0])
                 
                 currentBeacon = [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]
             }
@@ -602,5 +595,22 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             totalTime = runChecks[currentIndex].time.timeIntervalSinceDate(runChecks[comparingIndex].time)
         }
         return totalTime
+    }
+    
+    func uploadRunCheckData(runCheck: RunCheck) {
+        let parameters = [
+            "userId": "2015206",
+            "tripId": "1",
+            "checkpointId": "\(runCheck.checkpointId)",
+        ]
+        
+        Alamofire.request(.POST, BasicConfig.RunCheckPostURL, parameters: parameters, encoding: .JSON)
+            .response { request, response, data, error in
+                if let error = error {
+                    DDLogError("上傳RunCheck資訊失敗：\(error)")
+                }else{
+                    DDLogInfo("上傳RunCheck資訊成功")
+                }
+        }
     }
 }
