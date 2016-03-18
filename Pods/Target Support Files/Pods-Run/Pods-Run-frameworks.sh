@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Run/Alamofire.framework"
   install_framework "Pods-Run/Async.framework"
+  install_framework "Pods-Run/CRToast.framework"
   install_framework "Pods-Run/CocoaLumberjack.framework"
   install_framework "Pods-Run/KLCPopup.framework"
   install_framework "Pods-Run/MBProgressHUD.framework"
@@ -94,6 +95,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Run/Alamofire.framework"
   install_framework "Pods-Run/Async.framework"
+  install_framework "Pods-Run/CRToast.framework"
   install_framework "Pods-Run/CocoaLumberjack.framework"
   install_framework "Pods-Run/KLCPopup.framework"
   install_framework "Pods-Run/MBProgressHUD.framework"
