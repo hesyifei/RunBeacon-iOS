@@ -129,9 +129,6 @@ class RunMapView: MKMapView {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.animatesDrop = true
             pinView!.canShowCallout = true
-            
-            /*let accessoryButton = UIButton(type: .DetailDisclosure)
-            pinView!.rightCalloutAccessoryView = accessoryButton*/
         } else {
             pinView!.annotation = annotation
         }

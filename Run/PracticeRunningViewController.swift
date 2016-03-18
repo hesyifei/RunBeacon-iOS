@@ -50,7 +50,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var currentBeacon = [String]()
     
     var timer: NSTimer?
-    var timerCount = 0
+    var timerStartTime: NSTimeInterval!
     
     
     // MARK: - Override func
@@ -97,7 +97,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         timeLabel.textColor = UIColor.blackColor()
         timeLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         
-        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 80.0)
+        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 75.0)
         
         
         bottomBar.backgroundColor = navigationColor
@@ -111,7 +111,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         initCheckpoints()
         
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "countTime", userInfo: nil, repeats: true)
+        timerStartTime = NSDate.timeIntervalSinceReferenceDate()
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector: "calcTime", userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
@@ -534,9 +535,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
-    func countTime() {
-        timerCount += 1
-        timeLabel.text = millisecondsToFormattedTime(Double(timerCount))
+    func calcTime() {
+        let timeDifference = NSDate.timeIntervalSinceReferenceDate() - timerStartTime
+        
+        let minuteAndSecond = secondsToFormattedTime(timeDifference)
+        let milliseconds = timeDifference%1
+        let millisecondsToInt = Int(round(100*milliseconds))
+        
+        timeLabel.text = "\(minuteAndSecond).\(String(format: "%02d", millisecondsToInt))"
     }
     
     func timelineTap(sender: UITapGestureRecognizer) {
@@ -584,16 +590,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         let seconds = Int(roundSeconds%60)
         
         return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
-    }
-    
-    func millisecondsToFormattedTime(inputMilliseconds: Double) -> String {
-        let roundMilliseconds = round(inputMilliseconds)
-        
-        let minutes = Int((roundMilliseconds/100)/60)
-        let seconds = Int((roundMilliseconds/100)%60)
-        let milliseconds = Int(roundMilliseconds%100)
-        
-        return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds)).\(String(format: "%02d", milliseconds))"
     }
     
     func getSpeed(seconds: Double, distance: Double) -> Double {

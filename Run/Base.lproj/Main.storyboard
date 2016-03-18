@@ -229,32 +229,11 @@
                         <outlet property="tableView" destination="JUl-MD-IGa" id="Fbu-zr-KgD"/>
                         <outlet property="timeLabel" destination="nWs-vE-ZZL" id="5HZ-lP-w0z"/>
                         <outlet property="topMapView" destination="DU1-Yf-isv" id="EgD-4M-Ik5"/>
-                        <segue destination="Oed-1f-aZm" kind="show" identifier="showCheckpointDetail" id="OAi-iW-gXJ">
-                            <nil key="action"/>
-                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="htd-AN-j3X" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1489" y="333"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="KZ4-Et-iYq">
-            <objects>
-                <viewController id="Oed-1f-aZm" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zc6-sg-X4F"/>
-                        <viewControllerLayoutGuide type="bottom" id="7fQ-eK-CCL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="fqT-sF-ERE">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kPB-1F-d7o" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2132" y="333"/>
         </scene>
     </scenes>
 </document>
