@@ -30,10 +30,11 @@ class TimelineView: UIView {
         DDLogVerbose("準備 TimelineView drawRect: \(isTop), \(isBottom) \(rect.height)")
         
         
+        // 記得同時修改PracticeRunningViewController內的numberLabel的top及height
         let rectConfig: [String: CGFloat] = [
             "Timeline Width": 5.0,
             "Circle Diameter": 15.0,
-            "Top/Bottom Circle Padding": 10.0,
+            "Top/Bottom Circle Padding": 5.0,
         ]
         
         
@@ -65,7 +66,7 @@ class TimelineView: UIView {
         let lineRect = CGRectMake(originX, originY, width, height)
         
         let linePath = UIBezierPath(roundedRect: lineRect, byRoundingCorners: roundingCorners, cornerRadii: CGSizeMake(15.0, 15.0))
-        UIColor.greenColor().setFill()
+        UIColor.grayColor().setFill()
         linePath.fill()
         
         
@@ -75,7 +76,7 @@ class TimelineView: UIView {
         
         let circleRect = CGRectMake(circleOriginX, rectConfig["Top/Bottom Circle Padding"]!, rectConfig["Circle Diameter"]!, rectConfig["Circle Diameter"]!)
         let topCircle = CircleView(frame: circleRect)
-        //topCircle.alpha = 0.5
+        //topCircle.circleColor = UIColor.greenColor()
         self.addSubview(topCircle)
     }
 }

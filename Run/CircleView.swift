@@ -13,8 +13,11 @@ import CocoaLumberjack
 
 @IBDesignable
 class CircleView: UIView {
+    var circleColor: UIColor!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.circleColor = UIColor.blackColor()
         self.backgroundColor = UIColor.clearColor()
     }
     
@@ -24,7 +27,7 @@ class CircleView: UIView {
     
     override func drawRect(rect: CGRect) {
         let circleNew = UIBezierPath(ovalInRect: rect)
-        UIColor.redColor().setFill()
+        circleColor.setFill()
         circleNew.fill()
     }
 }

@@ -56,6 +56,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         DDLogInfo("Practice Running View Controller 之 super.viewDidLoad() 已加載")
         
         
+        // 如果RunCheck內checkpointId為-1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
         runChecks = [
             RunCheck(checkpointId: 2, time: NSDate()),
             RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-60)),
@@ -63,6 +64,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-180)),
             RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-200)),
             RunCheck(checkpointId: 0, time: NSDate().dateByAddingTimeInterval(-210)),
+            RunCheck(checkpointId: -1, time: NSDate().dateByAddingTimeInterval(-250)),
         ]
         
         
@@ -229,7 +231,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 85.0
+        if(indexPath.row == runChecks.count-1){
+            // 如果是最後一行、則不需要普通高度
+            return 40.0
+        }else{
+            return 85.0
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -256,8 +263,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         ]
         
         let viewWidths: [String: CGFloat] = [       // 固定寬度之view
-            "numberLabel": 35.0,
+            "numberLabel": 40.0,
             "timelineView": 15.0,
+        ]
+        let viewHeights: [String: CGFloat] = [
+            "numberLabel": 15.0,                // 應等於rectConfig["Circle Diameter"]
+            "timelineView": 20.0,
         ]
         
         
@@ -318,8 +329,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             
             cell.contentView.addConstraints([
                 NSLayoutConstraint(item: numberLabel, attribute: .Leading, relatedBy: .Equal, toItem: leftView, attribute: .Leading, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: numberLabel, attribute: .Top, relatedBy: .Equal, toItem: leftView, attribute: .Top, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: numberLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: viewWidths["numberLabel"]!),          // 應為一個正方形，所以height=width
+                NSLayoutConstraint(item: numberLabel, attribute: .Top, relatedBy: .Equal, toItem: leftView, attribute: .Top, multiplier: 1.0, constant: 5.0),               // 應等於rectConfig["Top/Bottom Circle Padding"]
+                NSLayoutConstraint(item: numberLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: viewHeights["numberLabel"]!),
                 NSLayoutConstraint(item: numberLabel, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: viewWidths["numberLabel"]!),
                 ])
             
@@ -335,7 +346,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             cell.contentView.addConstraints([
                 NSLayoutConstraint(item: totalTimeLabel, attribute: .Leading, relatedBy: .Equal, toItem: leftView, attribute: .Leading, multiplier: 1.0, constant: 0.0),
                 NSLayoutConstraint(item: totalTimeLabel, attribute: .Top, relatedBy: .Equal, toItem: numberLabel, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: totalTimeLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 20.0),
+                NSLayoutConstraint(item: totalTimeLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: viewHeights["totalTimeLabel"]!),
                 NSLayoutConstraint(item: totalTimeLabel, attribute: .Width, relatedBy: .Equal, toItem: numberLabel, attribute: .Width, multiplier: 1.0, constant: 0.0),
                 ])
             
@@ -350,7 +361,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             cell.contentView.addConstraints([
                 NSLayoutConstraint(item: rightView, attribute: .Leading, relatedBy: .Equal, toItem: leftView, attribute: .Trailing, multiplier: 1.0, constant: 0.0),
                 NSLayoutConstraint(item: rightView, attribute: .Trailing, relatedBy: .Equal, toItem: cell.contentView, attribute: .Trailing, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: rightView, attribute: .Top, relatedBy: .Equal, toItem: cell.contentView, attribute: .Top, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: rightView, attribute: .Top, relatedBy: .Equal, toItem: cell.contentView, attribute: .Top, multiplier: 1.0, constant: 25.0),
                 NSLayoutConstraint(item: rightView, attribute: .Bottom, relatedBy: .Equal, toItem: cell.contentView, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
                 ])
             
@@ -394,7 +405,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             cell.contentView.addConstraints([
                 NSLayoutConstraint(item: speedCurrentLabel, attribute: .Leading, relatedBy: .Equal, toItem: timeCurrentLabel, attribute: .Trailing, multiplier: 1.0, constant: 0.0),
                 NSLayoutConstraint(item: speedCurrentLabel, attribute: .Trailing, relatedBy: .Equal, toItem: rightView, attribute: .Trailing, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: speedCurrentLabel, attribute: .Top, relatedBy: .Equal, toItem: cell.contentView, attribute: .Top, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: speedCurrentLabel, attribute: .Top, relatedBy: .Equal, toItem: rightView, attribute: .Top, multiplier: 1.0, constant: 0.0),
                 NSLayoutConstraint(item: speedCurrentLabel, attribute: .Height, relatedBy: .Equal, toItem: timeCurrentLabel, attribute: .Height, multiplier: 1.0, constant: 0.0),
                 ])
             
@@ -403,11 +414,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             /*
             numberLabel.backgroundColor = UIColor.brownColor()
             totalTimeLabel.backgroundColor = UIColor.lightGrayColor()
-            speedCurrentLabel.backgroundColor = UIColor.yellowColor()
             timeCurrentLabel.backgroundColor = UIColor.purpleColor()
             timeReferenceLabel.backgroundColor = UIColor.orangeColor()
+            speedCurrentLabel.backgroundColor = UIColor.yellowColor()
             */
+            
         }
+        
+        
+        let isTop = indexPath.row == 0
+        let isBottom = indexPath.row == runChecks.count-1
         
         
         // 如果目前已有timelineView就移除（為防止上下移動時發生錯誤）
@@ -417,8 +433,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         timelineView = TimelineView()
         timelineView.tag = tagIDs["timelineView"]!
-        timelineView.isTop = indexPath.row == 0
-        timelineView.isBottom = indexPath.row == runChecks.count-1
+        timelineView.isTop = isTop
+        timelineView.isBottom = isBottom
         timelineView.translatesAutoresizingMaskIntoConstraints = false
         leftView.addSubview(timelineView)
         
@@ -439,33 +455,43 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         /*** 修改數據開始 ***/
         let row = indexPath.row
         
-        cell.tag = runChecks[row].checkpointId           // 供timelineTap使用
         
-        
-        numberLabel.text = "#\(runChecks[row].checkpointId)"
         numberLabel.font = UIFont(name: (numberLabel.font?.fontName)!, size: 15.0)
+        totalTimeLabel.font = UIFont(name: (totalTimeLabel.font?.fontName)!, size: 8.0)
+        
+        timeCurrentLabel.font = UIFont(name: (timeCurrentLabel.font?.fontName)!, size: 28.0)
+        timeReferenceLabel.textColor = UIColor.grayColor()
+        speedCurrentLabel.font = UIFont(name: (speedCurrentLabel.font?.fontName)!, size: 28.0)
         
         
         let totalTime = getRunCheckTimeDifference(row, comparingIndex: runChecks.count-1)
         totalTimeLabel.text = "\(secondsToFormattedTime(totalTime))"
-        totalTimeLabel.font = UIFont(name: (totalTimeLabel.font?.fontName)!, size: 8.0)
         
         
-        let timeDifference = getRunCheckTimeDifference(row, comparingIndex: row+1)
-        timeCurrentLabel.text = "\(secondsToFormattedTime(timeDifference))"
-        timeCurrentLabel.font = UIFont(name: (timeCurrentLabel.font?.fontName)!, size: 28.0)
-        
-        
-        let speed = getSpeedText(timeDifference, distance: 5.0)
-        speedCurrentLabel.text = "\(speed)"
-        speedCurrentLabel.font = UIFont(name: (speedCurrentLabel.font?.fontName)!, size: 28.0)
-        
-        timeReferenceLabel.text = "Ⓐ 02:00    Ⓣ 05:00"
-        timeReferenceLabel.textColor = UIColor.grayColor()
-        
-        
-        let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineTap:")
-        leftView.addGestureRecognizer(timelineTapGesture)
+        if(!isBottom){
+            cell.tag = runChecks[row].checkpointId           // 供timelineTap使用
+            
+            
+            numberLabel.text = "#\(runChecks[row].checkpointId)"
+            
+            
+            let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineTap:")
+            leftView.addGestureRecognizer(timelineTapGesture)
+            
+            
+            let timeDifference = getRunCheckTimeDifference(row, comparingIndex: row+1)
+            timeCurrentLabel.text = "\(secondsToFormattedTime(timeDifference))"
+            
+            timeReferenceLabel.text = "Ⓐ 02:00    Ⓣ 05:00"
+            
+            let speed = getSpeedText(timeDifference, distance: 5.0)
+            speedCurrentLabel.text = "\(speed)"
+        }else{
+            numberLabel.text = "Ⓑ"
+            timeCurrentLabel.text = ""
+            timeReferenceLabel.text = ""
+            speedCurrentLabel.text = ""
+        }
         
         /*** 修改數據結束 ***/
         
