@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MLC-xU-Nkc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -166,26 +167,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JUl-MD-IGa">
-                                <rect key="frame" x="0.0" y="264" width="600" height="336"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DU1-Yf-isv" customClass="RunMapView" customModule="Run" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="180"/>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWs-vE-ZZL">
-                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="EZY-DU-p8d"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="64" width="600" height="180"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JUl-MD-IGa">
+                                <rect key="frame" x="0.0" y="244" width="600" height="356"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="DU1-Yf-isv" secondAttribute="trailing" id="6Ug-xr-G4x"/>
-                            <constraint firstItem="BES-YY-o4Y" firstAttribute="top" secondItem="JUl-MD-IGa" secondAttribute="bottom" constant="44" id="6Z2-do-dSj"/>
                             <constraint firstItem="nWs-vE-ZZL" firstAttribute="top" secondItem="ecr-8A-wxW" secondAttribute="bottom" id="9gQ-qo-El3"/>
                             <constraint firstItem="DU1-Yf-isv" firstAttribute="top" secondItem="ecr-8A-wxW" secondAttribute="bottom" id="DXE-QD-hfD"/>
                             <constraint firstItem="JUl-MD-IGa" firstAttribute="top" secondItem="nWs-vE-ZZL" secondAttribute="bottom" id="F7y-iw-LeV"/>
@@ -196,14 +193,10 @@
                             <constraint firstAttribute="trailing" secondItem="JUl-MD-IGa" secondAttribute="trailing" id="ZJo-l8-HH2"/>
                             <constraint firstItem="nWs-vE-ZZL" firstAttribute="height" secondItem="DU1-Yf-isv" secondAttribute="height" id="dj6-jC-54L"/>
                             <constraint firstItem="JUl-MD-IGa" firstAttribute="leading" secondItem="EZO-bf-zE7" secondAttribute="leading" id="geW-N9-ijJ"/>
+                            <constraint firstItem="DU1-Yf-isv" firstAttribute="height" secondItem="EZO-bf-zE7" secondAttribute="height" multiplier="0.3" id="tRt-PN-KMf"/>
                             <constraint firstAttribute="trailing" secondItem="nWs-vE-ZZL" secondAttribute="trailing" id="xsm-Nr-vAy"/>
                             <constraint firstItem="nWs-vE-ZZL" firstAttribute="width" secondItem="DU1-Yf-isv" secondAttribute="width" id="zgK-2S-Soa"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="6Z2-do-dSj"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Running" id="Qbz-Sp-Dq9"/>
                     <connections>

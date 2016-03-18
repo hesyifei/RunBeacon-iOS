@@ -251,9 +251,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             "totalTimeLabel": 121,
             "rightView": 200,
             "timeCurrentLabel": 210,
-            "timeBestLabel": 211,
+            "timeReferenceLabel": 211,
             "speedCurrentLabel": 221,
-            "speedBestLabel": 222,
         ]
         
         let viewWidths: [String: CGFloat] = [       // 固定寬度之view
@@ -272,9 +271,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         var rightView: UIView!
         var timeCurrentLabel: PaddingLabel!
-        var timeBestLabel: PaddingLabel!
+        var timeReferenceLabel: PaddingLabel!
         var speedCurrentLabel: PaddingLabel!
-        var speedBestLabel: PaddingLabel!
         
         
         if let reuseCell = tableView.dequeueReusableCellWithIdentifier(cellID) {
@@ -286,10 +284,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             totalTimeLabel = cell?.contentView.viewWithTag(tagIDs["totalTimeLabel"]!) as! UILabel
             
             rightView = cell?.contentView.viewWithTag(tagIDs["rightView"]!)
-            timeBestLabel = cell?.contentView.viewWithTag(tagIDs["timeBestLabel"]!) as! PaddingLabel
+            timeReferenceLabel = cell?.contentView.viewWithTag(tagIDs["timeReferenceLabel"]!) as! PaddingLabel
             timeCurrentLabel = cell?.contentView.viewWithTag(tagIDs["timeCurrentLabel"]!) as! PaddingLabel
             speedCurrentLabel = cell?.contentView.viewWithTag(tagIDs["speedCurrentLabel"]!) as! PaddingLabel
-            speedBestLabel = cell?.contentView.viewWithTag(tagIDs["speedBestLabel"]!) as! PaddingLabel
         } else {
             DDLogVerbose("目前Cell \(indexPath.row)為nil，即將創建新Cell")
             
@@ -372,18 +369,19 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 ])
             
             
-            /** timeBestLabel 開始 **/
-            timeBestLabel = PaddingLabel()
-            timeBestLabel.tag = tagIDs["timeBestLabel"]!
-            timeBestLabel.translatesAutoresizingMaskIntoConstraints = false
-            rightView.addSubview(timeBestLabel)
+            /** timeReferenceLabel 開始 **/
+            timeReferenceLabel = PaddingLabel()
+            timeReferenceLabel.tag = tagIDs["timeReferenceLabel"]!
+            timeReferenceLabel.translatesAutoresizingMaskIntoConstraints = false
+            rightView.addSubview(timeReferenceLabel)
             
             cell.contentView.addConstraints([
-                NSLayoutConstraint(item: timeBestLabel, attribute: .Leading, relatedBy: .Equal, toItem: timeCurrentLabel, attribute: .Leading, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: timeBestLabel, attribute: .Top, relatedBy: .Equal, toItem: timeCurrentLabel, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: timeBestLabel, attribute: .Bottom, relatedBy: .Equal, toItem: rightView, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: timeBestLabel, attribute: .Width, relatedBy: .Equal, toItem: timeCurrentLabel, attribute: .Width, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: timeReferenceLabel, attribute: .Leading, relatedBy: .Equal, toItem: timeCurrentLabel, attribute: .Leading, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: timeReferenceLabel, attribute: .Trailing, relatedBy: .Equal, toItem: rightView, attribute: .Trailing, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: timeReferenceLabel, attribute: .Top, relatedBy: .Equal, toItem: timeCurrentLabel, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: timeReferenceLabel, attribute: .Bottom, relatedBy: .Equal, toItem: rightView, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
                 ])
+            
             
             
             /** speedCurrentLabel 開始 **/
@@ -401,29 +399,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 ])
             
             
-            /** speedBestLabel 開始 **/
-            speedBestLabel = PaddingLabel()
-            speedBestLabel.tag = tagIDs["speedBestLabel"]!
-            speedBestLabel.textAlignment = .Right
-            speedBestLabel.translatesAutoresizingMaskIntoConstraints = false
-            rightView.addSubview(speedBestLabel)
-            
-            cell.contentView.addConstraints([
-                NSLayoutConstraint(item: speedBestLabel, attribute: .Trailing, relatedBy: .Equal, toItem: speedCurrentLabel, attribute: .Trailing, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: speedBestLabel, attribute: .Top, relatedBy: .Equal, toItem: speedCurrentLabel, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: speedBestLabel, attribute: .Bottom, relatedBy: .Equal, toItem: rightView, attribute: .Bottom, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: speedBestLabel, attribute: .Width, relatedBy: .Equal, toItem: speedCurrentLabel, attribute: .Width, multiplier: 1.0, constant: 0.0),
-                ])
-            
-            
             
             /*
             numberLabel.backgroundColor = UIColor.brownColor()
             totalTimeLabel.backgroundColor = UIColor.lightGrayColor()
             speedCurrentLabel.backgroundColor = UIColor.yellowColor()
-            speedBestLabel.backgroundColor = UIColor.brownColor()
             timeCurrentLabel.backgroundColor = UIColor.purpleColor()
-            timeBestLabel.backgroundColor = UIColor.orangeColor()
+            timeReferenceLabel.backgroundColor = UIColor.orangeColor()
             */
         }
         
@@ -478,14 +460,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         speedCurrentLabel.text = "\(speed)"
         speedCurrentLabel.font = UIFont(name: (speedCurrentLabel.font?.fontName)!, size: 28.0)
         
+        timeReferenceLabel.text = "Ⓐ 02:00    Ⓣ 05:00"
+        timeReferenceLabel.textColor = UIColor.grayColor()
         
-        /*timeBestLabel.text = timesGood[row]
-        timeBestLabel.textColor = UIColor.grayColor()
-        
-        
-        
-        speedBestLabel.text = speedsGood[row]
-        speedBestLabel.textColor = UIColor.grayColor()*/
         
         let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineTap:")
         leftView.addGestureRecognizer(timelineTapGesture)
