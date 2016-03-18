@@ -20,7 +20,7 @@
 		EDB1DB711C9A631000E3CF8B /* CheckpointFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB701C9A631000E3CF8B /* CheckpointFunc.swift */; };
 		EDB1DB741C9A88CC00E3CF8B /* RunCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB731C9A88CC00E3CF8B /* RunCheck.swift */; };
 		EDB1DB781C9A8F8A00E3CF8B /* AudimatMonoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */; };
-		EDB1DB7A1C9AC2C100E3CF8B /* BasicConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB791C9AC2C100E3CF8B /* BasicConfig.swift */; };
+		EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB791C9AC2C100E3CF8B /* Config.swift */; };
 		EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */; };
 		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
 		EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */; };
@@ -72,7 +72,7 @@
 		EDB1DB701C9A631000E3CF8B /* CheckpointFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckpointFunc.swift; sourceTree = "<group>"; };
 		EDB1DB731C9A88CC00E3CF8B /* RunCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunCheck.swift; sourceTree = "<group>"; };
 		EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudimatMonoBold.ttf; sourceTree = "<group>"; };
-		EDB1DB791C9AC2C100E3CF8B /* BasicConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicConfig.swift; sourceTree = "<group>"; };
+		EDB1DB791C9AC2C100E3CF8B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
 		EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunMapView.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */,
-				EDB1DB791C9AC2C100E3CF8B /* BasicConfig.swift */,
+				EDB1DB791C9AC2C100E3CF8B /* Config.swift */,
 				EDB1DB6E1C9A5EB800E3CF8B /* DataLoadingViewController.swift */,
 				EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */,
 				EDCE6CBA1C9976B7004C8BD1 /* Practice View Controllers */,
@@ -455,7 +455,7 @@
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
 				EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */,
-				EDB1DB7A1C9AC2C100E3CF8B /* BasicConfig.swift in Sources */,
+				EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */,
 				EDCE6CB21C99731F004C8BD1 /* CheckpointPopupView.swift in Sources */,
 				EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */,
 				EDCE6CB41C99738C004C8BD1 /* TimelineView.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  BasicConfig.swift
+//  Config.swift
 //  Run
 //
 //  Created by Jason Ho on 17/3/2016.
