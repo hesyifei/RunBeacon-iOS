@@ -68,8 +68,7 @@ class RunMapView: MKMapView {
             for checkpoint in checkpoints {
                 let objectAnnotation = MKPointAnnotation()
                 objectAnnotation.coordinate = checkpoint.coordinate
-                objectAnnotation.title = "#\(checkpoint.id) \(checkpoint.name)"
-                objectAnnotation.subtitle = checkpoint.detail
+                objectAnnotation.title = "Checkpoint \(checkpoint.id)"
                 Async.main {
                     self.addAnnotation(objectAnnotation)
                 }
@@ -83,8 +82,8 @@ class RunMapView: MKMapView {
                 return annotation.coordinate
             }
             
-            var allPointsWithFinish = allPoints + [allPoints[0]]
-            let geodesic = MKGeodesicPolyline(coordinates: &allPointsWithFinish[0], count: allPointsWithFinish.count)
+            //var allPointsWithFinish = allPoints + [allPoints[0]]
+            let geodesic = MKGeodesicPolyline(coordinates: &allPoints[0], count: allPoints.count)
             self.addOverlay(geodesic)
         }
     }
@@ -107,7 +106,7 @@ class RunMapView: MKMapView {
         return MKOverlayRenderer()
     }
     
-    func funcViewForAnnotation(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation, highlightedPoints: [CLLocationCoordinate2D]) -> MKAnnotationView? {
+    func funcViewForAnnotation(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation, allCheckpoints: [Checkpoint]) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             // return nil so map view draws "blue dot" for standard user location
             return nil
@@ -116,21 +115,23 @@ class RunMapView: MKMapView {
         
         let reuseId = "pin"
         
-        var pinColor = UIColor.greenColor()
-        for point in highlightedPoints {
-            if(annotation.coordinate.longitude == point.longitude) && (annotation.coordinate.latitude == point.latitude){
-                pinColor = UIColor.yellowColor()
-            }
+        var pinColor = UIColor.redColor()
+        if(annotation.coordinate.longitude == allCheckpoints[0].coordinate.longitude) && (annotation.coordinate.latitude == allCheckpoints[0].coordinate.latitude){
+            pinColor = UIColor.yellowColor()
         }
+        if(annotation.coordinate.longitude == allCheckpoints[allCheckpoints.count-1].coordinate.longitude) && (annotation.coordinate.latitude == allCheckpoints[allCheckpoints.count-1].coordinate.latitude){
+            pinColor = UIColor.greenColor()
+        }
+        
         
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
             pinView!.animatesDrop = true
+            pinView!.canShowCallout = true
             
-            let accessoryButton = UIButton(type: .DetailDisclosure)
-            pinView!.rightCalloutAccessoryView = accessoryButton
+            /*let accessoryButton = UIButton(type: .DetailDisclosure)
+            pinView!.rightCalloutAccessoryView = accessoryButton*/
         } else {
             pinView!.annotation = annotation
         }

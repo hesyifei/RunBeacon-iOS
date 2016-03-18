@@ -121,7 +121,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        return topMapView.funcViewForAnnotation(mapView, viewForAnnotation: annotation, highlightedPoints: highlightedPoints)
+        return topMapView.funcViewForAnnotation(mapView, viewForAnnotation: annotation, allCheckpoints: checkpointsData)
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {

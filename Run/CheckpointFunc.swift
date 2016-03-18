@@ -44,7 +44,7 @@ class CheckpointFunc {
     
     
     func loadCheckpointsDataFromServer(completion: () -> Void) {
-        Alamofire.request(.GET, "http://areflys-mac.local/checkpoints.json")
+        Alamofire.request(.GET, BasicConfig.CheckpointDataGetURL)
             .response { request, response, data, error in
                 if let error = error {
                     DDLogError("checkpoints伺服器數據獲取錯誤：\(error)")
