@@ -10,6 +10,7 @@ target 'Run' do
     pod 'CRToast', '~> 0.0.7'
     pod 'MBProgressHUD', '~> 0.9.2'
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'
     pod 'KLCPopup', :head
 end
 

@@ -90,6 +90,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Run/CocoaLumberjack.framework"
   install_framework "Pods-Run/KLCPopup.framework"
   install_framework "Pods-Run/MBProgressHUD.framework"
+  install_framework "Pods-Run/ReachabilitySwift.framework"
   install_framework "Pods-Run/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -99,5 +100,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Run/CocoaLumberjack.framework"
   install_framework "Pods-Run/KLCPopup.framework"
   install_framework "Pods-Run/MBProgressHUD.framework"
+  install_framework "Pods-Run/ReachabilitySwift.framework"
   install_framework "Pods-Run/SwiftyJSON.framework"
 fi

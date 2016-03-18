@@ -11,6 +11,7 @@ PODS:
   - CRToast (0.0.9)
   - KLCPopup (HEAD based on 1.0)
   - MBProgressHUD (0.9.2)
+  - ReachabilitySwift (2.3.3)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
@@ -20,13 +21,19 @@ DEPENDENCIES:
   - CRToast (~> 0.0.7)
   - KLCPopup (HEAD)
   - MBProgressHUD (~> 0.9.2)
+  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 EXTERNAL SOURCES:
+  ReachabilitySwift:
+    :git: https://github.com/ashleymills/Reachability.swift
   SwiftyJSON:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
+  ReachabilitySwift:
+    :commit: cf126c0584a209143c75bf1d0f23fd904891e26e
+    :git: https://github.com/ashleymills/Reachability.swift
   SwiftyJSON:
     :commit: 2a5b70f06001316d4fb54501edc70b4084705da0
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
@@ -38,6 +45,7 @@ SPEC CHECKSUMS:
   CRToast: 5a78c22b921c5ed3487488af605bc403a9c92fed
   KLCPopup: 76c5a19227977f1e53d85236f9ef42257c168d98
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 COCOAPODS: 0.39.0
