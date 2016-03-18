@@ -527,29 +527,32 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func showCheckpointPopup() {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        
-        let customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
-        customView.backgroundLabel.text = "\(runChecks[0].checkpointId)"
-        
-        let timeDifference = getRunCheckTimeDifference(0, comparingIndex: 1)
-        customView.timeLabel.text = "\(secondsToFormattedTime(timeDifference))"
-        customView.speedLabel.text = "\(getSpeedText(timeDifference, distance: 1))"
-        
-        customView.leftBottomLargeLabel.text = "01:50"
-        customView.leftBottomSmallLabel.text = "Suggest Time"
-        customView.rightBottomLargeLabel.text = "7 m/s"
-        customView.rightBottomSmallLabel.text = "Suggest Speed"
-        
-        popupController = KLCPopup(contentView: customView)
-        popupController.shouldDismissOnContentTouch = false
-        popupController.shouldDismissOnBackgroundTouch = true
-        popupController.maskType = .Dimmed
-        popupController.showType = .SlideInFromBottom
-        popupController.dismissType = .SlideOutToBottom
-        
-        let layout = KLCPopupLayoutMake(.Center, .BelowCenter)
-        popupController.showWithLayout(layout, duration: 15.0)
+        var customView: CheckpointPopupView!
+        Async.background {
+            let screenSize: CGRect = UIScreen.mainScreen().bounds
+            
+            customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
+            customView.backgroundLabel.text = "\(self.runChecks[0].checkpointId)"
+            
+            let timeDifference = self.getRunCheckTimeDifference(0, comparingIndex: 1)
+            customView.timeLabel.text = "\(self.secondsToFormattedTime(timeDifference))"
+            customView.speedLabel.text = "\(self.getSpeedText(timeDifference, distance: 1))"
+            
+            customView.leftBottomLargeLabel.text = "01:50"
+            customView.leftBottomSmallLabel.text = "Suggest Time"
+            customView.rightBottomLargeLabel.text = "7 m/s"
+            customView.rightBottomSmallLabel.text = "Suggest Speed"
+            }.main {
+                self.popupController = KLCPopup(contentView: customView)
+                self.popupController.shouldDismissOnContentTouch = false
+                self.popupController.shouldDismissOnBackgroundTouch = true
+                self.popupController.maskType = .Dimmed
+                self.popupController.showType = .SlideInFromBottom
+                self.popupController.dismissType = .SlideOutToBottom
+                
+                let layout = KLCPopupLayoutMake(.Center, .BelowCenter)
+                self.popupController.showWithLayout(layout, duration: 15.0)
+        }
     }
     
     func secondsToFormattedTime(inputSeconds: Double) -> String {
