@@ -14,10 +14,6 @@ import CocoaLumberjack
 
 class RunMapView: MKMapView {
     
-    /*let initLocation = CLLocation(latitude: 22.215417, longitude: 114.214779)
-    
-    let regionRadius: CLLocationDistance = 200*/
-    
     var defaults = NSUserDefaults()
     
     
@@ -26,6 +22,7 @@ class RunMapView: MKMapView {
     
     
     var allAnnotations = [MKPointAnnotation]()
+    var allAnnotationsDict = [Int: MKPointAnnotation]()
     var allPoints = [CLLocationCoordinate2D]()
     
     
@@ -74,6 +71,7 @@ class RunMapView: MKMapView {
                 }
                 
                 allAnnotations.append(objectAnnotation)
+                allAnnotationsDict[checkpoint.id] = objectAnnotation
             }
             
             

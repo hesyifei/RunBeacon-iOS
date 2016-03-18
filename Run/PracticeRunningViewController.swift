@@ -60,10 +60,10 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         runChecks = [
             RunCheck(checkpointId: 2, time: NSDate()),
             RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-60)),
-            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-120)),
-            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-180)),
-            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-200)),
-            RunCheck(checkpointId: 0, time: NSDate().dateByAddingTimeInterval(-210)),
+            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-120)),
+            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-180)),
+            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-200)),
+            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-210)),
             RunCheck(checkpointId: -1, time: NSDate().dateByAddingTimeInterval(-250)),
         ]
         
@@ -453,14 +453,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         if(!isBottom){
-            cell.tag = runChecks[row].checkpointId           // 供timelineTap使用
+            cell.tag = runChecks[row].checkpointId           // 供timelineAction使用
+            
+            let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineAction:")
+            leftView.addGestureRecognizer(timelineTapGesture)
             
             
             numberLabel.text = "#\(runChecks[row].checkpointId)"
-            
-            
-            let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineTap:")
-            leftView.addGestureRecognizer(timelineTapGesture)
             
             
             let timeDifference = getRunCheckTimeDifference(row, comparingIndex: row+1)
@@ -514,16 +513,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         timeLabel.text = "\(minuteAndSecond)"
     }
     
-    func timelineTap(sender: UITapGestureRecognizer) {
+    func timelineAction(sender: UITapGestureRecognizer) {
         let tapLocation = sender.locationInView(tableView)
         
         let indexPath = tableView.indexPathForRowAtPoint(tapLocation)
-        DDLogDebug("用戶已點擊 Cell \(indexPath?.row) 的 timeline")
-        
         let cell = tableView.cellForRowAtIndexPath(indexPath!)
         let tag = cell?.tag
         
-        topMapView.selectAnnotation(topMapView.allAnnotations[tag!], animated: true)
+        DDLogDebug("用戶已點擊第\(indexPath?.row)行（tag \(tag)）的 timeline")
+        
+        topMapView.selectAnnotation(topMapView.allAnnotationsDict[tag!]!, animated: true)
     }
     
     func showCheckpointPopup() {
