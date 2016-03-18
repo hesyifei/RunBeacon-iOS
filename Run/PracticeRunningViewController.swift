@@ -15,6 +15,7 @@ import MapKit
 import Async
 import Alamofire
 import CocoaLumberjack
+import CRToast
 import KLCPopup
 
 class PracticeRunningViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -176,7 +177,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
         if beacons.count > 0 {
-            // 這裡可能會產生bug（直接提取[0]似乎有問題）
+            // 這裡可能會產生bug（直接提取[0]似乎不太好）
             let beacon = beacons[0]
             if(currentBeacon == [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]){
                 DDLogVerbose("繼續維持在Beacon（\(beacon.major), \(beacon.minor), \(beacon.proximity.rawValue)）的範圍內")
@@ -615,12 +616,15 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         DDLogDebug("準備上傳RunCheck數據：\(parameters)")
         
+        
         Alamofire.request(.POST, BasicConfig.RunCheckPostURL, parameters: parameters, encoding: .JSON)
             .response { request, response, data, error in
                 if let error = error {
                     DDLogError("上傳RunCheck資訊失敗：\(error)")
+                    CRToastManager.showNotificationWithMessage("Cannot upload checkpoint to server!", completionBlock: nil)
                 }else{
                     DDLogInfo("上傳RunCheck資訊成功")
+                    CRToastManager.showNotificationWithMessage("Upload checkpoint successfully!", completionBlock: nil)
                 }
         }
     }
