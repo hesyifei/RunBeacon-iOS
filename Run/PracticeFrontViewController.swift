@@ -93,18 +93,9 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     // MARK: - Action func
     func startButtonAction() {
-        MBProgressHUD.showHUDAddedTo(self.navigationController?.view, animated: true)
-        Alamofire.request(.GET, BasicConfig.RunCheckTripIdGetURL)
-            .responseString { response in
-                if(response.result.isSuccess){
-                    self.tripId = response.result.value!
-                    DDLogDebug("已從服務器獲取此次TripId：\(self.tripId)")
-                    self.performSegueWithIdentifier("showPracticeRunningView", sender: self)
-                }else{
-                    DDLogError("從服務器獲取TripId失敗：\(response.result.error?.localizedDescription)")
-                }
-                MBProgressHUD.hideHUDForView(self.navigationController?.view, animated: true)
-        }
+        tripId = NSUUID().UUIDString
+        DDLogDebug("已生成此次tripId：\(tripId)")
+        self.performSegueWithIdentifier("showPracticeRunningView", sender: self)
     }
     
     
