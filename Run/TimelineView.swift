@@ -31,11 +31,7 @@ class TimelineView: UIView {
         
         
         // 記得同時修改PracticeRunningViewController內的numberLabel的top及height
-        let rectConfig: [String: CGFloat] = [
-            "Timeline Width": 5.0,
-            "Circle Diameter": 15.0,
-            "Top/Bottom Circle Padding": 5.0,
-        ]
+        let rectConfig = RunCellUIConfig.TimelineRectConfig
         
         
         let originX = rect.width/2-rectConfig["Timeline Width"]!/2

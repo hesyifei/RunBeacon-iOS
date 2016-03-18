@@ -233,7 +233,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if(indexPath.row == runChecks.count-1){
             // 如果是最後一行、則不需要普通高度
-            return 40.0
+            return RunCellUIConfig.TimelineRectConfig["Top/Bottom Circle Padding"]!+RunCellUIConfig.TimelineRectConfig["Circle Diameter"]!+RunCellUIConfig.ViewHeights["totalTimeLabel"]!
         }else{
             return 85.0
         }
@@ -250,30 +250,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         /*** 初始化TableCell開始 ***/
-        let cellID = "RunningCell"
-        let tagIDs: [String: Int] = [               // 謹記不能為0（否則於cell.tag重複）或小於100（可能於其後cell.tag設置後重複）
-            "leftView": 100,
-            "timelineView": 110,
-            "numberLabel": 120,
-            "totalTimeLabel": 121,
-            "rightView": 200,
-            "timeCurrentLabel": 210,
-            "timeReferenceLabel": 211,
-            "speedCurrentLabel": 221,
-        ]
         
-        let viewWidths: [String: CGFloat] = [       // 固定寬度之view
-            "numberLabel": 40.0,
-            "timelineView": 15.0,
-        ]
-        let viewHeights: [String: CGFloat] = [
-            "numberLabel": 15.0,                // 應等於rectConfig["Circle Diameter"]
-            "timelineView": 20.0,
-        ]
+        let cellID = RunCellUIConfig.CellID
+        let tagIDs = RunCellUIConfig.TagIDs
+        let viewWidths = RunCellUIConfig.ViewWidths
+        let viewHeights = RunCellUIConfig.ViewHeights
         
         
         var cell: UITableViewCell!
-        
         
         var leftView: UIView!
         var timelineView: TimelineView!
@@ -329,8 +313,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             
             cell.contentView.addConstraints([
                 NSLayoutConstraint(item: numberLabel, attribute: .Leading, relatedBy: .Equal, toItem: leftView, attribute: .Leading, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: numberLabel, attribute: .Top, relatedBy: .Equal, toItem: leftView, attribute: .Top, multiplier: 1.0, constant: 5.0),               // 應等於rectConfig["Top/Bottom Circle Padding"]
-                NSLayoutConstraint(item: numberLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: viewHeights["numberLabel"]!),
+                NSLayoutConstraint(item: numberLabel, attribute: .Top, relatedBy: .Equal, toItem: leftView, attribute: .Top, multiplier: 1.0, constant: RunCellUIConfig.TimelineRectConfig["Top/Bottom Circle Padding"]!),
+                NSLayoutConstraint(item: numberLabel, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: RunCellUIConfig.TimelineRectConfig["Circle Diameter"]!),
                 NSLayoutConstraint(item: numberLabel, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: viewWidths["numberLabel"]!),
                 ])
             
