@@ -26,9 +26,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet var topMapView: RunMapView!
     @IBOutlet var timeLabel: UILabel!
     
-    @IBOutlet var bottomBar: UIView!
-    @IBOutlet var bottomLabel: UILabel!
-    
     
     // MARK: - Basic var
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -39,7 +36,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     // MARK: UI var
     var popupController: KLCPopup = KLCPopup()
     
-    let navigationColor = UIColor(red: 247.0/250.0, green: 247.0/250.0, blue: 247.0/250.0, alpha: 1.0)
     
     
     // MARK: - Data/Init var
@@ -103,13 +99,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
-        bottomBar.backgroundColor = navigationColor
-        
-        let bottomBarTopBorder = CALayer()
-        bottomBarTopBorder.frame = CGRectMake(0, 0, bottomBar.frame.size.width, 1.0)
-        bottomBarTopBorder.backgroundColor = UIColor.blackColor().CGColor
-        bottomBar.layer.addSublayer(bottomBarTopBorder)
-        
         
         initCheckpoints()
         
@@ -155,13 +144,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     // MARK: - LocationManager func
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let loc = locations.last
-        let speed = loc?.speed
-        DDLogVerbose("已獲取用戶目前速度：\(speed)")
-        bottomLabel.text = "YA \(speed)"
-    }
-    
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
             if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
@@ -621,10 +603,10 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             .response { request, response, data, error in
                 if let error = error {
                     DDLogError("上傳RunCheck資訊失敗：\(error)")
-                    CRToastManager.showNotificationWithMessage("Cannot upload checkpoint to server!", completionBlock: nil)
+                    CRToastManager.showNotificationWithMessage("Cannot upload checkpoint data to server!", completionBlock: nil)
                 }else{
                     DDLogInfo("上傳RunCheck資訊成功")
-                    CRToastManager.showNotificationWithMessage("Upload checkpoint successfully!", completionBlock: nil)
+                    CRToastManager.showNotificationWithMessage("Upload checkpoint data successfully!", completionBlock: nil)
                 }
         }
     }

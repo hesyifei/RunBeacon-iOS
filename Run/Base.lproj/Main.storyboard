@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MLC-xU-Nkc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -107,10 +106,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ecf-Ua-itT" customClass="RunMapView" customModule="Run" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="600" height="480"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="466"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I72-Nv-lS5">
-                                <rect key="frame" x="0.0" y="544" width="600" height="56"/>
+                                <rect key="frame" x="0.0" y="530" width="600" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="XAD-vp-eGa"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                             </button>
                         </subviews>
@@ -122,7 +124,6 @@
                             <constraint firstItem="I72-Nv-lS5" firstAttribute="top" secondItem="ecf-Ua-itT" secondAttribute="bottom" id="H03-2Q-BMs"/>
                             <constraint firstItem="ecf-Ua-itT" firstAttribute="leading" secondItem="GJj-9n-Rl2" secondAttribute="leading" id="SpL-YF-CK6"/>
                             <constraint firstItem="bxm-pQ-w2e" firstAttribute="top" secondItem="I72-Nv-lS5" secondAttribute="bottom" id="UZD-CY-qVG"/>
-                            <constraint firstItem="ecf-Ua-itT" firstAttribute="height" secondItem="GJj-9n-Rl2" secondAttribute="height" multiplier="0.8" id="gnV-EP-t8j"/>
                             <constraint firstItem="I72-Nv-lS5" firstAttribute="leading" secondItem="GJj-9n-Rl2" secondAttribute="leading" id="z4F-sA-AXj"/>
                         </constraints>
                     </view>
@@ -166,31 +167,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JUl-MD-IGa">
-                                <rect key="frame" x="0.0" y="304" width="600" height="252"/>
+                                <rect key="frame" x="0.0" y="264" width="600" height="336"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jDu-UZ-9XV">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTHING YET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-hS-e7A">
-                                        <rect key="frame" x="244.5" y="11.5" width="111.5" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="B6O-hS-e7A" firstAttribute="centerX" secondItem="jDu-UZ-9XV" secondAttribute="centerX" id="jfZ-jh-ZNw"/>
-                                    <constraint firstItem="B6O-hS-e7A" firstAttribute="centerY" secondItem="jDu-UZ-9XV" secondAttribute="centerY" id="r2I-YM-E2w"/>
-                                    <constraint firstAttribute="height" constant="44" id="wD5-PN-O5C"/>
-                                </constraints>
-                            </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DU1-Yf-isv" customClass="RunMapView" customModule="Run" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="600" height="240"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWs-vE-ZZL">
-                                <rect key="frame" x="0.0" y="64" width="600" height="240"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="EZY-DU-p8d"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -204,12 +191,8 @@
                             <constraint firstItem="JUl-MD-IGa" firstAttribute="top" secondItem="nWs-vE-ZZL" secondAttribute="bottom" id="F7y-iw-LeV"/>
                             <constraint firstItem="JUl-MD-IGa" firstAttribute="top" secondItem="DU1-Yf-isv" secondAttribute="bottom" id="Hci-9Y-Ai3"/>
                             <constraint firstItem="nWs-vE-ZZL" firstAttribute="leading" secondItem="EZO-bf-zE7" secondAttribute="leading" id="Ig5-Ri-a14"/>
-                            <constraint firstItem="jDu-UZ-9XV" firstAttribute="top" secondItem="JUl-MD-IGa" secondAttribute="bottom" id="LSA-lO-mB3"/>
-                            <constraint firstAttribute="trailing" secondItem="jDu-UZ-9XV" secondAttribute="trailing" id="Pjg-Ql-4Yh"/>
-                            <constraint firstItem="jDu-UZ-9XV" firstAttribute="leading" secondItem="EZO-bf-zE7" secondAttribute="leading" id="SVP-eb-aNv"/>
+                            <constraint firstItem="BES-YY-o4Y" firstAttribute="top" secondItem="JUl-MD-IGa" secondAttribute="bottom" id="RbI-Nn-6zI"/>
                             <constraint firstItem="DU1-Yf-isv" firstAttribute="leading" secondItem="EZO-bf-zE7" secondAttribute="leading" id="VA5-op-mxy"/>
-                            <constraint firstItem="DU1-Yf-isv" firstAttribute="height" secondItem="EZO-bf-zE7" secondAttribute="height" multiplier="0.4" id="VFH-nz-uCP"/>
-                            <constraint firstItem="BES-YY-o4Y" firstAttribute="top" secondItem="jDu-UZ-9XV" secondAttribute="bottom" id="WcL-Vv-4z6"/>
                             <constraint firstAttribute="trailing" secondItem="JUl-MD-IGa" secondAttribute="trailing" id="ZJo-l8-HH2"/>
                             <constraint firstItem="nWs-vE-ZZL" firstAttribute="height" secondItem="DU1-Yf-isv" secondAttribute="height" id="dj6-jC-54L"/>
                             <constraint firstItem="JUl-MD-IGa" firstAttribute="leading" secondItem="EZO-bf-zE7" secondAttribute="leading" id="geW-N9-ijJ"/>
@@ -224,8 +207,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Running" id="Qbz-Sp-Dq9"/>
                     <connections>
-                        <outlet property="bottomBar" destination="jDu-UZ-9XV" id="ukd-OK-shs"/>
-                        <outlet property="bottomLabel" destination="B6O-hS-e7A" id="bJ8-hZ-rxb"/>
                         <outlet property="tableView" destination="JUl-MD-IGa" id="Fbu-zr-KgD"/>
                         <outlet property="timeLabel" destination="nWs-vE-ZZL" id="5HZ-lP-w0z"/>
                         <outlet property="topMapView" destination="DU1-Yf-isv" id="EgD-4M-Ik5"/>
