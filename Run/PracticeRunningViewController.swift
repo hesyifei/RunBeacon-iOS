@@ -94,10 +94,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         self.navigationItem.leftBarButtonItems = [closeNavButton]
         
         
+        timeLabel.text = "\(secondsToFormattedTime(0))"
+        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 95.0)
         timeLabel.textColor = UIColor.blackColor()
         timeLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         
-        timeLabel.font = UIFont(name: "AudimatMonoBold", size: 75.0)
+        
         
         
         bottomBar.backgroundColor = navigationColor
@@ -112,7 +114,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         timerStartTime = NSDate.timeIntervalSinceReferenceDate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector: "calcTime", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "calcTime", userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
@@ -539,10 +541,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         let timeDifference = NSDate.timeIntervalSinceReferenceDate() - timerStartTime
         
         let minuteAndSecond = secondsToFormattedTime(timeDifference)
-        let milliseconds = timeDifference%1
-        let millisecondsToInt = Int(round(100*milliseconds))
-        
-        timeLabel.text = "\(minuteAndSecond).\(String(format: "%02d", millisecondsToInt))"
+        timeLabel.text = "\(minuteAndSecond)"
     }
     
     func timelineTap(sender: UITapGestureRecognizer) {
