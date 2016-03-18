@@ -65,11 +65,15 @@ class RunMapView: MKMapView {
             for checkpoint in checkpoints {
                 let objectAnnotation = MKPointAnnotation()
                 objectAnnotation.coordinate = checkpoint.coordinate
-                objectAnnotation.title = "Checkpoint \(checkpoint.id)"
+                if(checkpoint.id == -1){
+                    objectAnnotation.title = "Begin Ⓑ"
+                }else{
+                    objectAnnotation.title = "Checkpoint \(checkpoint.id)"
+                }
+                
                 Async.main {
                     self.addAnnotation(objectAnnotation)
                 }
-                
                 allAnnotations.append(objectAnnotation)
                 allAnnotationsDict[checkpoint.id] = objectAnnotation
             }

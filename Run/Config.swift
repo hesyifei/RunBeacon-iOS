@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 struct BasicConfig {
-    static let CheckpointDataGetURL = ""
+    static let CheckpointDataGetURL = "http://areflys-mac.local/checkpoints.json"
     static let RunCheckPostURL = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/post_beacon"
     static let BeaconProximityUUID = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
     

@@ -452,15 +452,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         totalTimeLabel.text = "\(secondsToFormattedTime(totalTime))"
         
         
+        cell.tag = runChecks[row].checkpointId           // 供timelineAction使用
+        
+        let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineAction:")
+        leftView.addGestureRecognizer(timelineTapGesture)
+        
         if(!isBottom){
-            cell.tag = runChecks[row].checkpointId           // 供timelineAction使用
-            
-            let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineAction:")
-            leftView.addGestureRecognizer(timelineTapGesture)
-            
-            
             numberLabel.text = "#\(runChecks[row].checkpointId)"
-            
             
             let timeDifference = getRunCheckTimeDifference(row, comparingIndex: row+1)
             timeCurrentLabel.text = "\(secondsToFormattedTime(timeDifference))"
