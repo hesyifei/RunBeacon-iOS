@@ -477,11 +477,15 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             timeReferenceLabel.text = "Ⓐ 02:00    Ⓣ 05:00"
             
             
+            let startCheckpointId = CheckpointFunc().getUploadCheckpointId(runChecks[row+1], runChecks: runChecks)
+            let endCheckpointId = CheckpointFunc().getUploadCheckpointId(runChecks[row], runChecks: runChecks)
+            DDLogVerbose("準備獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離")
             
-            if let i = pathsData.indexOf({($0.start == runChecks[row+1].checkpointId)&&($0.end == runChecks[row].checkpointId)}) {
-                DDLogError("YAYAYAY \(row): \(pathsData[i].distance)")
+            
+            if let i = pathsData.indexOf({($0.start == startCheckpointId)&&($0.end == endCheckpointId)}) {
+                DDLogError("第\(row)行已獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離：\(pathsData[i].distance)")
                 let speedText = getSpeedText(timeDifference, distance: pathsData[i].distance)
-                DDLogError("speed \(row): \(speedText)")
+                DDLogError("第\(row)行已獲取從\(startCheckpointId)到\(endCheckpointId)這段的速度：\(speedText)")
                 speedCurrentLabel.text = speedText
             }else{
                 speedCurrentLabel.text = "Unknown"
@@ -598,16 +602,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     func uploadRunCheckData(runCheck: RunCheck) {
         
-        // 默認情況（runCheck的ID不存在於checkpointsGroupData內）應直接上傳runCheck.checkpointId
-        var uploadId = runCheck.checkpointId
-        for (mainCheckpointId, groupData) in checkpointsGroupData {
-            if(runCheck.checkpointId == mainCheckpointId){          // 如果runCheck.checkpointId就是checkpointsGroupData的key的話
-                let allRunCheckWithId = runChecks.filter{$0.checkpointId == mainCheckpointId}       // 找到所有ID為這一ID的runCheck數據
-                uploadId = groupData[allRunCheckWithId.count-1]         // 判斷應上傳ID
-            }
-        }
-        DDLogDebug("已獲取此次（檢測到之原ID為\(runCheck.checkpointId)）應上傳的checkpointId：\(uploadId)")
-        
+        let uploadId = CheckpointFunc().getUploadCheckpointId(runCheck, runChecks: runChecks)
+
         
         let parameters = [
             "userId": "2015206",

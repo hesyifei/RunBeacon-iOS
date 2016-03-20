@@ -107,6 +107,27 @@ class CheckpointFunc {
         return ["max": biggestRepeatingCheckpointId, "min": smallestRepeatingCheckpointId]
     }
     
+    func getUploadCheckpointId(inputRunCheck: RunCheck, runChecks: [RunCheck]) -> Int {
+        let checkpointsGroupData = CheckpointFunc().getCheckpointsGroup()
+        
+        
+        // 將所有ID為inputRunCheck.checkpointId的runChecks提取出來並reverse以按時間正序排列
+        var allRunCheckWithId = runChecks.filter{$0.checkpointId == inputRunCheck.checkpointId}
+        allRunCheckWithId = allRunCheckWithId.reverse()
+        
+        
+        // 默認情況（runCheck的ID不存在於checkpointsGroupData內）應直接上傳runCheck.checkpointId
+        var returnInt = inputRunCheck.checkpointId
+        
+        if let targetIndex = allRunCheckWithId.indexOf({$0 == inputRunCheck}) {     // 看目前的inputRunCheck是第N個同樣的ID
+            if let returnId = checkpointsGroupData[inputRunCheck.checkpointId]?[targetIndex] {         // 獲取應上傳ID
+                returnInt = returnId
+            }
+        }
+        DDLogDebug("已獲取此次（檢測到之原ID為\(inputRunCheck.checkpointId)）實際於伺服器上的checkpointId：\(returnInt)")
+        return returnInt
+    }
+    
     
     
     func loadCheckpointsDataFromServer(completion: () -> Void) {
