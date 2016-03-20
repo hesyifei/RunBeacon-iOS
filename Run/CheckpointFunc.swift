@@ -52,18 +52,20 @@ class CheckpointFunc {
                     let json = JSON(data: data!)
                     var checkpointsData = [Checkpoint]()
                     
-                    for (_, subJson): (String, JSON) in json["checkpoints"] {
-                        checkpointsData.append(Checkpoint(json: subJson))
+                    for (index, subJson): (String, JSON) in json {
+                        let checkpointToBeAppend = Checkpoint(json: subJson)
+                        checkpointsData.append(checkpointToBeAppend)
+                        if(Int(index) == 0){
+                            self.defaults.setDouble(checkpointToBeAppend.coordinate.latitude, forKey: "initLatitude")
+                            self.defaults.setDouble(checkpointToBeAppend.coordinate.longitude, forKey: "initLongitude")
+                            DDLogVerbose("已從通過第一個checkpoint設定init數據")
+                        }
                     }
                     DDLogVerbose("已從伺服器獲取checkpointsData：\(checkpointsData)")
                     
                     CheckpointFunc().saveCheckpoints(checkpointsData)
                     
                     
-                    self.defaults.setDouble(json["init"]["latitude"].doubleValue, forKey: "initLatitude")
-                    self.defaults.setDouble(json["init"]["longitude"].doubleValue, forKey: "initLongitude")
-                    self.defaults.setDouble(json["init"]["radius"].doubleValue, forKey: "initRadius")
-                    DDLogVerbose("已從伺服器獲取init數據")
                     
                     
                     completion()

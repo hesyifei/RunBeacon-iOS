@@ -44,18 +44,13 @@ class RunMapView: MKMapView {
         
         initLocation = CLLocation(latitude: self.defaults.doubleForKey("initLatitude"), longitude: self.defaults.doubleForKey("initLongitude"))
         
-        regionRadius = self.defaults.doubleForKey("initRadius")
-        if(regionRadius == 0){
-            regionRadius = 200.0
-        }
+        regionRadius = 200.0
     }
     
     func mapViewInit() {
         varInit()
         
-        
         self.mapType = .Satellite
-        
         
         self.centerMapOnLocation(initLocation)
     }
@@ -65,7 +60,9 @@ class RunMapView: MKMapView {
             for checkpoint in checkpoints {
                 let objectAnnotation = MKPointAnnotation()
                 objectAnnotation.coordinate = checkpoint.coordinate
-                if(checkpoint.id == -1){
+                
+                if(checkpoint.id == 1){
+                    // ID為1代表為起點（此處將不會有真正的iBeacon）
                     objectAnnotation.title = "Begin Ⓑ"
                 }else{
                     objectAnnotation.title = "Checkpoint \(checkpoint.id)"

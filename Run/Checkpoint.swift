@@ -18,8 +18,8 @@ class Checkpoint: NSObject, NSCoding, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     
     init(json: JSON) {
-        self.id = json["id"].intValue
-        self.coordinate = CLLocationCoordinate2DMake(json["latitude"].doubleValue, json["longitude"].doubleValue)
+        self.id = json["checkpointId"].intValue
+        self.coordinate = CLLocationCoordinate2DMake(json["lat"].doubleValue, json["lng"].doubleValue)
         
         super.init()
     }
@@ -27,16 +27,16 @@ class Checkpoint: NSObject, NSCoding, MKAnnotation {
     
     // MARK: NSCoding
     required init(coder decoder: NSCoder) {
-        self.id = decoder.decodeIntegerForKey("id")
-        self.coordinate = CLLocationCoordinate2DMake(decoder.decodeDoubleForKey("latitude"), decoder.decodeDoubleForKey("longitude"))
+        self.id = decoder.decodeIntegerForKey("checkpointId")
+        self.coordinate = CLLocationCoordinate2DMake(decoder.decodeDoubleForKey("lat"), decoder.decodeDoubleForKey("lng"))
         super.init()
     }
     
     func encodeWithCoder(coder: NSCoder) {
-        coder.encodeInt(Int32(self.id), forKey: "id")
+        coder.encodeInt(Int32(self.id), forKey: "checkpointId")
         
         // 無法直接儲存座標（見 http://stackoverflow.com/a/14269810/2603230）
-        coder.encodeDouble(self.coordinate.latitude, forKey: "latitude")
-        coder.encodeDouble(self.coordinate.longitude, forKey: "longitude")
+        coder.encodeDouble(self.coordinate.latitude, forKey: "lat")
+        coder.encodeDouble(self.coordinate.longitude, forKey: "lng")
     }
 }

@@ -56,15 +56,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         DDLogInfo("Practice Running View Controller 之 super.viewDidLoad() 已加載")
         
         
-        // 如果RunCheck內checkpointId為-1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
+        // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
         runChecks = [
-            RunCheck(checkpointId: 2, time: NSDate()),
-            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-60)),
+            RunCheck(checkpointId: 3, time: NSDate()),
+            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-60)),
             RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-120)),
             RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-180)),
             RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-200)),
             RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-210)),
-            RunCheck(checkpointId: -1, time: NSDate().dateByAddingTimeInterval(-250)),
         ]
         
         
@@ -83,6 +82,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         tableView.dataSource = self
         
         tableView.separatorStyle = .None
+        
+        tableView.allowsSelection = false
         
         
         topMapView.delegate = self
@@ -493,7 +494,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         Async.background {
             let totalTime = round(self.getRunCheckTimeDifference(0, comparingIndex: self.runChecks.count-1))
             let totalTimeString = "\(Int(totalTime/60)) minutes \(Int(totalTime%60)) seconds"
-            let speechString = "Good job! You have just arrived Checkpoint \(runCheck.checkpointId). You have run for \(totalTimeString)"
+            let speechString = "Good job! You have just arrived Checkpoint \(runCheck.checkpointId). You have run for \(totalTimeString). Keep on running!"
             DDLogDebug("即將讀出檢查站提示字句：\(speechString)")
             
             let speechsynt = AVSpeechSynthesizer()
