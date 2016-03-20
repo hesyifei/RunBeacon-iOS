@@ -17,7 +17,7 @@ class CheckpointFunc {
     
     let defaults = NSUserDefaults.standardUserDefaults()
     let checkpointsDataKey = "checkpointsData"
-    
+    let pathsDataKey = "pathsData"
     
     
     func saveCheckpoints(checkpoints: [Checkpoint]) {
@@ -43,6 +43,30 @@ class CheckpointFunc {
     }
     
     
+    func savePaths(paths: [Path]) {
+        // 儲存paths數據（參見：http://stackoverflow.com/a/26233274/2603230）
+        let arrayOfObjectsData = NSKeyedArchiver.archivedDataWithRootObject(paths)
+        self.defaults.setObject(arrayOfObjectsData, forKey: pathsDataKey)
+        
+        DDLogDebug("已儲存paths數據至defaults")
+    }
+    
+    func getPaths() -> [Path] {
+        if let arrayOfObjectsUnarchivedData = defaults.dataForKey(pathsDataKey) {
+            if let arrayOfObjectsUnarchived = NSKeyedUnarchiver.unarchiveObjectWithData(arrayOfObjectsUnarchivedData) as? [Path] {
+                DDLogDebug("已從defaults獲取paths數據")
+                DDLogVerbose("paths內容：\(arrayOfObjectsUnarchived)")
+                
+                return arrayOfObjectsUnarchived
+            }
+        }
+        DDLogWarn("從defaults獲取paths數據失敗、將返回空值")
+        DDLogWarn("可能原因：第一次開啟App、checkpoints數據未設定")
+        return []
+    }
+    
+    
+    
     func loadCheckpointsDataFromServer(completion: () -> Void) {
         Alamofire.request(.GET, BasicConfig.CheckpointDataGetURL)
             .response { request, response, data, error in
@@ -52,7 +76,7 @@ class CheckpointFunc {
                     let json = JSON(data: data!)
                     var checkpointsData = [Checkpoint]()
                     
-                    for (index, subJson): (String, JSON) in json {
+                    for (index, subJson): (String, JSON) in json["checkpoint"] {
                         let checkpointToBeAppend = Checkpoint(json: subJson)
                         checkpointsData.append(checkpointToBeAppend)
                         if(Int(index) == 0){
@@ -65,6 +89,14 @@ class CheckpointFunc {
                     
                     CheckpointFunc().saveCheckpoints(checkpointsData)
                     
+                    
+                    
+                    var pathsData = [Path]()
+                    for (_, subJson): (String, JSON) in json["path"] {
+                        let pathToBeAppend = Path(json: subJson)
+                        pathsData.append(pathToBeAppend)
+                    }
+                    CheckpointFunc().savePaths(pathsData)
                     
                     
                     

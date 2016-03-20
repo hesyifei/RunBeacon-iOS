@@ -43,6 +43,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
+    var pathsData = [Path]()
     
     var currentBeacon = [String]()
     
@@ -58,8 +59,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
         runChecks = [
-            RunCheck(checkpointId: 3, time: NSDate()),
-            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-60)),
+            RunCheck(checkpointId: 6, time: NSDate()),
+            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-60)),
             RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-120)),
             RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-180)),
             RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-200)),
@@ -205,6 +206,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     func initCheckpoints() {
         checkpointsData = CheckpointFunc().getCheckpoints()
         topMapView.loadCheckpoints(checkpointsData)
+        
+        pathsData = CheckpointFunc().getPaths()
     }
     
     
@@ -466,8 +469,17 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             
             timeReferenceLabel.text = "Ⓐ 02:00    Ⓣ 05:00"
             
-            let speed = getSpeedText(timeDifference, distance: 5.0)
-            speedCurrentLabel.text = "\(speed)"
+            
+            
+            if let i = pathsData.indexOf({($0.start == runChecks[row+1].checkpointId)&&($0.end == runChecks[row].checkpointId)}) {
+                DDLogError("YAYAYAY \(row): \(pathsData[i].distance)")
+                let speedText = getSpeedText(timeDifference, distance: pathsData[i].distance)
+                DDLogError("speed \(row): \(speedText)")
+                speedCurrentLabel.text = speedText
+            }else{
+                speedCurrentLabel.text = "Unknown"
+            }
+            
         }else{
             numberLabel.text = "Ⓑ"
             timeCurrentLabel.text = ""
@@ -566,7 +578,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         return round(seconds)/distance
     }
     func getSpeedText(seconds: Double, distance: Double) -> String {
-        return "\(getSpeed(seconds, distance: distance)) m/s"
+        return String(format: "%.2f m/s", getSpeed(seconds, distance: distance))
     }
     
     func getRunCheckTimeDifference(currentIndex: Int, comparingIndex: Int) -> NSTimeInterval {
