@@ -64,12 +64,17 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             RunCheck(checkpointId: 4, time: NSDate()),
             RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
             RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
-            RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-130)),
-            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-160)),
-            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-220)),
-            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-280)),
-            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-300)),
-            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-310)),
+            RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
+            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
+            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-320)),
+            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-380)),
+            RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-400)),
+            RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-430)),
+            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-460)),
+            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-520)),
+            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-580)),
+            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-600)),
+            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-610)),
         ]
         
         
@@ -96,8 +101,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
-        let closeNavButton = UIBarButtonItem(title: "Close", style: .Plain, target: self, action: "closeView")
-        self.navigationItem.leftBarButtonItems = [closeNavButton]
+        let cancelNavButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelPractice")
+        self.navigationItem.leftBarButtonItems = [cancelNavButton]
         
         
         timeLabel.text = "\(secondsToFormattedTime(0))"
@@ -144,6 +149,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         timer!.invalidate()
         timer = nil
+        DDLogInfo("已停止timer計時器")
     }
     
     override func didReceiveMemoryWarning() {
@@ -175,18 +181,24 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             }else{
                 DDLogInfo("已進入新Beacon（\(beacon.major), \(beacon.minor), \(beacon.proximity.rawValue)）範圍")
                 
-                runChecks = [RunCheck(checkpointId: beacon.minor.integerValue, time: NSDate())] + runChecks
+                let newRunCheck = RunCheck(checkpointId: beacon.minor.integerValue, time: NSDate())
+                runChecks = [newRunCheck] + runChecks
                 
                 tableView.beginUpdates()
                 tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
                 tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
                 tableView.endUpdates()
                 
-                showCheckpointPopup()
                 doVibration()
-                readSpeech(runChecks[0])
-                
                 uploadRunCheckData(runChecks[0])
+                
+                if(CheckpointFunc().getUploadCheckpointId(newRunCheck, runChecks: runChecks) == checkpointsData[checkpointsData.count-1].id){
+                    DDLogInfo("用戶已到達最後一個Checkpoint、即將結束跑步及計時")
+                    finishPractice()
+                }else{
+                    showCheckpointPopup()
+                    readSpeech(runChecks[0])
+                }
                 
                 currentBeacon = [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]
             }
@@ -505,6 +517,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     // MARK: - General func
+    func finishPractice() {
+        closeView()
+    }
+    
+    func cancelPractice() {
+        closeView()
+    }
+    
     func closeView() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
