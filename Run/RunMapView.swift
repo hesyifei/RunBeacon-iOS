@@ -26,6 +26,9 @@ class RunMapView: MKMapView {
     var allPoints = [CLLocationCoordinate2D]()
     
     
+    var checkpointsGroupData = [Int: [Int]]()
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -45,6 +48,8 @@ class RunMapView: MKMapView {
         initLocation = CLLocation(latitude: self.defaults.doubleForKey("initLatitude"), longitude: self.defaults.doubleForKey("initLongitude"))
         
         regionRadius = 200.0
+        
+        checkpointsGroupData = CheckpointFunc().getCheckpointsGroup()
     }
     
     func mapViewInit() {
@@ -58,21 +63,33 @@ class RunMapView: MKMapView {
     func loadCheckpoints(checkpoints: [Checkpoint]) {
         if(checkpoints.count > 0){
             for checkpoint in checkpoints {
-                let objectAnnotation = MKPointAnnotation()
-                objectAnnotation.coordinate = checkpoint.coordinate
                 
-                if(checkpoint.id == 1){
-                    // ID為1代表為起點（此處將不會有真正的iBeacon）
-                    objectAnnotation.title = "Begin Ⓑ"
-                }else{
-                    objectAnnotation.title = "Checkpoint \(checkpoint.id)"
+                var canAddAnnotation = true
+                for (_, groupData) in checkpointsGroupData {
+                    if let index = groupData.indexOf(checkpoint.id) {
+                        if(index >= 1){
+                            canAddAnnotation = false
+                        }
+                    }
                 }
                 
-                Async.main {
-                    self.addAnnotation(objectAnnotation)
+                if(canAddAnnotation){
+                    let objectAnnotation = MKPointAnnotation()
+                    objectAnnotation.coordinate = checkpoint.coordinate
+                    
+                    if(checkpoint.id == 1){
+                        // ID為1代表為起點（此處將不會有真正的iBeacon）
+                        objectAnnotation.title = "Begin Ⓑ"
+                    }else{
+                        objectAnnotation.title = "Checkpoint \(checkpoint.id)"
+                    }
+                    
+                    Async.main {
+                        self.addAnnotation(objectAnnotation)
+                    }
+                    allAnnotations.append(objectAnnotation)
+                    allAnnotationsDict[checkpoint.id] = objectAnnotation
                 }
-                allAnnotations.append(objectAnnotation)
-                allAnnotationsDict[checkpoint.id] = objectAnnotation
             }
             
             
@@ -81,9 +98,22 @@ class RunMapView: MKMapView {
                 return annotation.coordinate
             }
             
-            //var allPointsWithFinish = allPoints + [allPoints[0]]
             let geodesic = MKGeodesicPolyline(coordinates: &allPoints[0], count: allPoints.count)
             self.addOverlay(geodesic)
+            
+            
+            
+            let maxAndMinRepeatingCheckpointId = CheckpointFunc().getCheckpointsGroupMinAndMax()
+            
+            let coordinatesForClosingOneLine: [CLLocationCoordinate2D]!
+            coordinatesForClosingOneLine = [
+                (allAnnotationsDict[maxAndMinRepeatingCheckpointId["max"]!]?.coordinate)!,
+                (allAnnotationsDict[maxAndMinRepeatingCheckpointId["min"]!]?.coordinate)!,
+            ]
+            
+            // 添加繞圈時那條時圈閉合的線
+            let closingOneLine = MKGeodesicPolyline(coordinates: &coordinatesForClosingOneLine[0], count: coordinatesForClosingOneLine.count)
+            self.addOverlay(closingOneLine)
         }
     }
     

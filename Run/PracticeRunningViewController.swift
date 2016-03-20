@@ -44,6 +44,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
     var pathsData = [Path]()
+    var checkpointsGroupData = [Int: [Int]]()
+    
     
     var currentBeacon = [String]()
     
@@ -59,12 +61,15 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
         runChecks = [
-            RunCheck(checkpointId: 6, time: NSDate()),
-            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-60)),
-            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-120)),
-            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-180)),
-            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-200)),
-            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-210)),
+            RunCheck(checkpointId: 4, time: NSDate()),
+            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
+            RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
+            RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-130)),
+            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-160)),
+            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-220)),
+            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-280)),
+            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-300)),
+            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-310)),
         ]
         
         
@@ -157,7 +162,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             }
         }
         if status == .Denied || status == .Restricted {
-            DDLogWarn("定位服務未允許/未開啟，無法檢測iBeacon！")
+            DDLogError("定位服務未允許/未開啟，無法檢測iBeacon！")
         }
     }
     
@@ -208,6 +213,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         topMapView.loadCheckpoints(checkpointsData)
         
         pathsData = CheckpointFunc().getPaths()
+        
+        checkpointsGroupData = CheckpointFunc().getCheckpointsGroup()
     }
     
     
@@ -590,10 +597,22 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func uploadRunCheckData(runCheck: RunCheck) {
+        
+        // 默認情況（runCheck的ID不存在於checkpointsGroupData內）應直接上傳runCheck.checkpointId
+        var uploadId = runCheck.checkpointId
+        for (mainCheckpointId, groupData) in checkpointsGroupData {
+            if(runCheck.checkpointId == mainCheckpointId){          // 如果runCheck.checkpointId就是checkpointsGroupData的key的話
+                let allRunCheckWithId = runChecks.filter{$0.checkpointId == mainCheckpointId}       // 找到所有ID為這一ID的runCheck數據
+                uploadId = groupData[allRunCheckWithId.count-1]         // 判斷應上傳ID
+            }
+        }
+        DDLogDebug("已獲取此次（檢測到之原ID為\(runCheck.checkpointId)）應上傳的checkpointId：\(uploadId)")
+        
+        
         let parameters = [
             "userId": "2015206",
             "tripId": "\(tripId!)",
-            "checkpointId": "\(runCheck.checkpointId)",
+            "checkpointId": "\(uploadId)",
         ]
         
         DDLogDebug("準備上傳RunCheck數據：\(parameters)")

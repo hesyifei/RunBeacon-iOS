@@ -18,6 +18,7 @@ class CheckpointFunc {
     let defaults = NSUserDefaults.standardUserDefaults()
     let checkpointsDataKey = "checkpointsData"
     let pathsDataKey = "pathsData"
+    let checkpointsGroupDataKey = "checkpointsGroupData"
     
     
     func saveCheckpoints(checkpoints: [Checkpoint]) {
@@ -61,8 +62,49 @@ class CheckpointFunc {
             }
         }
         DDLogWarn("從defaults獲取paths數據失敗、將返回空值")
-        DDLogWarn("可能原因：第一次開啟App、checkpoints數據未設定")
+        DDLogWarn("可能原因：第一次開啟App、paths數據未設定")
         return []
+    }
+    
+    
+    
+    func saveCheckpointsGroup(group: [Int: [Int]]) {
+        let arrayOfObjectsData = NSKeyedArchiver.archivedDataWithRootObject(group)
+        self.defaults.setObject(arrayOfObjectsData, forKey: checkpointsGroupDataKey)
+        
+        DDLogDebug("已儲存group數據至defaults")
+    }
+    func getCheckpointsGroup() -> [Int: [Int]] {
+        if let arrayOfObjectsUnarchivedData = defaults.dataForKey(checkpointsGroupDataKey) {
+            if let arrayOfObjectsUnarchived = NSKeyedUnarchiver.unarchiveObjectWithData(arrayOfObjectsUnarchivedData) as? [Int: [Int]] {
+                DDLogDebug("已從defaults獲取group數據")
+                DDLogVerbose("group內容：\(arrayOfObjectsUnarchived)")
+                
+                return arrayOfObjectsUnarchived
+            }
+        }
+        DDLogWarn("從defaults獲取group數據失敗、將返回空值")
+        DDLogWarn("可能原因：第一次開啟App、group數據未設定")
+        return [0: []]
+    }
+    
+    func getCheckpointsGroupMinAndMax() -> [String: Int] {
+        
+        let checkpointsGroupData = getCheckpointsGroup()
+        
+        // 這兩個將會代表繞圈時的最結束/最開始的兩點（這裡設定的是初始值）
+        var smallestRepeatingCheckpointId = Int.max
+        var biggestRepeatingCheckpointId = Int.min
+        
+        for (mainCheckpointId, _) in checkpointsGroupData {
+            if(mainCheckpointId > biggestRepeatingCheckpointId){
+                biggestRepeatingCheckpointId = mainCheckpointId
+            }
+            if(mainCheckpointId < smallestRepeatingCheckpointId){
+                smallestRepeatingCheckpointId = mainCheckpointId
+            }
+        }
+        return ["max": biggestRepeatingCheckpointId, "min": smallestRepeatingCheckpointId]
     }
     
     
@@ -98,6 +140,14 @@ class CheckpointFunc {
                     }
                     CheckpointFunc().savePaths(pathsData)
                     
+                    
+                    
+                    var checkpointGroupData = [Int: [Int]]()
+                    for (mainCheckpointId, subJson): (String, JSON) in json["group"] {
+                        checkpointGroupData[Int(mainCheckpointId)!] = subJson.arrayValue.map{$0.intValue}
+                    }
+                    //DDLogWarn("GOOOOOOD \(checkpointGroupData)")
+                    CheckpointFunc().saveCheckpointsGroup(checkpointGroupData)
                     
                     
                     completion()
