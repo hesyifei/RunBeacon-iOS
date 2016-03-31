@@ -56,38 +56,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         passwordTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
         
-        if let accountData = Locksmith.loadDataForUserAccount("StudentAccount") {
-            if let username = accountData["username"] {
-                if let _ = accountData["password"] {
-                    DDLogInfo("目前用戶已登入賬戶（\(accountData)）、直接進入主界面")
-                    Async.main {
-                        let screenSize: CGRect = UIScreen.mainScreen().bounds
-                        
-                        let welcomeLabel = UILabel(frame: CGRectMake(0, 0, screenSize.width*0.8, 80.0))
-                        welcomeLabel.text = "Welcome back, \(username)!"
-                        welcomeLabel.textAlignment = .Center
-                        welcomeLabel.backgroundColor = UIColor.whiteColor()
-                        welcomeLabel.layer.cornerRadius = 5.0
-                        welcomeLabel.clipsToBounds = true
-                        
-                        let popupController = KLCPopup(contentView: welcomeLabel)
-                        popupController.shouldDismissOnContentTouch = false
-                        popupController.shouldDismissOnBackgroundTouch = false
-                        popupController.maskType = .Dimmed
-                        popupController.showType = .GrowIn
-                        popupController.dismissType = .GrowOut
-                        
-                        popupController.willStartDismissingCompletion = {
-                            self.showPracticeView()
-                        }
-                        
-                        let layout = KLCPopupLayoutMake(.Center, .Center)
-                        popupController.showWithLayout(layout, duration: 2.5)
-                    }
-                }
-            }
-        }
-        
         /*
         /*** 僅供測試、實際將使用下方viewWillAppear的函數 ***/
         DDLogInfo("目前沒有Checkpoints相關數據儲存於本地、即將顯示下載View")
@@ -99,11 +67,48 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         super.viewWillAppear(animated)
         DDLogInfo("Login View Controller 之 super.viewWillAppear() 已加載")
         
+        usernameTextField.text = ""
+        passwordTextField.text = ""
+        
+        
         if(CheckpointFunc().getCheckpoints().count > 0){
             DDLogInfo("目前已有Checkpoints相關數據儲存於本地")
         }else{
             DDLogInfo("目前沒有Checkpoints相關數據儲存於本地、即將顯示下載View")
             self.performSegueWithIdentifier("showDataLoadingView", sender: self)
+        }
+        
+        
+        if let accountData = Locksmith.loadDataForUserAccount(BasicConfig.UserAccountID) {
+            if let username = accountData["username"] {
+                if let _ = accountData["password"] {
+                    DDLogInfo("目前用戶已登入賬戶（\(accountData)）、即將進入主界面")
+                    Async.main {
+                        let screenSize: CGRect = UIScreen.mainScreen().bounds
+                        
+                        let welcomeLabel = UILabel(frame: CGRectMake(0, 0, screenSize.width*0.8, 80.0))
+                        welcomeLabel.text = "Welcome back, \(username)!"
+                        welcomeLabel.textAlignment = .Center
+                        welcomeLabel.backgroundColor = UIColor.whiteColor()
+                        welcomeLabel.layer.cornerRadius = 5.0
+                        welcomeLabel.clipsToBounds = true
+                        
+                        let popupController = KLCPopup(contentView: welcomeLabel)
+                        popupController.shouldDismissOnContentTouch = true
+                        popupController.shouldDismissOnBackgroundTouch = true
+                        popupController.maskType = .Dimmed
+                        popupController.showType = .GrowIn
+                        popupController.dismissType = .GrowOut
+                        
+                        popupController.willStartDismissingCompletion = {
+                            self.showPracticeView()
+                        }
+                        
+                        let layout = KLCPopupLayoutMake(.Center, .Center)
+                        popupController.showWithLayout(layout, duration: 2.0)
+                    }
+                }
+            }
         }
     }
     
@@ -132,12 +137,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         let dataToBeStored = ["username": usernameTextField.text!, "password": passwordTextField.text!]
         
         do {
-            try Locksmith.updateData(dataToBeStored, forUserAccount: "StudentAccount")
+            try Locksmith.updateData(dataToBeStored, forUserAccount: BasicConfig.UserAccountID)
             DDLogDebug("已儲存用戶名及密碼：\(dataToBeStored)")
             
             showPracticeView()
         } catch {
-            DDLogError("無法儲存用戶名及密碼：\(dataToBeStored)")
+            DDLogError("無法儲存用戶名及密碼（\(dataToBeStored)）：\(error)")
         }
     }
     

@@ -15,6 +15,7 @@ import Alamofire
 import CocoaLumberjack
 import SwiftyJSON
 import MBProgressHUD
+import Locksmith
 
 class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -56,7 +57,8 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         let recordNavButton = UIBarButtonItem(title: "Record", style: .Plain, target: self, action: #selector(self.presentRecordView))
         self.navigationItem.leftBarButtonItems = [recordNavButton]
         
-        
+        let logoutNavButton = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: #selector(self.logoutAction))
+        self.navigationItem.rightBarButtonItems = [logoutNavButton]
         
         
         
@@ -108,6 +110,16 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     func presentRecordView() {
         self.performSegueWithIdentifier("showPracticeRecordView", sender: self)
         DDLogDebug("準備進入PracticeRecordViewController")
+    }
+    
+    func logoutAction() {
+        do {
+            try Locksmith.deleteDataForUserAccount(BasicConfig.UserAccountID)
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } catch {
+            DDLogError("無法刪除用戶登入數據：\(error)")
+        }
     }
     
     

@@ -690,7 +690,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         let uploadId = CheckpointFunc().getUploadCheckpointId(runCheck, runChecks: runChecks)
 
         
-        let userId = Locksmith.loadDataForUserAccount("StudentAccount")!["username"] as! String
+        let userId = Locksmith.loadDataForUserAccount(BasicConfig.UserAccountID)!["username"] as! String
         
         let parameters = [
             "userId": userId,

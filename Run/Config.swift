@@ -17,6 +17,8 @@ struct BasicConfig {
     static let NavigationBarBackgroundColor = UIColor(red: 247.0/250.0, green: 247.0/250.0, blue: 247.0/250.0, alpha: 1.0)
     
     static let TripIDFromRecordView = "--NOT_A_TRIP--"
+    
+    static let UserAccountID = "StudentAccount"
 }
 
 
