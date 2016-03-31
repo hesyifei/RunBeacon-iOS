@@ -182,6 +182,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     // MARK: - LocationManager func
+    func startScanning() {
+        if(isRecord == false){
+            // 所有iBeacon均應設置為同一UUID
+            let beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
+            
+            beaconRegion.notifyEntryStateOnDisplay = true
+            
+            locationManager.startRangingBeaconsInRegion(beaconRegion)
+            DDLogInfo("開始掃描iBeacon")
+        }
+    }
+    
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
             if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
@@ -236,18 +248,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             }
         } else {
             // 一個iBeacon都沒有
-        }
-    }
-    
-    func startScanning() {
-        if(isRecord == false){
-            // 所有iBeacon均應設置為同一UUID
-            let beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
-            
-            beaconRegion.notifyEntryStateOnDisplay = true
-            
-            locationManager.startRangingBeaconsInRegion(beaconRegion)
-            DDLogInfo("開始掃描iBeacon")
         }
     }
     
