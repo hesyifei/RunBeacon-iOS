@@ -53,10 +53,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     var timerStartTime: NSTimeInterval!
     
     
+    var isRecord: Bool!
+    
+    
     // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogInfo("Practice Running View Controller 之 super.viewDidLoad() 已加載")
+        
+        
+        self.isRecord = self.tripId == BasicConfig.TripIDFromRecordView
+        DDLogDebug("已設置isRecord值為\(self.isRecord)")
+        
         
         
         // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
@@ -216,14 +224,15 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func startScanning() {
-        DDLogInfo("開始掃描iBeacon")
-        
-        // 所有iBeacon均應設置為同一UUID
-        let beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
-        
-        beaconRegion.notifyEntryStateOnDisplay = true
-        
-        locationManager.startRangingBeaconsInRegion(beaconRegion)
+        if(!isRecord){
+            // 所有iBeacon均應設置為同一UUID
+            let beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
+            
+            beaconRegion.notifyEntryStateOnDisplay = true
+            
+            locationManager.startRangingBeaconsInRegion(beaconRegion)
+            DDLogInfo("開始掃描iBeacon")
+        }
     }
     
     
@@ -587,6 +596,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             customView.timeLabel.text = "\(self.secondsToFormattedTime(timeDifference))"
             customView.speedLabel.text = "\(self.getSpeedText(timeDifference, distance: 1))"
             
+            // TODO: change speed & time here
             customView.leftBottomLargeLabel.text = "01:50"
             customView.leftBottomSmallLabel.text = "Suggest Time"
             customView.rightBottomLargeLabel.text = "7 m/s"
