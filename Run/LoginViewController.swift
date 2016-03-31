@@ -75,7 +75,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
             DDLogInfo("目前已有Checkpoints相關數據儲存於本地")
         }else{
             DDLogInfo("目前沒有Checkpoints相關數據儲存於本地、即將顯示下載View")
-            self.performSegueWithIdentifier("showDataLoadingView", sender: self)
+            Async.main {
+                self.performSegueWithIdentifier("showDataLoadingView", sender: self)
+            }
         }
         
         

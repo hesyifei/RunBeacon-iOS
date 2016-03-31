@@ -26,7 +26,6 @@ class DataLoadingViewController: UIViewController {
         
         initCheckpointsData({
             Async.main {
-                //self.performSegueWithIdentifier("showLoginView", sender: self)
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         })
