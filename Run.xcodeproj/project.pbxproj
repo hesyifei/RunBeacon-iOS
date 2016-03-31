@@ -24,6 +24,7 @@
 		EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB791C9AC2C100E3CF8B /* Config.swift */; };
 		EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */; };
 		EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */; };
+		EDCAD0331CAD365500F4C674 /* PracticeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */; };
 		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
 		EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */; };
 		EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */; };
@@ -78,6 +79,7 @@
 		EDB1DB791C9AC2C100E3CF8B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecordViewController.swift; sourceTree = "<group>"; };
+		EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecord.swift; sourceTree = "<group>"; };
 		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
 		EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunMapView.swift; sourceTree = "<group>"; };
 		EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRunningViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */,
 				ED65D0271C9E433F009790B0 /* Path.swift */,
 				EDB1DB731C9A88CC00E3CF8B /* RunCheck.swift */,
+				EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */,
 			);
 			name = "Data Classes";
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */,
 				EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */,
 				EDCE6CB21C99731F004C8BD1 /* CheckpointPopupView.swift in Sources */,
+				EDCAD0331CAD365500F4C674 /* PracticeRecord.swift in Sources */,
 				EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */,
 				EDCE6CB41C99738C004C8BD1 /* TimelineView.swift in Sources */,
 				EDCE6CB81C9973F6004C8BD1 /* PaddingLabel.swift in Sources */,

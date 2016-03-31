@@ -9,7 +9,6 @@
 import UIKit
 import Foundation
 import MapKit
-import Async
 import CocoaLumberjack
 import SwiftyJSON
 

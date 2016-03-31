@@ -8,7 +8,6 @@
 
 import UIKit
 import Foundation
-import Async
 import CocoaLumberjack
 
 class RunCheck: NSObject {
