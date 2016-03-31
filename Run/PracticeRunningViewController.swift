@@ -17,6 +17,7 @@ import Alamofire
 import CocoaLumberjack
 import CRToast
 import KLCPopup
+import Locksmith
 
 class PracticeRunningViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -689,12 +690,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         let uploadId = CheckpointFunc().getUploadCheckpointId(runCheck, runChecks: runChecks)
 
         
+        let userId = Locksmith.loadDataForUserAccount("StudentAccount")!["username"] as! String
+        
         let parameters = [
-            "userId": "2015206",
+            "userId": userId,
             "tripId": "\(tripId!)",
             "checkpointId": "\(uploadId)",
         ]
-        
         DDLogDebug("準備上傳RunCheck數據：\(parameters)")
         
         

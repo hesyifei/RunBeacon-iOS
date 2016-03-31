@@ -12,6 +12,8 @@ import Foundation
 import Async
 import Alamofire
 import CocoaLumberjack
+import KLCPopup
+import Locksmith
 
 class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate {
     
@@ -48,11 +50,43 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         
         
         usernameTextField.delegate = self
-        usernameTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
+        usernameTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
         passwordTextField.delegate = self
-        passwordTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
+        passwordTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
+        
+        if let accountData = Locksmith.loadDataForUserAccount("StudentAccount") {
+            if let username = accountData["username"] {
+                if let _ = accountData["password"] {
+                    DDLogInfo("目前用戶已登入賬戶（\(accountData)）、直接進入主界面")
+                    Async.main {
+                        let screenSize: CGRect = UIScreen.mainScreen().bounds
+                        
+                        let welcomeLabel = UILabel(frame: CGRectMake(0, 0, screenSize.width*0.8, 80.0))
+                        welcomeLabel.text = "Welcome back, \(username)!"
+                        welcomeLabel.textAlignment = .Center
+                        welcomeLabel.backgroundColor = UIColor.whiteColor()
+                        welcomeLabel.layer.cornerRadius = 5.0
+                        welcomeLabel.clipsToBounds = true
+                        
+                        let popupController = KLCPopup(contentView: welcomeLabel)
+                        popupController.shouldDismissOnContentTouch = false
+                        popupController.shouldDismissOnBackgroundTouch = false
+                        popupController.maskType = .Dimmed
+                        popupController.showType = .GrowIn
+                        popupController.dismissType = .GrowOut
+                        
+                        popupController.willStartDismissingCompletion = {
+                            self.showPracticeView()
+                        }
+                        
+                        let layout = KLCPopupLayoutMake(.Center, .Center)
+                        popupController.showWithLayout(layout, duration: 2.5)
+                    }
+                }
+            }
+        }
         
         /*
         /*** 僅供測試、實際將使用下方viewWillAppear的函數 ***/
@@ -95,7 +129,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     
     // MARK: - Action func
     func loginButtonAction() {
-        self.performSegueWithIdentifier("showPracticeView", sender: self)
+        let dataToBeStored = ["username": usernameTextField.text!, "password": passwordTextField.text!]
+        
+        do {
+            try Locksmith.updateData(dataToBeStored, forUserAccount: "StudentAccount")
+            DDLogDebug("已儲存用戶名及密碼：\(dataToBeStored)")
+            
+            showPracticeView()
+        } catch {
+            DDLogError("無法儲存用戶名及密碼：\(dataToBeStored)")
+        }
+    }
+    
+    func showPracticeView() {
+        Async.main {
+            self.performSegueWithIdentifier("showPracticeView", sender: self)
+        }
     }
     
     func dismissKeyboard() {
