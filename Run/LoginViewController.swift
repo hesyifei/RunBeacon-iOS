@@ -134,15 +134,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     
     // MARK: - Action func
     func loginButtonAction() {
-        let dataToBeStored = ["username": usernameTextField.text!, "password": passwordTextField.text!]
-        
-        do {
-            try Locksmith.updateData(dataToBeStored, forUserAccount: BasicConfig.UserAccountID)
-            DDLogDebug("已儲存用戶名及密碼：\(dataToBeStored)")
+        if((usernameTextField.text!.isEmpty)||(passwordTextField.text!.isEmpty)){
+            BasicFunc().showAlert(self, title: "Notice", message: "Please enter username and password.")
+        }else{
+            let dataToBeStored = ["username": usernameTextField.text!, "password": passwordTextField.text!]
             
-            showPracticeView()
-        } catch {
-            DDLogError("無法儲存用戶名及密碼（\(dataToBeStored)）：\(error)")
+            do {
+                try Locksmith.updateData(dataToBeStored, forUserAccount: BasicConfig.UserAccountID)
+                DDLogDebug("已儲存用戶名及密碼：\(dataToBeStored)")
+                
+                showPracticeView()
+            } catch {
+                DDLogError("無法儲存用戶名及密碼（\(dataToBeStored)）：\(error)")
+            }
         }
     }
     
@@ -155,5 +159,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     func dismissKeyboard() {
         self.view.endEditing(true)
     }
-    
 }

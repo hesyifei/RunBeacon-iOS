@@ -25,6 +25,7 @@
 		EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */; };
 		EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */; };
 		EDCAD0331CAD365500F4C674 /* PracticeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */; };
+		EDCAD03C1CAD6AF600F4C674 /* BasicFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */; };
 		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
 		EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */; };
 		EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */; };
@@ -80,6 +81,7 @@
 		EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecordViewController.swift; sourceTree = "<group>"; };
 		EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecord.swift; sourceTree = "<group>"; };
+		EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicFunc.swift; sourceTree = "<group>"; };
 		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
 		EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunMapView.swift; sourceTree = "<group>"; };
 		EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRunningViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */,
 				EDB1DB791C9AC2C100E3CF8B /* Config.swift */,
+				EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */,
 				EDB1DB6E1C9A5EB800E3CF8B /* DataLoadingViewController.swift */,
 				EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */,
 				EDCE6CBA1C9976B7004C8BD1 /* Practice View Controllers */,
@@ -462,6 +465,7 @@
 				ED9FE8E01C991FE600DB731D /* PracticeFrontViewController.swift in Sources */,
 				EDB1DB711C9A631000E3CF8B /* CheckpointFunc.swift in Sources */,
 				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
+				EDCAD03C1CAD6AF600F4C674 /* BasicFunc.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
 				EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */,

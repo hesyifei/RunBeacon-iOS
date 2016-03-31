@@ -113,13 +113,19 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     func logoutAction() {
-        do {
-            try Locksmith.deleteDataForUserAccount(BasicConfig.UserAccountID)
-            
-            self.dismissViewControllerAnimated(true, completion: nil)
-        } catch {
-            DDLogError("無法刪除用戶登入數據：\(error)")
-        }
+        let warningAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .Alert)
+        warningAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { action in
+            do {
+                try Locksmith.deleteDataForUserAccount(BasicConfig.UserAccountID)
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } catch {
+                DDLogError("無法刪除用戶登入數據：\(error)")
+            }
+        }))
+        warningAlert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+        
+        self.presentViewController(warningAlert, animated: true, completion: nil)
     }
     
     
