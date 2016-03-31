@@ -15,6 +15,8 @@ struct BasicConfig {
     static let BeaconProximityUUID = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
     
     static let NavigationBarBackgroundColor = UIColor(red: 247.0/250.0, green: 247.0/250.0, blue: 247.0/250.0, alpha: 1.0)
+    
+    static let TripIDFromRecordView = "--NOT_A_TRIP--"
 }
 
 

@@ -58,7 +58,10 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         DDLogInfo("用戶已點擊RecordCell")
         
-        self.performSegueWithIdentifier("showPracticeDetailView", sender: self)
+        let practiceRunningVC = self.storyboard!.instantiateViewControllerWithIdentifier("PracticeRunningViewController") as! PracticeRunningViewController
+        practiceRunningVC.tripId = BasicConfig.TripIDFromRecordView
+        
+        self.navigationController?.pushViewController(practiceRunningVC, animated: true)
     }
 }
 

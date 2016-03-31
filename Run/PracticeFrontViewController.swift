@@ -107,6 +107,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     func presentRecordView() {
         self.performSegueWithIdentifier("showPracticeRecordView", sender: self)
+        DDLogDebug("準備進入PracticeRecordViewController")
     }
     
     
