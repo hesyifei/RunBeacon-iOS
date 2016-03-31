@@ -22,6 +22,8 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         super.viewDidLoad()
         DDLogInfo("Practice Record View Controller 之 super.viewDidLoad() 已加載")
         
+        self.title = "Record"
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -60,7 +62,7 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         
         let practiceRunningVC = self.storyboard!.instantiateViewControllerWithIdentifier("PracticeRunningViewController") as! PracticeRunningViewController
         practiceRunningVC.tripId = BasicConfig.TripIDFromRecordView
-        practiceRunningVC.practiceRecords = recordData[indexPath.row]
+        practiceRunningVC.practiceRecord = recordData[indexPath.row]
         
         self.navigationController?.pushViewController(practiceRunningVC, animated: true)
     }

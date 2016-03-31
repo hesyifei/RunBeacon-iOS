@@ -54,7 +54,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     var isRecord: Bool!
-    var practiceRecords: PracticeRecord?
+    var practiceRecord: PracticeRecord?
     
     
     // MARK: - Override func
@@ -64,31 +64,36 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         self.isRecord = self.tripId == BasicConfig.TripIDFromRecordView
-        DDLogDebug("已設置isRecord值為\(isRecord)")
+        DDLogVerbose("已設置isRecord值為\(isRecord)")
         
         if(isRecord == true){
-            DDLogVerbose("已獲取practiceRecords值：\(practiceRecords)")
+            DDLogDebug("此次是一次練習記錄")
+            DDLogVerbose("已獲取practiceRecord值：\(practiceRecord)")
+            self.runChecks = (practiceRecord?.runChecks)!
+        }else{
+            DDLogDebug("此次是一次新練習")
+            // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
+            self.runChecks = [
+                //RunCheck(checkpointId: 4, time: NSDate()),
+                //RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
+                //RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
+                RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
+                RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
+                RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-320)),
+                RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-380)),
+                RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-400)),
+                RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-430)),
+                RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-460)),
+                RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-520)),
+                RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-580)),
+                RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-600)),
+                RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-610)),
+            ]
         }
         
         
         
-        // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
-        runChecks = [
-            //RunCheck(checkpointId: 4, time: NSDate()),
-            //RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
-            //RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
-            RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
-            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
-            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-320)),
-            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-380)),
-            RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-400)),
-            RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-430)),
-            RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-460)),
-            RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-520)),
-            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-580)),
-            RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-600)),
-            RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-610)),
-        ]
+        
         
         
         
@@ -101,21 +106,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         locationManager.startUpdatingLocation()
         
         
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.separatorStyle = .None
-        
-        tableView.allowsSelection = false
-        
-        
         topMapView.delegate = self
         
         
         
-        let cancelNavButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(self.cancelPractice))
-        self.navigationItem.leftBarButtonItems = [cancelNavButton]
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .None
+        tableView.allowsSelection = false
+        
+        
+        
         
         
         timeLabel.text = "\(secondsToFormattedTime(0))"
@@ -125,14 +127,20 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
+        if(isRecord == false){
+            let cancelNavButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(self.cancelPractice))
+            self.navigationItem.leftBarButtonItems = [cancelNavButton]
+            
+            timerStartTime = NSDate.timeIntervalSinceReferenceDate()
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.calcTime), userInfo: nil, repeats: true)
+            NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
+            DDLogDebug("已開啟timer計時器")
+        }else{
+            timeLabel.text = "\(secondsToFormattedTime((practiceRecord?.timeInterval)!))"
+        }
         
         
         initCheckpoints()
-        
-        
-        timerStartTime = NSDate.timeIntervalSinceReferenceDate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.calcTime), userInfo: nil, repeats: true)
-        NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -160,9 +168,11 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         super.viewDidDisappear(animated)
         DDLogInfo("Practice Running View Controller 之 super.viewDidDisappear() 已加載")
         
-        timer!.invalidate()
-        timer = nil
-        DDLogInfo("已停止timer計時器")
+        if(isRecord == false){
+            timer!.invalidate()
+            timer = nil
+            DDLogInfo("已停止timer計時器")
+        }
     }
     
     override func didReceiveMemoryWarning() {
