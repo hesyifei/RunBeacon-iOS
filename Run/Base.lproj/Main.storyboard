@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MLC-xU-Nkc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MLC-xU-Nkc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -133,11 +133,42 @@
                         <outlet property="startButton" destination="I72-Nv-lS5" id="zxp-PB-oU5"/>
                         <outlet property="topMapView" destination="ecf-Ua-itT" id="uAJ-cm-5d9"/>
                         <segue destination="bwH-Qh-0VH" kind="showDetail" identifier="showPracticeRunningView" id="nBS-AG-8xv"/>
+                        <segue destination="vPu-13-bK5" kind="show" identifier="showPracticeRecordView" id="Zvu-cU-PhF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MYx-B2-05J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="212" y="333"/>
+        </scene>
+        <!--Practice Record View Controller-->
+        <scene sceneID="Z1N-P4-iM7">
+            <objects>
+                <viewController id="vPu-13-bK5" customClass="PracticeRecordViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="c0u-N2-R6L"/>
+                        <viewControllerLayoutGuide type="bottom" id="32P-6B-kRN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LjL-1B-1MD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gRF-KP-FsQ">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gRF-KP-FsQ" firstAttribute="top" secondItem="c0u-N2-R6L" secondAttribute="bottom" id="04Q-ba-n43"/>
+                            <constraint firstItem="32P-6B-kRN" firstAttribute="top" secondItem="gRF-KP-FsQ" secondAttribute="bottom" id="2e1-uf-EXY"/>
+                            <constraint firstAttribute="trailing" secondItem="gRF-KP-FsQ" secondAttribute="trailing" id="QIu-WT-4Mq"/>
+                            <constraint firstItem="gRF-KP-FsQ" firstAttribute="leading" secondItem="LjL-1B-1MD" secondAttribute="leading" id="iES-Ko-jAp"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1J9-8D-ooH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="854" y="-332"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Jxm-62-c8z">

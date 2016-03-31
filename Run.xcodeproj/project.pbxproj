@@ -23,6 +23,7 @@
 		EDB1DB781C9A8F8A00E3CF8B /* AudimatMonoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */; };
 		EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB791C9AC2C100E3CF8B /* Config.swift */; };
 		EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */; };
+		EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */; };
 		EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */; };
 		EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */; };
 		EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */; };
@@ -76,6 +77,7 @@
 		EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudimatMonoBold.ttf; sourceTree = "<group>"; };
 		EDB1DB791C9AC2C100E3CF8B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecordViewController.swift; sourceTree = "<group>"; };
 		EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLogFormatter.swift; sourceTree = "<group>"; };
 		EDCE6CAB1C9928A1004C8BD1 /* RunMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunMapView.swift; sourceTree = "<group>"; };
 		EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRunningViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			children = (
 				ED9FE8DF1C991FE600DB731D /* PracticeFrontViewController.swift */,
 				EDCE6CAF1C9972B4004C8BD1 /* PracticeRunningViewController.swift */,
+				EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */,
 			);
 			name = "Practice View Controllers";
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
+				EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */,
 				EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */,
 				EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */,
 				EDCE6CB21C99731F004C8BD1 /* CheckpointPopupView.swift in Sources */,
