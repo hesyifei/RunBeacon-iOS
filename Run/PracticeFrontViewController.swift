@@ -69,7 +69,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         locationManager.delegate = self
         
         
-        startButton.titleLabel?.text = "Start"
+        startButton.setTitle("Start", forState: .Normal)
         startButton.titleLabel?.font = UIFont(name: (startButton.titleLabel?.font?.fontName)!, size: 30.0)
         startButton.backgroundColor = UIColor.greenColor()
         startButton.addTarget(self, action: #selector(self.startButtonAction), forControlEvents: .TouchUpInside)

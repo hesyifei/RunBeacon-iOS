@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MLC-xU-Nkc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KcV-FO-Ntq">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -60,16 +60,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQf-5C-32R">
-                                <rect key="frame" x="20" y="72" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hKR-nP-7TR">
+                                <rect key="frame" x="90" y="120" width="420" height="360"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xNC-C0-qUk">
+                                        <rect key="frame" x="42" y="50" width="336" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r5l-UE-DrY">
+                                        <rect key="frame" x="41" y="100" width="336" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQf-5C-32R">
+                                        <rect key="frame" x="191" y="170" width="38" height="30"/>
+                                        <state key="normal" title="Login"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="xNC-C0-qUk" firstAttribute="width" secondItem="hKR-nP-7TR" secondAttribute="width" multiplier="0.8" id="1mx-J6-3Xb"/>
+                                    <constraint firstItem="xNC-C0-qUk" firstAttribute="top" secondItem="hKR-nP-7TR" secondAttribute="top" constant="50" id="Cky-Al-xat"/>
+                                    <constraint firstItem="r5l-UE-DrY" firstAttribute="centerX" secondItem="hKR-nP-7TR" secondAttribute="centerX" id="IWx-9F-2Yk"/>
+                                    <constraint firstItem="AQf-5C-32R" firstAttribute="top" secondItem="r5l-UE-DrY" secondAttribute="bottom" constant="40" id="Yxf-i4-4MH"/>
+                                    <constraint firstItem="r5l-UE-DrY" firstAttribute="width" secondItem="xNC-C0-qUk" secondAttribute="width" id="faN-OD-n94"/>
+                                    <constraint firstItem="AQf-5C-32R" firstAttribute="centerX" secondItem="hKR-nP-7TR" secondAttribute="centerX" id="sbA-Bh-VEr"/>
+                                    <constraint firstItem="xNC-C0-qUk" firstAttribute="centerX" secondItem="hKR-nP-7TR" secondAttribute="centerX" id="vRc-5m-Bcm"/>
+                                    <constraint firstItem="r5l-UE-DrY" firstAttribute="top" secondItem="xNC-C0-qUk" secondAttribute="bottom" constant="20" id="xmu-hT-mqd"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hKR-nP-7TR" firstAttribute="centerX" secondItem="6v1-Mk-GGY" secondAttribute="centerX" id="EOG-CU-Dgi"/>
+                            <constraint firstItem="hKR-nP-7TR" firstAttribute="width" secondItem="6v1-Mk-GGY" secondAttribute="width" multiplier="0.7" id="Rnq-B2-rRK"/>
+                            <constraint firstItem="hKR-nP-7TR" firstAttribute="centerY" secondItem="6v1-Mk-GGY" secondAttribute="centerY" id="dQA-cc-BW1"/>
+                            <constraint firstItem="hKR-nP-7TR" firstAttribute="height" secondItem="6v1-Mk-GGY" secondAttribute="height" multiplier="0.6" id="zts-Kn-brq"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4Oo-Ui-Y6F"/>
                     <connections>
                         <outlet property="loginButton" destination="AQf-5C-32R" id="TLr-iX-z9i"/>
+                        <outlet property="loginView" destination="hKR-nP-7TR" id="lJj-fh-XaK"/>
+                        <outlet property="passwordTextField" destination="r5l-UE-DrY" id="Kgo-my-L6J"/>
+                        <outlet property="usernameTextField" destination="xNC-C0-qUk" id="GFG-nr-ADf"/>
                         <segue destination="1Wg-ry-S6t" kind="showDetail" identifier="showPracticeView" id="Sje-cW-WNp"/>
                         <segue destination="whl-sS-nQG" kind="presentation" identifier="showDataLoadingView" id="cyM-3t-AzR"/>
                     </connections>
@@ -77,22 +112,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dZb-fy-SGO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1165" y="805"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Tg8-kC-Wvy">
-            <objects>
-                <navigationController id="MLC-xU-Nkc" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eWG-db-BRr">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="KcV-FO-Ntq" kind="relationship" relationship="rootViewController" id="kOu-jW-d9G"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rWZ-3A-ggr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1815" y="805"/>
         </scene>
         <!--Practice-->
         <scene sceneID="0eY-EQ-Fyb">
