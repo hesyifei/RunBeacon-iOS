@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>489</string>
+	<string>491</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -28,7 +28,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>To check if you pass the checkpoint!</string>
+	<string>This application requires location services to check if you have passed any checkpoints.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Topsquare.ttf</string>

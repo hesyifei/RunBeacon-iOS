@@ -35,6 +35,7 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
             PracticeRecord(runChecks: [
                 RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
                 RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
+                RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-275)),
                 RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-300)),
                 ]),
             PracticeRecord(runChecks: [
