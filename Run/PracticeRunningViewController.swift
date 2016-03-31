@@ -54,6 +54,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     var isRecord: Bool!
+    var practiceRecords: PracticeRecord?
     
     
     // MARK: - Override func
@@ -63,7 +64,11 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         self.isRecord = self.tripId == BasicConfig.TripIDFromRecordView
-        DDLogDebug("已設置isRecord值為\(self.isRecord)")
+        DDLogDebug("已設置isRecord值為\(isRecord)")
+        
+        if(isRecord == true){
+            DDLogVerbose("已獲取practiceRecords值：\(practiceRecords)")
+        }
         
         
         
@@ -197,6 +202,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 // TODO: 暫時無法判斷用戶是否往回跑、暫時擱置
                 /*DDLogError("NEW ID: \(CheckpointFunc().getUploadCheckpointId(newRunCheck, runChecks: [newRunCheck] + runChecks))\nLATEST REAL ID: \(CheckpointFunc().getUploadCheckpointId(runChecks[runChecks.count-1], runChecks: runChecks))")*/
                 
+                
                 runChecks = [newRunCheck] + runChecks
                 
                 
@@ -224,7 +230,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func startScanning() {
-        if(!isRecord){
+        if(isRecord == false){
             // 所有iBeacon均應設置為同一UUID
             let beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
             

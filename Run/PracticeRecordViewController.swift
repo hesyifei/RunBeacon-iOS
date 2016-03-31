@@ -60,6 +60,7 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         
         let practiceRunningVC = self.storyboard!.instantiateViewControllerWithIdentifier("PracticeRunningViewController") as! PracticeRunningViewController
         practiceRunningVC.tripId = BasicConfig.TripIDFromRecordView
+        practiceRunningVC.practiceRecords = recordData[indexPath.row]
         
         self.navigationController?.pushViewController(practiceRunningVC, animated: true)
     }
