@@ -87,7 +87,7 @@ class CheckpointPopupView: UIView {
         
         
         speedLabel = UILabel()
-        speedLabel.font = UIFont(name: (speedLabel.font?.fontName)!, size: 40.0)
+        speedLabel.font = UIFont(name: "AudimatMonoBold", size: 45.0)
         speedLabel.textColor = UIColor.blueColor()
         speedLabel.textAlignment = .Center
         speedLabel.translatesAutoresizingMaskIntoConstraints = false

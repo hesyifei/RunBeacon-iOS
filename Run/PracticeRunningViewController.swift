@@ -556,7 +556,13 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func cancelPractice() {
-        closeView()
+        let warningAlert = UIAlertController(title: "Warning", message: "This action is irreversible!\nAre you sure you want to cancel this practice?", preferredStyle: UIAlertControllerStyle.Alert)
+        warningAlert.addAction(UIAlertAction(title: "Yes", style: .Destructive, handler: { action in
+            self.closeView()
+        }))
+        warningAlert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+        
+        self.presentViewController(warningAlert, animated: true, completion: nil)
     }
     
     func closeView() {
