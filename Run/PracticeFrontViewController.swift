@@ -53,7 +53,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         DDLogInfo("Practice Front View Controller 之 super.viewDidLoad() 已加載")
         
         
-        startButton.addTarget(self, action: "startButtonAction", forControlEvents: .TouchUpInside)
+        startButton.addTarget(self, action: #selector(self.startButtonAction), forControlEvents: .TouchUpInside)
 
         
         

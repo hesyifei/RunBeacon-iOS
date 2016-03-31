@@ -61,9 +61,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
         runChecks = [
-            RunCheck(checkpointId: 4, time: NSDate()),
-            RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
-            RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
+            //RunCheck(checkpointId: 4, time: NSDate()),
+            //RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
+            //RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
             RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
             RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
             RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-320)),
@@ -101,7 +101,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
-        let cancelNavButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelPractice")
+        let cancelNavButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(self.cancelPractice))
         self.navigationItem.leftBarButtonItems = [cancelNavButton]
         
         
@@ -118,7 +118,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         timerStartTime = NSDate.timeIntervalSinceReferenceDate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "calcTime", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.calcTime), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
     }
     
@@ -173,16 +173,24 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
-        if beacons.count > 0 {
-            // 這裡可能會產生bug（直接提取[0]似乎不太好）
-            let beacon = beacons[0]
+        let filteredBeacon = beacons.filter() { $0.proximity != .Unknown }      // 獲取所有距離非Unknown的Beacon
+        
+        if filteredBeacon.count > 0 {
+            let beacon = filteredBeacon.first!          // 獲取距離最近的Beacon
             if(currentBeacon == [beacon.proximityUUID.UUIDString, beacon.major.stringValue, beacon.minor.stringValue]){
                 DDLogVerbose("繼續維持在Beacon（\(beacon.major), \(beacon.minor), \(beacon.proximity.rawValue)）的範圍內")
             }else{
                 DDLogInfo("已進入新Beacon（\(beacon.major), \(beacon.minor), \(beacon.proximity.rawValue)）範圍")
                 
+                
+                
                 let newRunCheck = RunCheck(checkpointId: beacon.minor.integerValue, time: NSDate())
+                
+                // TODO: 暫時無法判斷用戶是否往回跑、暫時擱置
+                /*DDLogError("NEW ID: \(CheckpointFunc().getUploadCheckpointId(newRunCheck, runChecks: [newRunCheck] + runChecks))\nLATEST REAL ID: \(CheckpointFunc().getUploadCheckpointId(runChecks[runChecks.count-1], runChecks: runChecks))")*/
+                
                 runChecks = [newRunCheck] + runChecks
+                
                 
                 tableView.beginUpdates()
                 tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
@@ -477,7 +485,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         cell.tag = runChecks[row].checkpointId           // 供timelineAction使用
         
-        let timelineTapGesture = UITapGestureRecognizer(target: self, action: "timelineAction:")
+        let timelineTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.timelineAction(_:)))
         leftView.addGestureRecognizer(timelineTapGesture)
         
         if(!isBottom){

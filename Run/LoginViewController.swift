@@ -27,25 +27,26 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-        loginButton.addTarget(self, action: "loginButtonAction", forControlEvents: .TouchUpInside)
+        loginButton.addTarget(self, action: #selector(self.loginButtonAction), forControlEvents: .TouchUpInside)
         
         
+        /*
         /*** 僅供測試、實際將使用下方viewWillAppear的函數 ***/
         DDLogInfo("目前沒有Checkpoints相關數據儲存於本地、即將顯示下載View")
         self.performSegueWithIdentifier("showDataLoadingView", sender: self)
-
+        */
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         DDLogInfo("Login View Controller 之 super.viewWillAppear() 已加載")
         
-        /*if(CheckpointFunc().getCheckpoints().count > 0){
+        if(CheckpointFunc().getCheckpoints().count > 0){
             DDLogInfo("目前已有Checkpoints相關數據儲存於本地")
         }else{
             DDLogInfo("目前沒有Checkpoints相關數據儲存於本地、即將顯示下載View")
             self.performSegueWithIdentifier("showDataLoadingView", sender: self)
-        }*/
+        }
     }
     
     func loginButtonAction() {
