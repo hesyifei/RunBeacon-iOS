@@ -12,6 +12,7 @@ target 'Run' do
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
     pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'
     pod 'KLCPopup', :head
+    pod 'Locksmith'
 end
 
 target 'RunTests' do
