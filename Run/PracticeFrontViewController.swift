@@ -53,8 +53,13 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         DDLogInfo("Practice Front View Controller 之 super.viewDidLoad() 已加載")
         
         
+        let recordNavButton = UIBarButtonItem(title: "Record", style: .Plain, target: self, action: #selector(self.presentRecordView))
+        self.navigationItem.leftBarButtonItems = [recordNavButton]
+        
+        
+        
         startButton.addTarget(self, action: #selector(self.startButtonAction), forControlEvents: .TouchUpInside)
-
+        
         
         
         topMapView.delegate = self
@@ -96,6 +101,10 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         tripId = NSUUID().UUIDString
         DDLogDebug("已生成此次tripId：\(tripId)")
         self.performSegueWithIdentifier("showPracticeRunningView", sender: self)
+    }
+    
+    func presentRecordView() {
+        self.performSegueWithIdentifier("showPracticeRecordView", sender: self)
     }
     
     
