@@ -527,15 +527,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             DDLogVerbose("準備獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離")
             
             
-            if let i = pathsData.indexOf({($0.start == startCheckpointId)&&($0.end == endCheckpointId)}) {
-                DDLogError("第\(row)行已獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離：\(pathsData[i].distance)")
-                let speedText = getSpeedText(timeDifference, distance: pathsData[i].distance)
-                DDLogError("第\(row)行已獲取從\(startCheckpointId)到\(endCheckpointId)這段的速度：\(speedText)")
+            let distance = getDistance(start: startCheckpointId, end: endCheckpointId)
+            if(distance != -1){
+                DDLogVerbose("第\(row)行已獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離：\(distance)")
+                let speedText = getSpeedText(timeDifference, distance: distance)
+                DDLogVerbose("第\(row)行已獲取從\(startCheckpointId)到\(endCheckpointId)這段的速度：\(speedText)")
                 speedCurrentLabel.text = speedText
             }else{
+                DDLogWarn("第\(row)行無法獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離及速度")
                 speedCurrentLabel.text = "Unknown"
             }
-            
         }else{
             numberLabel.text = "Ⓑ"
             timeCurrentLabel.text = ""
@@ -610,7 +611,22 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             
             let timeDifference = self.getRunCheckTimeDifference(0, comparingIndex: 1)
             customView.timeLabel.text = "\(self.secondsToFormattedTime(timeDifference))"
-            customView.speedLabel.text = "\(self.getSpeedText(timeDifference, distance: 1))"
+            
+            
+            let startCheckpointId = CheckpointFunc().getUploadCheckpointId(self.runChecks[1], runChecks: self.runChecks)
+            let endCheckpointId = CheckpointFunc().getUploadCheckpointId(self.runChecks[0], runChecks: self.runChecks)
+            DDLogVerbose("彈窗準備獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離")
+            let distance = self.getDistance(start: startCheckpointId, end: endCheckpointId)
+            if(distance != -1){
+                DDLogVerbose("彈窗已獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離：\(distance)")
+                let speedText = self.getSpeedText(timeDifference, distance: distance)
+                DDLogVerbose("彈窗已獲取從\(startCheckpointId)到\(endCheckpointId)這段的速度：\(speedText)")
+                customView.speedLabel.text = speedText
+            }else{
+                DDLogWarn("彈窗無法獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離及速度")
+                customView.speedLabel.text = ""
+            }
+            
             
             // TODO: change speed & time here
             customView.leftBottomLargeLabel.text = "01:50"
@@ -627,6 +643,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 
                 let layout = KLCPopupLayoutMake(.Center, .BelowCenter)
                 self.popupController.showWithLayout(layout, duration: 15.0)
+        }
+    }
+    
+    func getDistance(start startCheckpointId: Int, end endCheckpointId: Int) -> Double {
+        if let i = pathsData.indexOf({($0.start == startCheckpointId)&&($0.end == endCheckpointId)}) {
+            return pathsData[i].distance
+        }else{
+            return -1
         }
     }
     
