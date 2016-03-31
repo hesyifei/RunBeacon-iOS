@@ -32,11 +32,14 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         tableView.dataSource = self
         
         recordData = [
-            PracticeRecord(runChecks: [RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
-                RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260))]),
             PracticeRecord(runChecks: [
-                RunCheck(checkpointId: 2, time: NSDate()),
-                RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-60)),
+                RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
+                RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
+                RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-300)),
+                ]),
+            PracticeRecord(runChecks: [
+                RunCheck(checkpointId: 3, time: NSDate()),
+                RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-60)),
                 RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-160)),
                 ]),
         ]
@@ -58,8 +61,22 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordCell", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel!.text = "\(recordData[indexPath.row].timeInterval)"
-        cell.detailTextLabel!.text = "\(recordData[indexPath.row].speed)"
+        
+        let currentRecord = recordData[indexPath.row]
+        
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let timeFormatter = NSDateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        
+        cell.textLabel!.text = "\(dateFormatter.stringFromDate(currentRecord.startTime)) \(timeFormatter.stringFromDate(currentRecord.startTime))-\(timeFormatter.stringFromDate(currentRecord.endTime))"
+        
+        
+        let durationString = PracticeRunningViewController().secondsToFormattedTime(currentRecord.timeInterval)
+        
+        cell.detailTextLabel!.text = "Ⓣ \(durationString)"
+        
         
         return cell
     }
