@@ -19,6 +19,8 @@ struct BasicConfig {
     static let TripIDFromRecordView = "--NOT_A_TRIP--"
     
     static let UserAccountID = "StudentAccount"
+    
+    static let ContactAdminMessage = "Please contact administrator for more information."
 }
 
 

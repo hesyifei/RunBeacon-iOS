@@ -33,14 +33,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="數據下載中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubO-1V-HR6">
-                                <rect key="frame" x="39" y="93" width="85" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download data from server..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubO-1V-HR6">
+                                <rect key="frame" x="0.0" y="90" width="600" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="xwz-rs-3E7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PWL-Go-Nsh">
+                                <rect key="frame" x="290" y="180" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PWL-Go-Nsh" firstAttribute="top" secondItem="ubO-1V-HR6" secondAttribute="bottom" constant="30" id="1rF-Hz-aSu"/>
+                            <constraint firstItem="PWL-Go-Nsh" firstAttribute="centerX" secondItem="aHd-cC-gLr" secondAttribute="centerX" id="DBa-UC-8DD"/>
+                            <constraint firstItem="ubO-1V-HR6" firstAttribute="top" secondItem="7Ep-IR-N8a" secondAttribute="bottom" constant="70" id="IMV-Kh-yPs"/>
+                            <constraint firstItem="ubO-1V-HR6" firstAttribute="width" secondItem="aHd-cC-gLr" secondAttribute="width" id="Iri-Gv-ifX"/>
+                            <constraint firstItem="ubO-1V-HR6" firstAttribute="centerX" secondItem="aHd-cC-gLr" secondAttribute="centerX" id="c9l-Lb-9Ol"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iVF-Tp-k2z"/>
                 </viewController>

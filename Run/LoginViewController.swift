@@ -142,12 +142,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
             let dataToBeStored = ["username": usernameTextField.text!, "password": passwordTextField.text!]
             
             do {
-                try Locksmith.updateData(dataToBeStored, forUserAccount: BasicConfig.UserAccountID)
+                try Locksmith.saveData(dataToBeStored, forUserAccount: BasicConfig.UserAccountID)
                 DDLogDebug("已儲存用戶名及密碼：\(dataToBeStored)")
                 
                 showPracticeView()
-            } catch {
+            } catch let error as NSError {
                 DDLogError("無法儲存用戶名及密碼（\(dataToBeStored)）：\(error)")
+                BasicFunc().showErrorAlert(self, error: error)
             }
         }
     }

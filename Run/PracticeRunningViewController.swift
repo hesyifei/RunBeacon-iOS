@@ -205,6 +205,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         }
         if status == .Denied || status == .Restricted {
             DDLogError("定位服務未允許/未開啟，無法檢測iBeacon！")
+            BasicFunc().showEnableLocationAlert(self)
         }
     }
     
@@ -705,6 +706,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 if let error = error {
                     DDLogError("上傳RunCheck資訊失敗：\(error)")
                     CRToastManager.showNotificationWithMessage("Cannot upload checkpoint data to server!", completionBlock: nil)
+                    BasicFunc().showErrorAlert(self, error: error)
                 }else{
                     DDLogInfo("上傳RunCheck資訊成功")
                     CRToastManager.showNotificationWithMessage("Upload checkpoint data successfully!", completionBlock: nil)

@@ -39,7 +39,7 @@ class DataLoadingViewController: UIViewController {
     
     // MARK: - Data func
     func initCheckpointsData(completion: () -> Void) {
-        CheckpointFunc().loadCheckpointsDataFromServer({
+        CheckpointFunc().loadCheckpointsDataFromServer(self, completion: {
             completion()
         })
     }

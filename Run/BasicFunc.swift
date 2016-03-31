@@ -17,4 +17,14 @@ class BasicFunc {
         alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
         selfVC.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    func showErrorAlert(selfVC: UIViewController, error: NSError) {
+        showAlert(selfVC, title: "Error", message: "\(error.localizedDescription)\n\n\(BasicConfig.ContactAdminMessage)")
+    }
+    
+    func showEnableLocationAlert(selfVC: UIViewController) {
+        let alert = UIAlertController(title: "Notice", message: "Please enable Location Services and restart this application to continue.\n\n\(BasicConfig.ContactAdminMessage)", preferredStyle: .Alert)
+        // 將不會有按鈕出現（為阻止用戶繼續使用）
+        selfVC.presentViewController(alert, animated: true, completion: nil)
+    }
 }

@@ -130,11 +130,12 @@ class CheckpointFunc {
     
     
     
-    func loadCheckpointsDataFromServer(completion: () -> Void) {
+    func loadCheckpointsDataFromServer(selfVC: UIViewController, completion: () -> Void) {
         Alamofire.request(.GET, BasicConfig.CheckpointDataGetURL)
             .response { request, response, data, error in
                 if let error = error {
                     DDLogError("checkpoints伺服器數據獲取錯誤：\(error)")
+                    BasicFunc().showErrorAlert(selfVC, error: error)
                 } else {
                     let json = JSON(data: data!)
                     var checkpointsData = [Checkpoint]()

@@ -78,6 +78,12 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         
         
         initCheckpoints()
+        
+        
+        if(CLLocationManager.authorizationStatus() != .AuthorizedAlways){
+            DDLogError("定位服務未允許/未開啟，將提示用戶開啟後重啟App！")
+            BasicFunc().showEnableLocationAlert(self)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -119,8 +125,9 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
                 try Locksmith.deleteDataForUserAccount(BasicConfig.UserAccountID)
                 
                 self.dismissViewControllerAnimated(true, completion: nil)
-            } catch {
+            } catch let error as NSError {
                 DDLogError("無法刪除用戶登入數據：\(error)")
+                BasicFunc().showErrorAlert(self, error: error)
             }
         }))
         warningAlert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
