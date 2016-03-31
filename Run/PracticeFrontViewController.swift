@@ -58,7 +58,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         
         
         
-        startButton.addTarget(self, action: #selector(self.startButtonAction), forControlEvents: .TouchUpInside)
+        
         
         
         
@@ -72,6 +72,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         startButton.titleLabel?.text = "Start"
         startButton.titleLabel?.font = UIFont(name: (startButton.titleLabel?.font?.fontName)!, size: 30.0)
         startButton.backgroundColor = UIColor.greenColor()
+        startButton.addTarget(self, action: #selector(self.startButtonAction), forControlEvents: .TouchUpInside)
         
         
         initCheckpoints()
@@ -83,11 +84,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showPracticeRunningView"{
-            let destViewController = segue.destinationViewController as! UINavigationController
-            let targetController = destViewController.topViewController as! PracticeRunningViewController
-            targetController.tripId = self.tripId
-        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -98,9 +95,14 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     // MARK: - Action func
     func startButtonAction() {
-        tripId = NSUUID().UUIDString
+        self.tripId = NSUUID().UUIDString
         DDLogDebug("已生成此次tripId：\(tripId)")
-        self.performSegueWithIdentifier("showPracticeRunningView", sender: self)
+        
+        let practiceRunningVC = self.storyboard!.instantiateViewControllerWithIdentifier("PracticeRunningViewController") as! PracticeRunningViewController
+        practiceRunningVC.tripId = self.tripId
+        
+        let navController = UINavigationController(rootViewController: practiceRunningVC)
+        self.presentViewController(navController, animated: true, completion: nil)
     }
     
     func presentRecordView() {

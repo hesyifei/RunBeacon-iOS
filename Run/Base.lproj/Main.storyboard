@@ -132,7 +132,6 @@
                     <connections>
                         <outlet property="startButton" destination="I72-Nv-lS5" id="zxp-PB-oU5"/>
                         <outlet property="topMapView" destination="ecf-Ua-itT" id="uAJ-cm-5d9"/>
-                        <segue destination="bwH-Qh-0VH" kind="showDetail" identifier="showPracticeRunningView" id="nBS-AG-8xv"/>
                         <segue destination="vPu-13-bK5" kind="show" identifier="showPracticeRecordView" id="Zvu-cU-PhF"/>
                     </connections>
                 </viewController>
@@ -193,32 +192,17 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="gRF-KP-FsQ" id="4Mn-SH-M97"/>
+                        <segue destination="Gdd-cw-7Ym" kind="show" identifier="showPracticeDetailView" id="mX5-N1-ADk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1J9-8D-ooH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="854" y="-332"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Jxm-62-c8z">
-            <objects>
-                <navigationController id="bwH-Qh-0VH" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lvN-uF-gUM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Gdd-cw-7Ym" kind="relationship" relationship="rootViewController" id="O1Q-2e-kgG"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7OD-xy-cXf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="854" y="333"/>
-        </scene>
         <!--Running-->
         <scene sceneID="Qp7-gC-syk">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Gdd-cw-7Ym" customClass="PracticeRunningViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PracticeRunningViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gdd-cw-7Ym" customClass="PracticeRunningViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ecr-8A-wxW"/>
                         <viewControllerLayoutGuide type="bottom" id="BES-YY-o4Y"/>
@@ -267,7 +251,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="htd-AN-j3X" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1489" y="333"/>
+            <point key="canvasLocation" x="854" y="333"/>
         </scene>
     </scenes>
 </document>
