@@ -14,10 +14,14 @@ import CocoaLumberjack
 
 class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // MARK: - IBOutlet var
     @IBOutlet var tableView: UITableView!
     
+    // MARK: - Data/Init var
     var recordData: [PracticeRecord]!
     
+    
+    // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogInfo("Practice Record View Controller 之 super.viewDidLoad() 已加載")
@@ -43,6 +47,11 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
+    // MARK: - TableView func
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
         return recordData.count
     }
@@ -54,7 +63,6 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         
         return cell
     }
-    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
