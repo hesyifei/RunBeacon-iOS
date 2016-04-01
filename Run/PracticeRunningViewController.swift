@@ -33,6 +33,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     var locationManager: CLLocationManager!
     
+    var beaconRegion: CLBeaconRegion!
+    
     
     // MARK: UI var
     var popupController: KLCPopup = KLCPopup()
@@ -128,11 +130,17 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         
         
+        // 所有iBeacon均應設置為同一UUID
+        beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
+        beaconRegion.notifyEntryStateOnDisplay = true
+        
+        
         if(isRecord == false){
             let cancelNavButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(self.cancelPractice))
             self.navigationItem.leftBarButtonItems = [cancelNavButton]
             
-            timerStartTime = NSDate.timeIntervalSinceReferenceDate()
+            //timerStartTime = NSDate.timeIntervalSinceReferenceDate()
+            timerStartTime = runChecks[runChecks.count-1].time.timeIntervalSinceReferenceDate       // 使用第一個runCheck數據來當開始時間
             timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.calcTime), userInfo: nil, repeats: true)
             NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
             DDLogDebug("已開啟timer計時器")
@@ -173,6 +181,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             timer!.invalidate()
             timer = nil
             DDLogInfo("已停止timer計時器")
+            
+            stopScanning()
         }
     }
     
@@ -185,20 +195,24 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     // MARK: - LocationManager func
     func startScanning() {
         if(isRecord == false){
-            // 所有iBeacon均應設置為同一UUID
-            let beaconRegion = CLBeaconRegion(proximityUUID: BasicConfig.BeaconProximityUUID!, identifier: "CheckpointBeacon")
-            
-            beaconRegion.notifyEntryStateOnDisplay = true
-            
             locationManager.startRangingBeaconsInRegion(beaconRegion)
             DDLogInfo("開始掃描iBeacon")
         }
     }
     
+    func stopScanning() {
+        if(isRecord == false){
+            locationManager.stopRangingBeaconsInRegion(beaconRegion)
+            DDLogInfo("停止掃描iBeacon")
+        }
+    }
+    
+    
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .AuthorizedAlways {
             if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
                 if CLLocationManager.isRangingAvailable() {
+                    // TODO: change this thing to viewDidAppear etc. to make sure called everytime
                     startScanning()
                 }
             }
@@ -241,6 +255,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 if(CheckpointFunc().getUploadCheckpointId(newRunCheck, runChecks: runChecks) == checkpointsData[checkpointsData.count-1].id){
                     DDLogInfo("用戶已到達最後一個Checkpoint、即將結束跑步及計時")
                     finishPractice()
+                    readSpeech(runChecks[0], isEnd: true)
                 }else{
                     showCheckpointPopup()
                     readSpeech(runChecks[0])
@@ -575,11 +590,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
-    func readSpeech(runCheck: RunCheck) {
+    func readSpeech(runCheck: RunCheck, isEnd: Bool = false) {
         Async.background {
             let totalTime = round(self.getRunCheckTimeDifference(0, comparingIndex: self.runChecks.count-1))
             let totalTimeString = "\(Int(totalTime/60)) minutes \(Int(totalTime%60)) seconds"
-            let speechString = "Good job! You have just arrived Checkpoint \(runCheck.checkpointId). You have run for \(totalTimeString). Keep on running!"
+            
+            var speechString = "Good job! You have just arrived Checkpoint \(runCheck.checkpointId). You have run for \(totalTimeString). Keep on running!"
+            if(isEnd){
+                speechString = "Congratulations! You have crossed the finish line! You have run for \(totalTimeString). Take a break now!"
+            }
+            
             DDLogDebug("即將讀出檢查站提示字句：\(speechString)")
             
             let speechsynt = AVSpeechSynthesizer()

@@ -127,7 +127,7 @@ class RunMapView: MKMapView {
     func funcRenderForOverlay(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
             let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-            polylineRenderer.strokeColor = UIColor.redColor()
+            polylineRenderer.strokeColor = UIColor(netHex: 0xFF6666)
             polylineRenderer.lineWidth = 2
             return polylineRenderer
         }
@@ -144,12 +144,12 @@ class RunMapView: MKMapView {
         
         let reuseId = "pin"
         
-        var pinColor = UIColor.redColor()
+        var pinColor = UIColor(netHex: 0xCCCCCC)
         if(annotation.coordinate.longitude == allCheckpoints[0].coordinate.longitude) && (annotation.coordinate.latitude == allCheckpoints[0].coordinate.latitude){
-            pinColor = UIColor.yellowColor()
+            pinColor = UIColor(netHex: 0xFF6666)
         }
         if(annotation.coordinate.longitude == allCheckpoints[allCheckpoints.count-1].coordinate.longitude) && (annotation.coordinate.latitude == allCheckpoints[allCheckpoints.count-1].coordinate.latitude){
-            pinColor = UIColor.greenColor()
+            pinColor = UIColor(netHex: 0xFF6666)
         }
         
         
@@ -170,5 +170,19 @@ class RunMapView: MKMapView {
         if(mapView.region.span.latitudeDelta >= 0.04) || (mapView.region.span.latitudeDelta <= 0.001){
             centerMapOnLocation(initLocation)
         }
+    }
+}
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(netHex:Int) {
+        self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
 }

@@ -40,20 +40,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         self.view.addGestureRecognizer(tap)
         
         
-        self.view.backgroundColor = UIColor(red: 135/255, green: 211/255, blue: 124/255, alpha: 1.0)
+        self.view.backgroundColor = UIColor(netHex: 0x99CC33)
         
-        loginView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
-        loginView.layer.cornerRadius = 4.0
+        //loginView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
+        //loginView.layer.cornerRadius = 4.0
+        loginView.backgroundColor = UIColor.clearColor()
         
         
         loginButton.addTarget(self, action: #selector(self.loginButtonAction), forControlEvents: .TouchUpInside)
         
         
         usernameTextField.delegate = self
-        usernameTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+        /*usernameTextField.layer.cornerRadius = 10.0
+        usernameTextField.clipsToBounds = true*/
+        //usernameTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
         passwordTextField.delegate = self
-        passwordTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+        //passwordTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
         
         /*
@@ -61,6 +64,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         DDLogInfo("目前沒有Checkpoints相關數據儲存於本地、即將顯示下載View")
         self.performSegueWithIdentifier("showDataLoadingView", sender: self)
         */
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        DDLogInfo("Login View Controller 之 super.viewDidLayoutSubviews() 已加載")
+        
+        usernameTextField.layer.addSublayer(getTextFieldBorder(usernameTextField))
+        usernameTextField.layer.masksToBounds = true
+        
+        passwordTextField.layer.addSublayer(getTextFieldBorder(passwordTextField))
+        passwordTextField.layer.masksToBounds = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -119,6 +133,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // MARK: - General func
+    func getTextFieldBorder(textField: UITextField) -> CALayer {
+        let border = CALayer()
+        let borderWidth = CGFloat(1.5)
+        border.borderWidth = borderWidth
+        border.borderColor = UIColor.blackColor().CGColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - borderWidth, width: textField.frame.size.width, height: textField.frame.size.height)
+        return border
+    }
     
     // MARK: - TextField func
     func textFieldShouldReturn(textField: UITextField) -> Bool {

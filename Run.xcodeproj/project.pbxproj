@@ -153,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */,
-				EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */,
 				EDB1DB791C9AC2C100E3CF8B /* Config.swift */,
 				EDB1DB6E1C9A5EB800E3CF8B /* DataLoadingViewController.swift */,
 				EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */,
@@ -191,6 +190,7 @@
 		EDB1DB721C9A631500E3CF8B /* Function Classes */ = {
 			isa = PBXGroup;
 			children = (
+				EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */,
 				EDB1DB701C9A631000E3CF8B /* CheckpointFunc.swift */,
 			);
 			name = "Function Classes";
