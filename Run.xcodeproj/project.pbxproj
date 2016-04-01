@@ -35,6 +35,7 @@
 		EDCE6CB81C9973F6004C8BD1 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CB71C9973F6004C8BD1 /* PaddingLabel.swift */; };
 		EDCE6CBC1C997705004C8BD1 /* Topsquare.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */; };
 		EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */; };
+		EDDA75C81CAE6DD4007F3517 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA75C71CAE6DD4007F3517 /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		EDCE6CB71C9973F6004C8BD1 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Topsquare.ttf; sourceTree = "<group>"; };
 		EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
+		EDDA75C71CAE6DD4007F3517 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				EDCE6CBA1C9976B7004C8BD1 /* Practice View Controllers */,
 				EDB1DB721C9A631500E3CF8B /* Function Classes */,
 				EDCE6CBF1C997CB1004C8BD1 /* Data Classes */,
+				EDDA75C91CAE6DD9007F3517 /* Extension */,
 				EDCE6CAE1C992A6A004C8BD1 /* UI Classes */,
 				ED9FE8E11C991FE600DB731D /* Main.storyboard */,
 				ED9FE8E91C991FE600DB731D /* LaunchScreen.storyboard */,
@@ -246,6 +249,14 @@
 				EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */,
 			);
 			name = "Data Classes";
+			sourceTree = "<group>";
+		};
+		EDDA75C91CAE6DD9007F3517 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA75C71CAE6DD4007F3517 /* UIColor.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		F1CC372971B15B9BDCCCF50F /* Pods */ = {
@@ -466,6 +477,7 @@
 				EDB1DB711C9A631000E3CF8B /* CheckpointFunc.swift in Sources */,
 				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
 				EDCAD03C1CAD6AF600F4C674 /* BasicFunc.swift in Sources */,
+				EDDA75C81CAE6DD4007F3517 /* UIColor.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
 				EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */,

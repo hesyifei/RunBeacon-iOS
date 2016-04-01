@@ -51,12 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         
         
         usernameTextField.delegate = self
-        /*usernameTextField.layer.cornerRadius = 10.0
-        usernameTextField.clipsToBounds = true*/
-        //usernameTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
-        
         passwordTextField.delegate = self
-        //passwordTextField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
         
         /*
