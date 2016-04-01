@@ -62,7 +62,7 @@ class TimelineView: UIView {
         let lineRect = CGRectMake(originX, originY, width, height)
         
         let linePath = UIBezierPath(roundedRect: lineRect, byRoundingCorners: roundingCorners, cornerRadii: CGSizeMake(15.0, 15.0))
-        UIColor.grayColor().setFill()
+        UIColor.darkGrayColor().setFill()
         linePath.fill()
         
         
@@ -72,7 +72,7 @@ class TimelineView: UIView {
         
         let circleRect = CGRectMake(circleOriginX, rectConfig["Top/Bottom Circle Padding"]!, rectConfig["Circle Diameter"]!, rectConfig["Circle Diameter"]!)
         let topCircle = CircleView(frame: circleRect)
-        //topCircle.circleColor = UIColor.greenColor()
+        topCircle.circleColor = UIColor.blackColor()
         self.addSubview(topCircle)
     }
 }

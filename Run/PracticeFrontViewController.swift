@@ -57,7 +57,7 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         let recordNavButton = UIBarButtonItem(title: "Record", style: .Plain, target: self, action: #selector(self.presentRecordView))
         self.navigationItem.leftBarButtonItems = [recordNavButton]
         
-        let logoutNavButton = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: #selector(self.logoutAction))
+        let logoutNavButton = UIBarButtonItem(title: "Logout", style: .Done, target: self, action: #selector(self.logoutAction))
         self.navigationItem.rightBarButtonItems = [logoutNavButton]
         
         
