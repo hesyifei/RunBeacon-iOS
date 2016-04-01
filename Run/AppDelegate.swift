@@ -17,11 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        
-        UILabel.appearance().substituteFontName = "NotoSerif"
-        
-        
         /**** Log & Log Color START ****/
         setenv("XcodeColors", "YES", 0)
         
