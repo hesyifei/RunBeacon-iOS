@@ -59,66 +59,75 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
+    // MARK: - ChartView func
     func initChart() {
         
+        /*
+         圖標註釋：
+         X軸：檢查站ID
+         Y軸：從當次開始練習到該檢查站的總時間
+         故圖標數值將只會永遠向上、不會減少
+         */
+        
+        
+        
         chartView.noDataText = "No chart data available."
-        chartView.descriptionText = ""                  // 不顯示位於右下角的描述
+        chartView.descriptionText = "Use your fingers to zoom in or out!"
+        chartView.pinchZoomEnabled = true           // 允許手指同時放大XY兩軸
+        chartView.animate(yAxisDuration: 1.0)       // 從下往上動態載入圖表
         
         
-        let rightAxis = chartView.rightAxis
+        let rightAxis = chartView.rightAxis         // 右側Y軸
         rightAxis.drawLabelsEnabled = false         // 不顯示右側Y軸
         rightAxis.drawGridLinesEnabled = false
         
         
-        let leftAxis = chartView.leftAxis
-        leftAxis.drawAxisLineEnabled = true
-        leftAxis.drawGridLinesEnabled = false
-        
+        let leftAxis = chartView.leftAxis           // 左側Y軸
+        leftAxis.drawAxisLineEnabled = true         // 顯示軸
+        leftAxis.drawGridLinesEnabled = false       // 不於圖表內顯示橫軸線
         let leftAxisFormatter = NSNumberFormatter()
         leftAxisFormatter.maximumFractionDigits = 0
-        leftAxis.valueFormatter = leftAxisFormatter
+        leftAxis.valueFormatter = leftAxisFormatter // 左側Y軸值valueFormatter
         
         
-        let xAxis = chartView.xAxis
-        xAxis.drawAxisLineEnabled = true
-        xAxis.drawGridLinesEnabled = false
+        let xAxis = chartView.xAxis                 // X軸
+        xAxis.drawAxisLineEnabled = true            // 顯示軸
+        xAxis.drawGridLinesEnabled = false          // 不於圖表內顯示縱軸線
         xAxis.labelPosition = .Bottom
-        xAxis.setLabelsToSkip(0)
-        
+        xAxis.setLabelsToSkip(0)                    // X軸不隱藏任何值（見文檔）
         
         
         
         
         //let months = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
         let userAverageTime: [Double] = CheckpointFunc().getCheckpoints().map{ (eachCheckpoint) -> Double in
-            return Double(eachCheckpoint.id)
+            return Double(eachCheckpoint.id*((2)^eachCheckpoint.id))
         }
         
         let userAverageTimeDataSet = LineChartDataSet(yVals: getChartDataEntry(userAverageTime), label: "Your Average")
-        userAverageTimeDataSet.circleColors = [UIColor.blackColor()]
-        userAverageTimeDataSet.colors = [UIColor.redColor()]
+        //userAverageTimeDataSet.circleColors = [UIColor.blackColor()]
+        userAverageTimeDataSet.colors = [UIColorConfig.DarkRed]
+        userAverageTimeDataSet.fillColor = UIColorConfig.DarkRed
+        userAverageTimeDataSet.drawCirclesEnabled = false
+        userAverageTimeDataSet.drawCubicEnabled = true
+        userAverageTimeDataSet.drawFilledEnabled = true
         
         
         
+        // 設定X軸底部內容
         let checkpointsName: [String] = CheckpointFunc().getCheckpoints().map{ (eachCheckpoint) -> String in
             return "\(eachCheckpoint.id)"
         }
         let lineChartData = LineChartData(xVals: checkpointsName, dataSets: [userAverageTimeDataSet])
         chartView.data = lineChartData
-        
-        
-        
-        
     }
     
     func getChartDataEntry(values: [Double]) -> [ChartDataEntry] {
         var dataEntries: [ChartDataEntry] = []
-        
         for (index, value) in values.enumerate() {
             let dataEntry = ChartDataEntry(value: value, xIndex: index)
             dataEntries.append(dataEntry)
         }
-        
         return dataEntries
     }
     
