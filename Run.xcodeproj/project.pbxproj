@@ -36,6 +36,7 @@
 		EDCE6CBC1C997705004C8BD1 /* Topsquare.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */; };
 		EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */; };
 		EDDA75C81CAE6DD4007F3517 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA75C71CAE6DD4007F3517 /* UIColor.swift */; };
+		EDDA75CB1CAE6EA0007F3517 /* NotoSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Topsquare.ttf; sourceTree = "<group>"; };
 		EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		EDDA75C71CAE6DD4007F3517 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerif-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				ED9FE8EC1C991FE600DB731D /* Info.plist */,
+				EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */,
 				EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */,
 				EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */,
 				EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */,
@@ -378,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDB1DB781C9A8F8A00E3CF8B /* AudimatMonoBold.ttf in Resources */,
+				EDDA75CB1CAE6EA0007F3517 /* NotoSerif-Regular.ttf in Resources */,
 				ED9FE8EB1C991FE600DB731D /* LaunchScreen.storyboard in Resources */,
 				EDCE6CBC1C997705004C8BD1 /* Topsquare.ttf in Resources */,
 				ED9FE8E81C991FE600DB731D /* Assets.xcassets in Resources */,
