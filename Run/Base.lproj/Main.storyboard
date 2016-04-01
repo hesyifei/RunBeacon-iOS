@@ -187,7 +187,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gRF-KP-FsQ">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="304" width="600" height="296"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RecordCell" textLabel="hIk-m3-hdf" detailTextLabel="jH3-Y7-jT2" style="IBUITableViewCellStyleValue1" id="wno-dQ-mpQ">
@@ -216,16 +216,25 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wRr-RV-aT3" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="64" width="600" height="240"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="gRF-KP-FsQ" firstAttribute="top" secondItem="c0u-N2-R6L" secondAttribute="bottom" id="04Q-ba-n43"/>
                             <constraint firstItem="32P-6B-kRN" firstAttribute="top" secondItem="gRF-KP-FsQ" secondAttribute="bottom" id="2e1-uf-EXY"/>
+                            <constraint firstItem="gRF-KP-FsQ" firstAttribute="top" secondItem="wRr-RV-aT3" secondAttribute="bottom" id="3BV-IY-iat"/>
+                            <constraint firstItem="wRr-RV-aT3" firstAttribute="leading" secondItem="LjL-1B-1MD" secondAttribute="leading" id="AgG-gd-av3"/>
+                            <constraint firstItem="wRr-RV-aT3" firstAttribute="top" secondItem="c0u-N2-R6L" secondAttribute="bottom" id="Cxt-r8-s56"/>
                             <constraint firstAttribute="trailing" secondItem="gRF-KP-FsQ" secondAttribute="trailing" id="QIu-WT-4Mq"/>
+                            <constraint firstAttribute="trailing" secondItem="wRr-RV-aT3" secondAttribute="trailing" id="i9i-9Y-mxe"/>
                             <constraint firstItem="gRF-KP-FsQ" firstAttribute="leading" secondItem="LjL-1B-1MD" secondAttribute="leading" id="iES-Ko-jAp"/>
+                            <constraint firstItem="wRr-RV-aT3" firstAttribute="height" secondItem="LjL-1B-1MD" secondAttribute="height" multiplier="0.4" id="vsv-3V-hSF"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="chartView" destination="wRr-RV-aT3" id="QhM-Fi-R2v"/>
                         <outlet property="tableView" destination="gRF-KP-FsQ" id="4Mn-SH-M97"/>
                     </connections>
                 </viewController>

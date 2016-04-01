@@ -11,11 +11,13 @@ import Foundation
 import Async
 import Alamofire
 import CocoaLumberjack
+import Charts
 
 class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - IBOutlet var
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var chartView: LineChartView!
     
     // MARK: - Data/Init var
     var recordData: [PracticeRecord]!
@@ -30,6 +32,12 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        
+        initChart()
+        
+        
+        
         
         recordData = [
             PracticeRecord(runChecks: [
@@ -48,6 +56,70 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    
+    func initChart() {
+        
+        chartView.noDataText = "NOTHING YET"
+        chartView.descriptionText = ""                  // 不顯示位於右下角的描述
+        
+        
+        let rightAxis = chartView.rightAxis
+        rightAxis.drawLabelsEnabled = false         // 不顯示右側Y軸
+        rightAxis.drawGridLinesEnabled = false
+        
+        
+        let leftAxis = chartView.leftAxis
+        leftAxis.drawAxisLineEnabled = true
+        leftAxis.drawGridLinesEnabled = false
+        
+        let leftAxisFormatter = NSNumberFormatter()
+        leftAxisFormatter.maximumFractionDigits = 0
+        leftAxis.valueFormatter = leftAxisFormatter
+        
+        
+        let xAxis = chartView.xAxis
+        xAxis.drawAxisLineEnabled = true
+        xAxis.drawGridLinesEnabled = false
+        xAxis.labelPosition = .Bottom
+        xAxis.setLabelsToSkip(0)
+        
+        
+        
+        
+        
+        //let months = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+        let userAverageTime: [Double] = CheckpointFunc().getCheckpoints().map{ (eachCheckpoint) -> Double in
+            return Double(eachCheckpoint.id)
+        }
+        
+        let userAverageTimeDataSet = LineChartDataSet(yVals: getChartDataEntry(userAverageTime), label: "Your Average")
+        userAverageTimeDataSet.circleColors = [UIColor.blackColor()]
+        userAverageTimeDataSet.colors = [UIColor.redColor()]
+        
+        
+        
+        let checkpointsName: [String] = CheckpointFunc().getCheckpoints().map{ (eachCheckpoint) -> String in
+            return "\(eachCheckpoint.id)"
+        }
+        let lineChartData = LineChartData(xVals: checkpointsName, dataSets: [userAverageTimeDataSet])
+        chartView.data = lineChartData
+        
+        
+        
+        
+    }
+    
+    func getChartDataEntry(values: [Double]) -> [ChartDataEntry] {
+        var dataEntries: [ChartDataEntry] = []
+        
+        for (index, value) in values.enumerate() {
+            let dataEntry = ChartDataEntry(value: value, xIndex: index)
+            dataEntries.append(dataEntry)
+        }
+        
+        return dataEntries
     }
     
     

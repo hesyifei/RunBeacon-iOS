@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /**** Log & Log Color START ****/
         setenv("XcodeColors", "YES", 0)
         
-        
         #if DEBUG
             let logLevel = DDLogLevel.All
         #else
