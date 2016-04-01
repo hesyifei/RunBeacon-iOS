@@ -23,6 +23,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var loginButton: UIButton!
     
+    @IBOutlet var copyrightLabel: UILabel!
+    
+    @IBOutlet var loginViewTopLayoutConstraint: NSLayoutConstraint?
+    
+    
     // MARK: - Basic var
     var locationManager: CLLocationManager!
     
@@ -49,7 +54,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         
         loginButton.layer.cornerRadius = 25.0
         loginButton.clipsToBounds = true
-        loginButton.backgroundColor = UIColorConfig.GreenButtonBackground
+        loginButton.backgroundColor = UIColorConfig.GrassGreen
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         loginButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20.0)
         loginButton.addTarget(self, action: #selector(self.loginButtonAction), forControlEvents: .TouchUpInside)
@@ -58,6 +63,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         
+        
+        copyrightLabel.text = "2016 © He Yifei"
+        copyrightLabel.textColor = UIColor.lightGrayColor()
+        copyrightLabel.font = UIFont(name: copyrightLabel.font.fontName, size: 13.0)
         
         /*
         /*** 僅供測試、實際將使用下方viewWillAppear的函數 ***/
@@ -80,6 +89,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         DDLogInfo("Login View Controller 之 super.viewWillAppear() 已加載")
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardNotification(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        
         
         usernameTextField.text = ""
         passwordTextField.text = ""
@@ -128,6 +140,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         }
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        DDLogInfo("Login View Controller 之 super.viewDidDisappear() 已加載")
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -139,9 +158,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         let border = CALayer()
         let borderWidth = CGFloat(2.0)
         border.borderWidth = borderWidth
-        border.borderColor = UIColorConfig.GreenButtonBackground.CGColor
+        border.borderColor = UIColorConfig.GrassGreen.CGColor
         border.frame = CGRect(x: 0, y: textField.frame.size.height - borderWidth, width: textField.frame.size.width, height: textField.frame.size.height)
         return border
+    }
+    
+    func keyboardNotification(notification: NSNotification) {
+        let screenHeight = UIScreen.mainScreen().bounds.height
+        DDLogVerbose("已獲取屏幕高度：\(screenHeight)")
+        if(screenHeight <= 560.0){          // 如果屏幕比iPhone 5的屏幕還小的話
+            // http://stackoverflow.com/a/27135992/2603230
+            if let userInfo = notification.userInfo {
+                let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
+                let duration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+                let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+                let animationCurveRaw = animationCurveRawNSN?.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+                let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+                if endFrame?.origin.y >= UIScreen.mainScreen().bounds.size.height {
+                    self.loginViewTopLayoutConstraint?.constant = 0.0
+                } else {
+                    self.loginViewTopLayoutConstraint?.constant = -60.0 ?? 0.0
+                }
+                UIView.animateWithDuration(duration, delay: NSTimeInterval(0), options: animationCurve, animations: {
+                    self.view.layoutIfNeeded()
+                    }, completion: nil)
+            }
+        }
     }
     
     

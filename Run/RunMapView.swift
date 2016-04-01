@@ -127,7 +127,7 @@ class RunMapView: MKMapView {
     func funcRenderForOverlay(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKPolyline {
             let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-            polylineRenderer.strokeColor = UIColor(netHex: 0xFF6666)
+            polylineRenderer.strokeColor = UIColorConfig.DarkRed
             polylineRenderer.lineWidth = 2
             return polylineRenderer
         }
@@ -144,12 +144,12 @@ class RunMapView: MKMapView {
         
         let reuseId = "pin"
         
-        var pinColor = UIColor(netHex: 0xCCCCCC)
+        var pinColor = UIColorConfig.GrassGreen
         if(annotation.coordinate.longitude == allCheckpoints[0].coordinate.longitude) && (annotation.coordinate.latitude == allCheckpoints[0].coordinate.latitude){
-            pinColor = UIColor(netHex: 0xFF6666)
+            pinColor = UIColorConfig.DarkRed
         }
         if(annotation.coordinate.longitude == allCheckpoints[allCheckpoints.count-1].coordinate.longitude) && (annotation.coordinate.latitude == allCheckpoints[allCheckpoints.count-1].coordinate.latitude){
-            pinColor = UIColor(netHex: 0xFF6666)
+            pinColor = UIColorConfig.DarkRed
         }
         
         
