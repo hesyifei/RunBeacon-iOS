@@ -606,7 +606,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
         DDLogDebug("用戶已點擊第\(indexPath?.row)行（tag \(tag)）的 timeline")
         
-        topMapView.selectAnnotation(topMapView.allAnnotationsDict[tag!]!, animated: true)
+        if let annotationObject = topMapView.allAnnotationsDict[tag!] {
+            topMapView.selectAnnotation(annotationObject, animated: true)
+        }
     }
     
     func showCheckpointPopup() {
