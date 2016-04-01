@@ -109,8 +109,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         
         if let accountData = Locksmith.loadDataForUserAccount(BasicConfig.UserAccountID) {
             if let username = accountData["username"] {
-                if let _ = accountData["password"] {
+                if let password = accountData["password"] {
                     DDLogInfo("目前用戶已登入賬戶（\(accountData)）、即將進入主界面")
+                    
+                    self.usernameTextField.text = "\(username)"
+                    self.passwordTextField.text = "\(password)"
+                    
                     Async.main {
                         let screenSize: CGRect = UIScreen.mainScreen().bounds
                         

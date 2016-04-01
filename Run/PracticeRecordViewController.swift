@@ -61,7 +61,7 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
     
     func initChart() {
         
-        chartView.noDataText = "NOTHING YET"
+        chartView.noDataText = "No chart data available."
         chartView.descriptionText = ""                  // 不顯示位於右下角的描述
         
         
