@@ -25,6 +25,10 @@ struct BasicConfig {
 }
 
 
+struct UIColorConfig {
+    static let GreenButtonBackground = UIColor(netHex: 0x99CC33)
+}
+
 struct RunCellUIConfig {
     static let CellID = "RunningCell"
     static let TagIDs: [String: Int] = [               // 謹記不能為0（否則於cell.tag重複）或小於100（可能於其後cell.tag設置後重複）

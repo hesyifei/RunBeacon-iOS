@@ -90,9 +90,9 @@
                                         <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQf-5C-32R">
-                                        <rect key="frame" x="185" y="165" width="50" height="30"/>
+                                        <rect key="frame" x="42" y="185" width="336" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="nLw-Qa-11g"/>
+                                            <constraint firstAttribute="height" constant="50" id="8Wv-nV-OJX"/>
                                         </constraints>
                                         <state key="normal" title="Login"/>
                                     </button>
@@ -102,8 +102,9 @@
                                     <constraint firstItem="xNC-C0-qUk" firstAttribute="width" secondItem="hKR-nP-7TR" secondAttribute="width" multiplier="0.8" id="1mx-J6-3Xb"/>
                                     <constraint firstItem="xNC-C0-qUk" firstAttribute="top" secondItem="hKR-nP-7TR" secondAttribute="top" constant="50" id="Cky-Al-xat"/>
                                     <constraint firstItem="r5l-UE-DrY" firstAttribute="height" secondItem="xNC-C0-qUk" secondAttribute="height" id="EpS-hn-Hn3"/>
+                                    <constraint firstItem="AQf-5C-32R" firstAttribute="width" secondItem="xNC-C0-qUk" secondAttribute="width" id="HVu-R5-Us8"/>
                                     <constraint firstItem="r5l-UE-DrY" firstAttribute="centerX" secondItem="hKR-nP-7TR" secondAttribute="centerX" id="IWx-9F-2Yk"/>
-                                    <constraint firstItem="AQf-5C-32R" firstAttribute="top" secondItem="r5l-UE-DrY" secondAttribute="bottom" constant="40" id="Yxf-i4-4MH"/>
+                                    <constraint firstItem="AQf-5C-32R" firstAttribute="top" secondItem="r5l-UE-DrY" secondAttribute="bottom" constant="60" id="Yxf-i4-4MH"/>
                                     <constraint firstItem="r5l-UE-DrY" firstAttribute="width" secondItem="xNC-C0-qUk" secondAttribute="width" id="faN-OD-n94"/>
                                     <constraint firstItem="AQf-5C-32R" firstAttribute="centerX" secondItem="hKR-nP-7TR" secondAttribute="centerX" id="sbA-Bh-VEr"/>
                                     <constraint firstItem="xNC-C0-qUk" firstAttribute="centerX" secondItem="hKR-nP-7TR" secondAttribute="centerX" id="vRc-5m-Bcm"/>

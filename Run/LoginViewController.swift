@@ -40,13 +40,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         self.view.addGestureRecognizer(tap)
         
         
-        self.view.backgroundColor = UIColor(netHex: 0x99CC33)
+        self.view.backgroundColor = UIColor.whiteColor()
         
         //loginView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
         //loginView.layer.cornerRadius = 4.0
         loginView.backgroundColor = UIColor.clearColor()
         
         
+        loginButton.layer.cornerRadius = 25.0
+        loginButton.clipsToBounds = true
+        loginButton.backgroundColor = UIColorConfig.GreenButtonBackground
+        loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        loginButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20.0)
         loginButton.addTarget(self, action: #selector(self.loginButtonAction), forControlEvents: .TouchUpInside)
         
         
@@ -132,12 +137,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     // MARK: - General func
     func getTextFieldBorder(textField: UITextField) -> CALayer {
         let border = CALayer()
-        let borderWidth = CGFloat(1.5)
+        let borderWidth = CGFloat(2.0)
         border.borderWidth = borderWidth
-        border.borderColor = UIColor.blackColor().CGColor
+        border.borderColor = UIColorConfig.GreenButtonBackground.CGColor
         border.frame = CGRect(x: 0, y: textField.frame.size.height - borderWidth, width: textField.frame.size.width, height: textField.frame.size.height)
         return border
     }
+    
     
     // MARK: - TextField func
     func textFieldShouldReturn(textField: UITextField) -> Bool {

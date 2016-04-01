@@ -75,8 +75,8 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         startButton.clipsToBounds = true
         startButton.setTitle("Ready", forState: .Normal)
         startButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        startButton.titleLabel?.font = UIFont(name: (startButton.titleLabel?.font?.fontName)!, size: 20.0)
-        startButton.backgroundColor = UIColor(netHex: 0x99CC33)
+        startButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20.0)
+        startButton.backgroundColor = UIColorConfig.GreenButtonBackground
         startButton.addTarget(self, action: #selector(self.startButtonAction), forControlEvents: .TouchUpInside)
         
         
