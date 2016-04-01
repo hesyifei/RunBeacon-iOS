@@ -45,7 +45,7 @@ class CheckpointPopupView: UIView {
         
         
         backgroundLabel = UILabel()
-        backgroundLabel.font = UIFont(name: "Topsquare", size: 270.0)
+        backgroundLabel.font = UIFont(name: "Hansen-Shadow", size: 270.0)
         backgroundLabel.textColor = UIColor.grayColor().colorWithAlphaComponent(0.4)
         backgroundLabel.backgroundColor = UIColor.clearColor()
         backgroundLabel.textAlignment = .Center
@@ -73,7 +73,7 @@ class CheckpointPopupView: UIView {
         
         timeLabel = UILabel()
         timeLabel.font = UIFont(name: "AudimatMonoBold", size: 80.0)
-        timeLabel.textColor = UIColor.redColor()
+        timeLabel.textColor = UIColorConfig.DarkRed
         timeLabel.textAlignment = .Center
         timeLabel.translatesAutoresizingMaskIntoConstraints = false
         topView.addSubview(timeLabel)
@@ -88,7 +88,7 @@ class CheckpointPopupView: UIView {
         
         speedLabel = UILabel()
         speedLabel.font = UIFont(name: "AudimatMonoBold", size: 45.0)
-        speedLabel.textColor = UIColor.blueColor()
+        speedLabel.textColor = UIColor.blackColor()
         speedLabel.textAlignment = .Center
         speedLabel.translatesAutoresizingMaskIntoConstraints = false
         topView.addSubview(speedLabel)

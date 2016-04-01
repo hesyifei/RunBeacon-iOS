@@ -62,7 +62,7 @@ class TimelineView: UIView {
         let lineRect = CGRectMake(originX, originY, width, height)
         
         let linePath = UIBezierPath(roundedRect: lineRect, byRoundingCorners: roundingCorners, cornerRadii: CGSizeMake(15.0, 15.0))
-        UIColor.darkGrayColor().setFill()
+        UIColor.grayColor().setFill()
         linePath.fill()
         
         

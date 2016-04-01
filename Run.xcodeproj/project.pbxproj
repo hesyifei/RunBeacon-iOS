@@ -37,6 +37,7 @@
 		EDCE6CBE1C997CA9004C8BD1 /* Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */; };
 		EDDA75C81CAE6DD4007F3517 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDA75C71CAE6DD4007F3517 /* UIColor.swift */; };
 		EDDA75CB1CAE6EA0007F3517 /* NotoSerif-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */; };
+		EDDA75CD1CAE92FD007F3517 /* Hansen Shadow.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDDA75CC1CAE92FC007F3517 /* Hansen Shadow.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		EDCE6CBD1C997CA9004C8BD1 /* Checkpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkpoint.swift; sourceTree = "<group>"; };
 		EDDA75C71CAE6DD4007F3517 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerif-Regular.ttf"; sourceTree = "<group>"; };
+		EDDA75CC1CAE92FC007F3517 /* Hansen Shadow.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hansen Shadow.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 			children = (
 				ED9FE8EC1C991FE600DB731D /* Info.plist */,
 				EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */,
+				EDDA75CC1CAE92FC007F3517 /* Hansen Shadow.ttf */,
 				EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */,
 				EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */,
 				EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */,
@@ -386,6 +389,7 @@
 				EDCE6CBC1C997705004C8BD1 /* Topsquare.ttf in Resources */,
 				ED9FE8E81C991FE600DB731D /* Assets.xcassets in Resources */,
 				ED9FE8E31C991FE600DB731D /* Main.storyboard in Resources */,
+				EDDA75CD1CAE92FD007F3517 /* Hansen Shadow.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
