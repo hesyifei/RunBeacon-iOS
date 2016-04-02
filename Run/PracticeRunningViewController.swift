@@ -249,7 +249,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
                 tableView.endUpdates()
                 
-                doVibration()
+                BasicFunc().doVibration()
                 uploadRunCheckData(runChecks[0])
                 
                 if(CheckpointFunc().getUploadCheckpointId(newRunCheck, runChecks: runChecks) == checkpointsData[checkpointsData.count-1].id){
@@ -586,9 +586,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func doVibration() {
-        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-    }
+    
     
     func readSpeech(runCheck: RunCheck, isEnd: Bool = false) {
         Async.background {

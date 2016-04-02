@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import AudioToolbox
 import CoreLocation
 import Foundation
 import MapKit
@@ -16,6 +18,7 @@ import CocoaLumberjack
 import SwiftyJSON
 import MBProgressHUD
 import Locksmith
+import KLCPopup
 
 class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -34,6 +37,14 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var locationManager: CLLocationManager!
+    
+    var countdownTimer: NSTimer?
+    var countdownInt: Int!
+    
+    var popupController: KLCPopup!
+    var timerLabel: UILabel!
+    
+    var audioPlayer: AVAudioPlayer!
     
     
     // MARK: - Data var
@@ -109,12 +120,81 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         self.tripId = NSUUID().UUIDString
         DDLogDebug("已生成此次tripId：\(tripId)")
         
-        let practiceRunningVC = self.storyboard!.instantiateViewControllerWithIdentifier("PracticeRunningViewController") as! PracticeRunningViewController
-        practiceRunningVC.tripId = self.tripId
         
-        let navController = UINavigationController(rootViewController: practiceRunningVC)
-        self.presentViewController(navController, animated: true, completion: nil)
+        countdownInt = 3
+        playSound("beep-low")
+        BasicFunc().doVibration()
+        
+        Async.main {
+            self.timerLabel = UILabel(frame: CGRectMake(0, 0, 180.0, 180.0))
+            self.timerLabel.text = "\(self.countdownInt)"
+            self.timerLabel.textAlignment = .Center
+            self.timerLabel.font = UIFont(name: "AudimatMonoBold", size: 150.0)
+            self.timerLabel.textColor = UIColor.blackColor()
+            self.timerLabel.backgroundColor = UIColor.whiteColor()
+            self.timerLabel.layer.cornerRadius = 5.0
+            self.timerLabel.clipsToBounds = true
+            
+            self.popupController = KLCPopup(contentView: self.timerLabel)
+            self.popupController.shouldDismissOnContentTouch = false
+            self.popupController.shouldDismissOnBackgroundTouch = false
+            self.popupController.maskType = .Dimmed
+            self.popupController.showType = .GrowIn
+            self.popupController.dismissType = .GrowOut
+            
+            self.popupController.willStartDismissingCompletion = {
+                DDLogDebug("準備進入新跑步界面")
+                let practiceRunningVC = self.storyboard!.instantiateViewControllerWithIdentifier("PracticeRunningViewController") as! PracticeRunningViewController
+                practiceRunningVC.tripId = self.tripId
+                
+                let navController = UINavigationController(rootViewController: practiceRunningVC)
+                self.presentViewController(navController, animated: true, completion: nil)
+            }
+            
+            let layout = KLCPopupLayoutMake(.Center, .Center)
+            self.popupController.showWithLayout(layout)
+        }
+        
+        
+        countdownTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.calcCountdownTime), userInfo: nil, repeats: true)
+        DDLogDebug("已開啟timer倒計計時器")
     }
+    
+    func calcCountdownTime() {
+        countdownInt = countdownInt - 1
+        DDLogVerbose("新countdownInt值：\(countdownInt)")
+        self.timerLabel.text = "\(countdownInt)"
+        
+        BasicFunc().doVibration()
+        
+        if(countdownInt <= 0){
+            playSound("gun")
+            
+            countdownTimer?.invalidate()
+            countdownTimer = nil
+            
+            self.popupController.dismiss(true)
+        }else{
+            playSound("beep-low")
+        }
+    }
+    
+    func playSound(soundName: String) {
+        do {
+            if let bundle = NSBundle.mainBundle().pathForResource(soundName, ofType: "wav") {
+                DDLogDebug("準備播放音頻文件：\(soundName)")
+                let alertSound = NSURL(fileURLWithPath: bundle)
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)          // 設備靜音時將不會播放聲音
+                try AVAudioSession.sharedInstance().setActive(true)
+                try audioPlayer = AVAudioPlayer(contentsOfURL: alertSound)
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            }
+        } catch {
+            DDLogError("無法播放音頻文件「\(soundName)」：\(error)")
+        }
+    }
+    
     
     func presentRecordView() {
         self.performSegueWithIdentifier("showPracticeRecordView", sender: self)

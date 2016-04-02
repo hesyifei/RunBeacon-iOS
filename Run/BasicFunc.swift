@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import AudioToolbox
 import Foundation
 import Async
 import CocoaLumberjack
@@ -26,5 +28,10 @@ class BasicFunc {
         let alert = UIAlertController(title: "Notice", message: "Please enable Location Services and restart this application to continue.\n\n\(BasicConfig.ContactAdminMessage)", preferredStyle: .Alert)
         // 將不會有按鈕出現（為阻止用戶繼續使用）
         selfVC.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    func doVibration() {
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 }

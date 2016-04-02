@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C5463887C9ECB8D68FC5FF82 /* Pods_Run.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A531DA8D076AE52183BEB5 /* Pods_Run.framework */; };
+		ED24EF221CAF8B6900F3BBC3 /* beep-low.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED24EF211CAF8B6900F3BBC3 /* beep-low.wav */; };
+		ED24EF251CAF97DC00F3BBC3 /* gun.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED24EF241CAF97DC00F3BBC3 /* gun.wav */; };
 		ED65D0281C9E433F009790B0 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65D0271C9E433F009790B0 /* Path.swift */; };
 		ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */; };
 		ED9FE8E01C991FE600DB731D /* PracticeFrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE8DF1C991FE600DB731D /* PracticeFrontViewController.swift */; };
@@ -61,6 +63,8 @@
 		82A531DA8D076AE52183BEB5 /* Pods_Run.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Run.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD660E1835EF2DB530E01698 /* Pods-Run.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Run.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Run/Pods-Run.debug.xcconfig"; sourceTree = "<group>"; };
 		E2B5A2BC9D37DC77CA7DA0FA /* Pods-Run.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Run.release.xcconfig"; path = "Pods/Target Support Files/Pods-Run/Pods-Run.release.xcconfig"; sourceTree = "<group>"; };
+		ED24EF211CAF8B6900F3BBC3 /* beep-low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-low.wav"; sourceTree = "<group>"; };
+		ED24EF241CAF97DC00F3BBC3 /* gun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gun.wav; sourceTree = "<group>"; };
 		ED65D0271C9E433F009790B0 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		ED9FE8DA1C991FE600DB731D /* Run.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Run.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +135,26 @@
 				82A531DA8D076AE52183BEB5 /* Pods_Run.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ED24EF201CAF8B4400F3BBC3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */,
+				EDDA75CC1CAE92FC007F3517 /* Hansen Shadow.ttf */,
+				EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */,
+				EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		ED24EF231CAF8B6C00F3BBC3 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				ED24EF211CAF8B6900F3BBC3 /* beep-low.wav */,
+				ED24EF241CAF97DC00F3BBC3 /* gun.wav */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		ED9FE8D11C991FE500DB731D = {
@@ -207,10 +231,8 @@
 			isa = PBXGroup;
 			children = (
 				ED9FE8EC1C991FE600DB731D /* Info.plist */,
-				EDDA75CA1CAE6EA0007F3517 /* NotoSerif-Regular.ttf */,
-				EDDA75CC1CAE92FC007F3517 /* Hansen Shadow.ttf */,
-				EDCE6CBB1C997705004C8BD1 /* Topsquare.ttf */,
-				EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */,
+				ED24EF231CAF8B6C00F3BBC3 /* Sounds */,
+				ED24EF201CAF8B4400F3BBC3 /* Fonts */,
 				EDCE6CA91C99253F004C8BD1 /* CustomLogFormatter.swift */,
 			);
 			name = "Supporting Files";
@@ -386,6 +408,8 @@
 				EDB1DB781C9A8F8A00E3CF8B /* AudimatMonoBold.ttf in Resources */,
 				EDDA75CB1CAE6EA0007F3517 /* NotoSerif-Regular.ttf in Resources */,
 				ED9FE8EB1C991FE600DB731D /* LaunchScreen.storyboard in Resources */,
+				ED24EF251CAF97DC00F3BBC3 /* gun.wav in Resources */,
+				ED24EF221CAF8B6900F3BBC3 /* beep-low.wav in Resources */,
 				EDCE6CBC1C997705004C8BD1 /* Topsquare.ttf in Resources */,
 				ED9FE8E81C991FE600DB731D /* Assets.xcassets in Resources */,
 				ED9FE8E31C991FE600DB731D /* Main.storyboard in Resources */,
