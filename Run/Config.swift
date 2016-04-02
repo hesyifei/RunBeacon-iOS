@@ -18,15 +18,15 @@ struct BasicConfig {
     // Estimote: B9407F30-F5F8-466E-AFF9-25556B57FE6D
     // Taobao: FDA50693-A4E2-4FB1-AFCF-C6EB07647825
     
-    static let NavigationBarBackgroundColor = UIColor(red: 247.0/250.0, green: 247.0/250.0, blue: 247.0/250.0, alpha: 1.0)
-    
     static let TripIDFromRecordView = "--NOT_A_TRIP--"
     
-    static let ContactAdminMessage = "Please contact administrator for more information."
+    static let ContactAdminMessage = "Please contact teachers/helpers for more information."
 }
 
 
 struct UIColorConfig {
+    static let NavigationBarBackgroundColor = UIColor(red: 247.0/250.0, green: 247.0/250.0, blue: 247.0/250.0, alpha: 1.0)
+    
     static let GrassGreen = UIColor(netHex: 0x99CC33)
     static let DarkRed = UIColor(netHex: 0xB32424)
 }
