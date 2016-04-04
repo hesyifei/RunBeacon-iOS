@@ -46,7 +46,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     var runChecks = [RunCheck]()
     var checkpointsData = [Checkpoint]()
-    var pathsData = [Path]()
+    var pathsDict = [Int: Double]()
     var checkpointsGroupData = [Int: [Int]]()
     
     
@@ -80,8 +80,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 //RunCheck(checkpointId: 4, time: NSDate()),
                 //RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
                 //RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
-                RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
-                RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
+                //RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-230)),
+                //RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-260)),
                 RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-320)),
                 RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-380)),
                 RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-400)),
@@ -290,7 +290,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         checkpointsData = CheckpointFunc().getCheckpoints()
         topMapView.loadCheckpoints(checkpointsData)
         
-        pathsData = CheckpointFunc().getPaths()
+        
+        let pathsData = CheckpointFunc().getPaths()
+        // pathsDict數據儲存規則是從pathsData中首個檢查站的ID一直到第key個檢查站的ID的總距離
+        // 例如：pathsDict[5] = 從首個檢查站（有可能並非是pathsDict[1]因為首個檢查站ID取決於pathsData[0].start）到第5個檢查站的總距離
+        // 注意在這裡pathsData必需要按上升順序儲存path數據、否則會出現嚴重錯誤
+        pathsDict[pathsData[0].start] = 0.0             // pathsData[0].start即首個檢查站的ID
+        for eachPath in pathsData{
+            // 目前檢查站至首個檢查站的總距離 = 前一個檢查站至首個檢查站的總距離+前一個檢查站至目前檢查站的距離
+            pathsDict[eachPath.end] = pathsDict[eachPath.start]!+eachPath.distance
+        }
+        DDLogVerbose("已完成整理pathsDict數據：\(pathsDict)")
+        
         
         checkpointsGroupData = CheckpointFunc().getCheckpointsGroup()
     }
@@ -691,11 +702,16 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func getDistance(start startCheckpointId: Int, end endCheckpointId: Int) -> Double {
-        if let i = pathsData.indexOf({($0.start == startCheckpointId)&&($0.end == endCheckpointId)}) {
-            return pathsData[i].distance
-        }else{
-            return -1
+        if let startDistance = pathsDict[startCheckpointId] {
+            if let endDistance = pathsDict[endCheckpointId] {
+                let totalDistance = endDistance-startDistance
+                DDLogVerbose("已獲取從檢查站\(startCheckpointId)到\(endCheckpointId)的距離：\(totalDistance)")
+                return totalDistance
+            }
         }
+        
+        DDLogWarn("無法獲取從檢查站\(startCheckpointId)到\(endCheckpointId)的距離")
+        return -1
     }
     
     func secondsToFormattedTime(inputSeconds: Double) -> String {
