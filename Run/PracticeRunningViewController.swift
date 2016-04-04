@@ -152,6 +152,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         initCheckpoints()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        DDLogInfo("Practice Running View Controller 之 super.viewWillAppear() 已加載")
+        
+        // 防止用戶於跑步時自動鎖屏
+        UIApplication.sharedApplication().idleTimerDisabled = true
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         DDLogInfo("Practice Running View Controller 之 super.viewDidAppear() 已加載")
@@ -171,6 +179,14 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         //showPopupWithStyle()
         
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        DDLogInfo("Practice Running View Controller 之 super.viewWillDisappear() 已加載")
+        
+        // 解除防止用戶於跑步時自動鎖屏的限制
+        UIApplication.sharedApplication().idleTimerDisabled = false
     }
     
     override func viewDidDisappear(animated: Bool) {
