@@ -12,6 +12,7 @@ import Foundation
 import Async
 import Alamofire
 import CocoaLumberjack
+import DeviceKit
 import KLCPopup
 import Locksmith
 
@@ -95,6 +96,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         
         usernameTextField.text = ""
         passwordTextField.text = ""
+        
+        
+        let device = Device()
+        DDLogInfo("已獲取用戶目前使用的設備：\(device)")
+        
         
         
         if(CheckpointFunc().getCheckpoints().count > 0){
