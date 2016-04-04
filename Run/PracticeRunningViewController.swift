@@ -156,8 +156,22 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         super.viewWillAppear(animated)
         DDLogInfo("Practice Running View Controller 之 super.viewWillAppear() 已加載")
         
-        // 防止用戶於跑步時自動鎖屏
-        UIApplication.sharedApplication().idleTimerDisabled = true
+        if(isRecord == false){
+            // 防止用戶於跑步時自動鎖屏
+            UIApplication.sharedApplication().idleTimerDisabled = true
+            
+            
+            // 如果用戶允許永遠獲取位置就開始掃描iBeacon
+            if(CLLocationManager.authorizationStatus() == .AuthorizedAlways){
+                if(CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self)){
+                    if(CLLocationManager.isRangingAvailable()){
+                        startScanning()
+                    }
+                }
+            }
+            
+        }
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -181,22 +195,20 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        DDLogInfo("Practice Running View Controller 之 super.viewWillDisappear() 已加載")
-        
-        // 解除防止用戶於跑步時自動鎖屏的限制
-        UIApplication.sharedApplication().idleTimerDisabled = false
-    }
-    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         DDLogInfo("Practice Running View Controller 之 super.viewDidDisappear() 已加載")
         
+        
         if(isRecord == false){
+            // 解除阻止自動鎖屏的限制
+            UIApplication.sharedApplication().idleTimerDisabled = false
+            
+            
             timer!.invalidate()
             timer = nil
             DDLogInfo("已停止timer計時器")
+            
             
             stopScanning()
         }
@@ -210,30 +222,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     // MARK: - LocationManager func
     func startScanning() {
-        if(isRecord == false){
-            locationManager.startRangingBeaconsInRegion(beaconRegion)
-            DDLogInfo("開始掃描iBeacon")
-        }
+        locationManager.startRangingBeaconsInRegion(beaconRegion)
+        DDLogInfo("開始掃描iBeacon")
     }
     
     func stopScanning() {
-        if(isRecord == false){
-            locationManager.stopRangingBeaconsInRegion(beaconRegion)
-            DDLogInfo("停止掃描iBeacon")
-        }
+        locationManager.stopRangingBeaconsInRegion(beaconRegion)
+        DDLogInfo("停止掃描iBeacon")
     }
     
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedAlways {
-            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-                if CLLocationManager.isRangingAvailable() {
-                    // TODO: change this thing to viewDidAppear etc. to make sure called everytime
-                    startScanning()
-                }
-            }
-        }
-        if status == .Denied || status == .Restricted {
+        if(status == .Denied)||(status == .Restricted){
             DDLogError("定位服務未允許/未開啟，無法檢測iBeacon！")
             BasicFunc().showEnableLocationAlert(self)
         }
