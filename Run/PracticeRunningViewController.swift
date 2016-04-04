@@ -42,6 +42,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     // MARK: - Data/Init var
+    var brightnessBefore: CGFloat!
+    
     var tripId: String?
     
     var runChecks = [RunCheck]()
@@ -156,6 +158,11 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         super.viewWillAppear(animated)
         DDLogInfo("Practice Running View Controller 之 super.viewWillAppear() 已加載")
         
+        // 將屏幕亮度調為最亮並儲存進入前的亮度到brightnessBefore內
+        brightnessBefore = UIScreen.mainScreen().brightness
+        UIScreen.mainScreen().brightness = CGFloat(1.0)
+        
+        
         // 防止用戶於跑步時自動鎖屏
         UIApplication.sharedApplication().idleTimerDisabled = true
     }
@@ -184,6 +191,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         DDLogInfo("Practice Running View Controller 之 super.viewWillDisappear() 已加載")
+        
+        // 將屏幕亮度調回原本的亮度（brightnessBefore）
+        UIScreen.mainScreen().brightness = brightnessBefore
         
         // 解除防止用戶於跑步時自動鎖屏的限制
         UIApplication.sharedApplication().idleTimerDisabled = false
