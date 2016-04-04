@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DeviceKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>KLCPopup.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,7 +67,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2CE80B1CCF119A2FD678A24BA7B1998A</key>
+		<key>13E6B6C085E9A1676A91E3BC3F3CFB8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2B65F3510CFA8685A5F026130C89CAC0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,22 +87,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>79BB33FAD104E6EE3FFBC991751604C7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>92943306EC8070DF9CD02ECD505D2CD5</key>
+		<key>7CC12E2613794DA492CD0359B3C2C687</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A5FEBBC39752D654635897A455F44421</key>
+		<key>92943306EC8070DF9CD02ECD505D2CD5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -113,6 +118,11 @@
 			<true/>
 		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EF78824223C74AA13AE655CD2ACF32A3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 # Uncomment this line to define a global platform for your project
 platform :ios, '9.0'
 # Uncomment this line if you're using Swift
@@ -9,6 +10,7 @@ target 'Run' do
     pod 'CocoaLumberjack/Swift'
     pod 'CRToast', '~> 0.0.7'
     pod 'Charts'
+    pod 'DeviceKit', '~> 0.3.2'
     pod 'MBProgressHUD', '~> 0.9.2'
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
     pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'
