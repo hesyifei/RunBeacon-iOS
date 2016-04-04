@@ -683,7 +683,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             }
             
             
-            // TODO: change speed & time here
+            // TODO: change speed & time to target/average here
             customView.leftBottomLargeLabel.text = "01:50"
             customView.leftBottomSmallLabel.text = "Suggest Time"
             customView.rightBottomLargeLabel.text = "7 m/s"
@@ -710,7 +710,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             }
         }
         
-        DDLogWarn("無法獲取從檢查站\(startCheckpointId)到\(endCheckpointId)的距離")
+        DDLogWarn("無法獲取從檢查站\(startCheckpointId)到\(endCheckpointId)的距離、即將return -1")
         return -1
     }
     

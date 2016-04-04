@@ -22,10 +22,10 @@ import KLCPopup
 
 class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    // TODO: USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
+    // TODO: done - USE CLASS TO STORE/GET VALUE FOR EACH CHECKPOINT & TRIP
     // TODO: ADD TWO KINDS OF MODE 1. LIKE CURRENT 2. 橫向表格、顯示每次chekcpoint間的時間及標準時間
     // TODO: no need - USE UIIMAGEVIEW TO SHOW REDCROSS/WATER IN MKANNOTION ASSES VIEW
-    // TODO: 【討論】通過json寫入每段距離/標準時間/標準速度etc
+    // TODO: 通過json寫入每段距離/標準時間/標準速度etc
     
     
     // MARK: - IBOutlet var

@@ -10,16 +10,30 @@ import UIKit
 import Foundation
 
 struct BasicConfig {
+    // 用於Locksmith儲存用戶數據（可以使用任何值）
     static let UserAccountID = "StudentAccount"
     
-    static let CheckpointDataGetURL = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/get_setting_info"
-    static let RunCheckPostURL = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/post_beacon"
-    static let BeaconProximityUUID = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
-    // Estimote: B9407F30-F5F8-466E-AFF9-25556B57FE6D
-    // Taobao: FDA50693-A4E2-4FB1-AFCF-C6EB07647825
     
+    // App初始化時獲取各類數據的來源
+    static let CheckpointDataGetURL = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/get_setting_info"
+    
+    // 跑步時收到iBeacon信號後發送POST信息的目標
+    static let RunCheckPostURL = "http://portal.ssc.edu.hk/schoolportal/index.php/Hi_score/post_beacon"
+    
+    // 跑步時所需要接受信號的iBeacon的統一UUID
+    /*
+     UUID參考：
+     Estimote: B9407F30-F5F8-466E-AFF9-25556B57FE6D
+     Taobao: FDA50693-A4E2-4FB1-AFCF-C6EB07647825
+     */
+    static let BeaconProximityUUID = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
+    
+    
+    // 由PracticeRecordViewController進入PracticeRunningViewController時所傳輸的tripId（可以使用任何值）
     static let TripIDFromRecordView = "--NOT_A_TRIP--"
     
+    
+    // 將於用戶遇到錯誤時的彈窗中顯示
     static let ContactAdminMessage = "Please contact teachers/helpers for more information."
 }
 
