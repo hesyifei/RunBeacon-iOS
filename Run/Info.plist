@@ -44,8 +44,11 @@
 	<array>
 		<string>armv7</string>
 		<string>location-services</string>
+		<string>bluetooth-le</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UIRequiresPersistentWiFi</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
