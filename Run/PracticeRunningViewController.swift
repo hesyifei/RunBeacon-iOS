@@ -233,7 +233,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if(status == .Denied)||(status == .Restricted){
+        if(status != .AuthorizedAlways){
             DDLogError("定位服務未允許/未開啟，無法檢測iBeacon！")
             BasicFunc().showEnableLocationAlert(self)
         }
