@@ -83,9 +83,6 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next"/>
-                                        <connections>
-                                            <segue destination="rBl-w0-7cU" kind="showDetail" identifier="showRaceView" id="04H-Tj-rie"/>
-                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r5l-UE-DrY">
                                         <rect key="frame" x="42" y="125" width="336" height="30"/>
@@ -142,6 +139,7 @@
                         <outlet property="usernameTextField" destination="xNC-C0-qUk" id="GFG-nr-ADf"/>
                         <segue destination="1Wg-ry-S6t" kind="showDetail" identifier="showPracticeView" id="Sje-cW-WNp"/>
                         <segue destination="whl-sS-nQG" kind="presentation" identifier="showDataLoadingView" id="cyM-3t-AzR"/>
+                        <segue destination="rBl-w0-7cU" kind="showDetail" identifier="showRaceView" id="FDA-pc-RoR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dZb-fy-SGO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -212,7 +210,7 @@
         <!--Race View Controller-->
         <scene sceneID="dKc-Ga-teg">
             <objects>
-                <viewController id="5R3-hW-f72" customClass="RaceViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="5R3-hW-f72" customClass="RaceViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ITu-8j-bsJ"/>
                         <viewControllerLayoutGuide type="bottom" id="DxR-po-po2"/>
@@ -224,10 +222,36 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U5y-OF-bw3">
                                 <rect key="frame" x="0.0" y="244" width="600" height="356"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PassCell" textLabel="Xx1-8q-Zoh" detailTextLabel="lJc-vy-Hmt" style="IBUITableViewCellStyleValue1" id="pPB-IE-jDr">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pPB-IE-jDr" id="2hd-IX-HRa">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xx1-8q-Zoh">
+                                                    <rect key="frame" x="15" y="12" width="31.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lJc-vy-Hmt">
+                                                    <rect key="frame" x="543.5" y="12" width="41.5" height="19.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="an7-Es-5GM">
                                 <rect key="frame" x="0.0" y="64" width="600" height="180"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -243,6 +267,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TfP-36-hKs"/>
+                    <connections>
+                        <outlet property="tableView" destination="U5y-OF-bw3" id="zu0-90-tc7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CYO-t5-bbq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

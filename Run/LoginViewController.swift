@@ -100,7 +100,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         
         let device = Device()
         DDLogInfo("已獲取用戶目前使用的設備：\(device)")
-        
+        // 已於info.plist中「Required device capabilities」加入「bluetooth-le」
         
         
         if(CheckpointFunc().getCheckpoints().count > 0){
@@ -139,7 +139,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
                         popupController.dismissType = .GrowOut
                         
                         popupController.willStartDismissingCompletion = {
-                            self.showPracticeView()
+                            self.showNextView()
                         }
                         
                         let layout = KLCPopupLayoutMake(.Center, .Center)
@@ -222,7 +222,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
                 try Locksmith.saveData(dataToBeStored, forUserAccount: BasicConfig.UserAccountID)
                 DDLogDebug("已儲存用戶名及密碼：\(dataToBeStored)")
                 
-                showPracticeView()
+                showNextView()
             } catch let error as NSError {
                 DDLogError("無法儲存用戶名及密碼（\(dataToBeStored)）：\(error)")
                 BasicFunc().showErrorAlert(self, error: error)
@@ -230,9 +230,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         }
     }
     
-    func showPracticeView() {
+    func showNextView() {
         Async.main {
-            self.performSegueWithIdentifier("showPracticeView", sender: self)
+            //self.performSegueWithIdentifier("showPracticeView", sender: self)
+            self.performSegueWithIdentifier("showRaceView", sender: self)
         }
     }
     

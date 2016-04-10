@@ -14,10 +14,10 @@ import CocoaLumberjack
 import SwiftyJSON
 import MBProgressHUD
 
-class RaceViewController: UIViewController {
+class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - IBOutlet var
-    
+    @IBOutlet var tableView: UITableView!
     
     
     // MARK: - Basic var
@@ -27,7 +27,7 @@ class RaceViewController: UIViewController {
     
     
     // MARK: - Data var
-    
+    var passData = [String]()
     
     
     
@@ -37,10 +37,44 @@ class RaceViewController: UIViewController {
         DDLogInfo("Race View Controller 之 super.viewDidLoad() 已加載")
         
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        
+        
+        
+        passData = ["haha", "wata"]
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // MARK: - Tableview func
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 50.0
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return passData.count
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("PassCell", forIndexPath: indexPath) as UITableViewCell
+        
+        cell.textLabel!.text = "YAYA\(passData[indexPath.row])"
+        cell.detailTextLabel!.text = "WOHO"
+        
+        return cell
     }
 }
