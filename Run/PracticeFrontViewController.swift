@@ -62,6 +62,9 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         DDLogInfo("Practice Front View Controller 之 super.viewDidLoad() 已加載")
         
         
+        self.title = "Practice"
+        
+        
         let recordNavButton = UIBarButtonItem(title: "Record", style: .Plain, target: self, action: #selector(self.presentRecordView))
         self.navigationItem.leftBarButtonItems = [recordNavButton]
         

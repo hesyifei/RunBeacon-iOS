@@ -146,7 +146,7 @@
             </objects>
             <point key="canvasLocation" x="-1165" y="805"/>
         </scene>
-        <!--Practice-->
+        <!--Practice Front View Controller-->
         <scene sceneID="0eY-EQ-Fyb">
             <objects>
                 <viewController id="TrP-6r-dnR" customClass="PracticeFrontViewController" customModule="Run" customModuleProvider="target" sceneMemberID="viewController">
@@ -180,7 +180,7 @@
                             <constraint firstItem="I72-Nv-lS5" firstAttribute="centerX" secondItem="GJj-9n-Rl2" secondAttribute="centerX" id="uZX-29-KCE"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Practice" id="sgp-pD-lIZ"/>
+                    <navigationItem key="navigationItem" id="sgp-pD-lIZ"/>
                     <connections>
                         <outlet property="startButton" destination="I72-Nv-lS5" id="zxp-PB-oU5"/>
                         <outlet property="topMapView" destination="ecf-Ua-itT" id="uAJ-cm-5d9"/>
@@ -268,6 +268,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="TfP-36-hKs"/>
                     <connections>
+                        <outlet property="cameraView" destination="an7-Es-5GM" id="WTo-07-zXY"/>
                         <outlet property="tableView" destination="U5y-OF-bw3" id="zu0-90-tc7"/>
                     </connections>
                 </viewController>
