@@ -10,6 +10,7 @@
 		C5463887C9ECB8D68FC5FF82 /* Pods_Run.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A531DA8D076AE52183BEB5 /* Pods_Run.framework */; };
 		ED24EF221CAF8B6900F3BBC3 /* beep-low.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED24EF211CAF8B6900F3BBC3 /* beep-low.wav */; };
 		ED24EF251CAF97DC00F3BBC3 /* gun.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED24EF241CAF97DC00F3BBC3 /* gun.wav */; };
+		ED30F16A1CBA707300DAB1A8 /* RaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED30F1691CBA707300DAB1A8 /* RaceViewController.swift */; };
 		ED65D0281C9E433F009790B0 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED65D0271C9E433F009790B0 /* Path.swift */; };
 		ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */; };
 		ED9FE8E01C991FE600DB731D /* PracticeFrontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FE8DF1C991FE600DB731D /* PracticeFrontViewController.swift */; };
@@ -65,6 +66,7 @@
 		E2B5A2BC9D37DC77CA7DA0FA /* Pods-Run.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Run.release.xcconfig"; path = "Pods/Target Support Files/Pods-Run/Pods-Run.release.xcconfig"; sourceTree = "<group>"; };
 		ED24EF211CAF8B6900F3BBC3 /* beep-low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-low.wav"; sourceTree = "<group>"; };
 		ED24EF241CAF97DC00F3BBC3 /* gun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gun.wav; sourceTree = "<group>"; };
+		ED30F1691CBA707300DAB1A8 /* RaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RaceViewController.swift; sourceTree = "<group>"; };
 		ED65D0271C9E433F009790B0 /* Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		ED9FE8DA1C991FE600DB731D /* Run.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Run.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED9FE8DD1C991FE600DB731D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -157,6 +159,14 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
+		ED30F16B1CBA707700DAB1A8 /* Race View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ED30F1691CBA707300DAB1A8 /* RaceViewController.swift */,
+			);
+			name = "Race View Controller";
+			sourceTree = "<group>";
+		};
 		ED9FE8D11C991FE500DB731D = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +197,7 @@
 				EDB1DB6E1C9A5EB800E3CF8B /* DataLoadingViewController.swift */,
 				EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */,
 				EDCE6CBA1C9976B7004C8BD1 /* Practice View Controllers */,
+				ED30F16B1CBA707700DAB1A8 /* Race View Controller */,
 				EDB1DB721C9A631500E3CF8B /* Function Classes */,
 				EDCE6CBF1C997CB1004C8BD1 /* Data Classes */,
 				EDDA75C91CAE6DD9007F3517 /* Extension */,
@@ -517,6 +528,7 @@
 				EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */,
 				EDCE6CB21C99731F004C8BD1 /* CheckpointPopupView.swift in Sources */,
 				EDCAD0331CAD365500F4C674 /* PracticeRecord.swift in Sources */,
+				ED30F16A1CBA707300DAB1A8 /* RaceViewController.swift in Sources */,
 				EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */,
 				EDCE6CB41C99738C004C8BD1 /* TimelineView.swift in Sources */,
 				EDCE6CB81C9973F6004C8BD1 /* PaddingLabel.swift in Sources */,

@@ -83,6 +83,9 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next"/>
+                                        <connections>
+                                            <segue destination="rBl-w0-7cU" kind="showDetail" identifier="showRaceView" id="04H-Tj-rie"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r5l-UE-DrY">
                                         <rect key="frame" x="42" y="125" width="336" height="30"/>
@@ -189,6 +192,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MYx-B2-05J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="212" y="333"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GtX-uX-ezj">
+            <objects>
+                <navigationController id="rBl-w0-7cU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oUc-DM-a2w">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="5R3-hW-f72" kind="relationship" relationship="rootViewController" id="aqn-UU-XH5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u65-EK-ikP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-436" y="1162"/>
+        </scene>
+        <!--Race View Controller-->
+        <scene sceneID="dKc-Ga-teg">
+            <objects>
+                <viewController id="5R3-hW-f72" customClass="RaceViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ITu-8j-bsJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="DxR-po-po2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sl4-qb-kAM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U5y-OF-bw3">
+                                <rect key="frame" x="0.0" y="244" width="600" height="356"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="an7-Es-5GM">
+                                <rect key="frame" x="0.0" y="64" width="600" height="180"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="U5y-OF-bw3" firstAttribute="leading" secondItem="sl4-qb-kAM" secondAttribute="leading" id="0Tw-gC-Yqa"/>
+                            <constraint firstItem="DxR-po-po2" firstAttribute="top" secondItem="U5y-OF-bw3" secondAttribute="bottom" id="BtM-af-n2e"/>
+                            <constraint firstItem="an7-Es-5GM" firstAttribute="leading" secondItem="sl4-qb-kAM" secondAttribute="leading" id="DS8-8P-mok"/>
+                            <constraint firstAttribute="trailing" secondItem="U5y-OF-bw3" secondAttribute="trailing" id="Lhj-bK-UPO"/>
+                            <constraint firstItem="an7-Es-5GM" firstAttribute="height" secondItem="sl4-qb-kAM" secondAttribute="height" multiplier="0.3" id="Sl6-6q-DLS"/>
+                            <constraint firstItem="U5y-OF-bw3" firstAttribute="top" secondItem="an7-Es-5GM" secondAttribute="bottom" id="c4h-Ci-gNt"/>
+                            <constraint firstItem="an7-Es-5GM" firstAttribute="top" secondItem="ITu-8j-bsJ" secondAttribute="bottom" id="h8o-FM-h6G"/>
+                            <constraint firstAttribute="trailing" secondItem="an7-Es-5GM" secondAttribute="trailing" id="wQE-ot-FuT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="TfP-36-hKs"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CYO-t5-bbq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="212" y="1162"/>
         </scene>
         <!--Practice Record View Controller-->
         <scene sceneID="Z1N-P4-iM7">
