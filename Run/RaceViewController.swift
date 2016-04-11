@@ -20,6 +20,7 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - IBOutlet var
     @IBOutlet var tableView: UITableView!
     @IBOutlet var cameraView: UIView!
+    @IBOutlet var shutterButton: UIButton!
     
     
     // MARK: - Basic var
@@ -31,32 +32,9 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - UI Var
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
-    let blurView = UIVisualEffectView()
-    
     
     // MARK: - Data var
     var passData = [String]()
-    
-    var isCameraViewBlur: Bool = false {
-        willSet(newValue) {
-            DDLogVerbose("isCameraViewBlur 新值為 \(newValue)")
-            
-            self.blurView.userInteractionEnabled = false
-            UIView.animateWithDuration(0.5, animations: {
-                switch newValue {
-                case true:
-                    self.blurView.effect = UIBlurEffect(style: .Light)
-                    break
-                case false:
-                    self.blurView.effect = nil
-                    break
-                }
-                }, completion: {
-                    (value: Bool) in
-                    self.blurView.userInteractionEnabled = true
-            })
-        }
-    }
     
     
     // MARK: - Override func
@@ -71,6 +49,8 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         tableView.dataSource = self
         
+        
+        shutterButton.addTarget(self, action: #selector(self.shutterButtonAction), forControlEvents: .TouchUpInside)
         
         
         
@@ -103,12 +83,6 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
             break
         }
         
-        
-        Async.main{
-            self.isCameraViewBlur = true
-            }.main(after: 0.5) {
-                self.isCameraViewBlur = false
-        }
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -148,8 +122,7 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 self.optimizeVideoPreviewLayer()
                 
-                self.cameraView.layer.addSublayer(self.videoPreviewLayer!)
-                self.cameraView.addSubview(self.blurView)
+                self.cameraView.layer.insertSublayer(self.videoPreviewLayer!, atIndex: 0)
             }
             
             captureSession?.startRunning()
@@ -169,8 +142,6 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func optimizeVideoPreviewLayer() {
         videoPreviewLayer?.frame = self.cameraView.layer.bounds
         videoPreviewLayer?.connection.videoOrientation = self.videoOrientationFromCurrentOrientation()
-        
-        self.blurView.frame = self.cameraView.layer.bounds
     }
     
     func videoOrientationFromCurrentOrientation() -> AVCaptureVideoOrientation {
@@ -189,6 +160,25 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    func shutterButtonAction() {
+        showFlashView()
+    }
+    
+    func showFlashView() {
+        Async.main() {
+            let flashView = UIView(frame: self.cameraView.bounds)
+            flashView.backgroundColor = UIColor.whiteColor()
+            flashView.alpha = 1.0
+            self.cameraView.insertSubview(flashView, aboveSubview: self.shutterButton)
+            
+            UIView.animateWithDuration(0.5, animations: {
+                flashView.alpha = 0.0
+                }, completion: { (finished: Bool) in
+                    DDLogDebug("flashView已隱藏")
+                    flashView.removeFromSuperview()
+            })
+        }
+    }
     
     
     // MARK: - Tableview func
