@@ -220,7 +220,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U5y-OF-bw3">
-                                <rect key="frame" x="0.0" y="244" width="600" height="356"/>
+                                <rect key="frame" x="0.0" y="364" width="600" height="236"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PassCell" textLabel="Xx1-8q-Zoh" detailTextLabel="lJc-vy-Hmt" style="IBUITableViewCellStyleValue1" id="pPB-IE-jDr">
@@ -250,8 +250,8 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="an7-Es-5GM">
-                                <rect key="frame" x="0.0" y="64" width="600" height="180"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -260,7 +260,7 @@
                             <constraint firstItem="DxR-po-po2" firstAttribute="top" secondItem="U5y-OF-bw3" secondAttribute="bottom" id="BtM-af-n2e"/>
                             <constraint firstItem="an7-Es-5GM" firstAttribute="leading" secondItem="sl4-qb-kAM" secondAttribute="leading" id="DS8-8P-mok"/>
                             <constraint firstAttribute="trailing" secondItem="U5y-OF-bw3" secondAttribute="trailing" id="Lhj-bK-UPO"/>
-                            <constraint firstItem="an7-Es-5GM" firstAttribute="height" secondItem="sl4-qb-kAM" secondAttribute="height" multiplier="0.3" id="Sl6-6q-DLS"/>
+                            <constraint firstItem="an7-Es-5GM" firstAttribute="height" secondItem="sl4-qb-kAM" secondAttribute="height" multiplier="0.5" id="Sl6-6q-DLS"/>
                             <constraint firstItem="U5y-OF-bw3" firstAttribute="top" secondItem="an7-Es-5GM" secondAttribute="bottom" id="c4h-Ci-gNt"/>
                             <constraint firstItem="an7-Es-5GM" firstAttribute="top" secondItem="ITu-8j-bsJ" secondAttribute="bottom" id="h8o-FM-h6G"/>
                             <constraint firstAttribute="trailing" secondItem="an7-Es-5GM" secondAttribute="trailing" id="wQE-ot-FuT"/>

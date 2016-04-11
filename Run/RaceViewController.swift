@@ -25,14 +25,38 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - Basic var
     let application = UIApplication.sharedApplication()
     
-    
     var captureSession: AVCaptureSession?
+    
+    
+    // MARK: - UI Var
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    
+    let blurView = UIVisualEffectView()
     
     
     // MARK: - Data var
     var passData = [String]()
     
+    var isCameraViewBlur: Bool = false {
+        willSet(newValue) {
+            DDLogVerbose("isCameraViewBlur 新值為 \(newValue)")
+            
+            self.blurView.userInteractionEnabled = false
+            UIView.animateWithDuration(0.5, animations: {
+                switch newValue {
+                case true:
+                    self.blurView.effect = UIBlurEffect(style: .Light)
+                    break
+                case false:
+                    self.blurView.effect = nil
+                    break
+                }
+                }, completion: {
+                    (value: Bool) in
+                    self.blurView.userInteractionEnabled = true
+            })
+        }
+    }
     
     
     // MARK: - Override func
@@ -51,8 +75,6 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         passData = ["haha", "wata"]
-        
-        
         
         
     }
@@ -79,6 +101,13 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case .Denied, .Restricted:
             cameraError()
             break
+        }
+        
+        
+        Async.main{
+            self.isCameraViewBlur = true
+            }.main(after: 0.5) {
+                self.isCameraViewBlur = false
         }
     }
     
@@ -116,8 +145,11 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
             Async.main {
                 self.videoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
                 self.videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+                
                 self.optimizeVideoPreviewLayer()
+                
                 self.cameraView.layer.addSublayer(self.videoPreviewLayer!)
+                self.cameraView.addSubview(self.blurView)
             }
             
             captureSession?.startRunning()
@@ -137,6 +169,8 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func optimizeVideoPreviewLayer() {
         videoPreviewLayer?.frame = self.cameraView.layer.bounds
         videoPreviewLayer?.connection.videoOrientation = self.videoOrientationFromCurrentOrientation()
+        
+        self.blurView.frame = self.cameraView.layer.bounds
     }
     
     func videoOrientationFromCurrentOrientation() -> AVCaptureVideoOrientation {
@@ -163,7 +197,7 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50.0
+        return 100.0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
