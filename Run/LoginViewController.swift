@@ -231,9 +231,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     }
     
     func showNextView() {
-        Async.main {
+        /*Async.main {
             //self.performSegueWithIdentifier("showPracticeView", sender: self)
             self.performSegueWithIdentifier("showRaceView", sender: self)
+        }*/
+        let noticeAlert = UIAlertController(title: "VIEW", message: "WHICH VIEW?", preferredStyle: .Alert)
+        noticeAlert.addAction(UIAlertAction(title: "Practice", style: .Default, handler: { action in
+            Async.main {
+                self.performSegueWithIdentifier("showPracticeView", sender: self)
+            }
+        }))
+        noticeAlert.addAction(UIAlertAction(title: "Race", style: .Default, handler: { action in
+            Async.main {
+                self.performSegueWithIdentifier("showRaceView", sender: self)
+            }
+        }))
+        
+        Async.main {
+            self.presentViewController(noticeAlert, animated: true, completion: nil)
         }
     }
     
