@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         let beaconRegion = CLBeaconRegion(proximityUUID: proximityUUID, identifier: "CheckpointBeacon")
                         locationManager.startMonitoringForRegion(beaconRegion)
                         DDLogInfo("開始Monitor iBeacon")
+                        // Monitor iBeacon用處：可以於鎖屏左下角提示打開App
                     }
                 }
             }

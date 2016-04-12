@@ -26,6 +26,8 @@ class BasicFunc {
         showAlert(selfVC, title: "Error", message: "\(error.localizedDescription)\n\n\(BasicConfig.ContactAdminMessage)")
     }
     
+    
+    // TODO: show alert when bluetooth is disabled (like "Go Beacon")
     func showEnableLocationAlert(selfVC: UIViewController) {
         let alert = UIAlertController(title: "Notice", message: "Please enable Location Services and restart this application to continue.\n\n\(BasicConfig.ContactAdminMessage)", preferredStyle: .Alert)
         Async.main {
