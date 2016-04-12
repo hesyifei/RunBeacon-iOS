@@ -307,11 +307,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     
-    // MARK: - MapView func
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        self.performSegueWithIdentifier("showCheckpointDetail", sender: self)
-    }
-    
+    // MARK: - MapView func    
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         return topMapView.funcRenderForOverlay(mapView, rendererForOverlay: overlay)
     }
@@ -606,7 +602,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         }))
         warningAlert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
         
-        self.presentViewController(warningAlert, animated: true, completion: nil)
+        Async.main {
+            self.presentViewController(warningAlert, animated: true, completion: nil)
+        }
     }
     
     func closeView() {

@@ -148,6 +148,8 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
                 practiceRunningVC.tripId = self.tripId
                 
                 let navController = UINavigationController(rootViewController: practiceRunningVC)
+                
+                // already on main thread
                 self.presentViewController(navController, animated: true, completion: nil)
             }
             
@@ -197,7 +199,9 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
     
     
     func presentRecordView() {
-        self.performSegueWithIdentifier("showPracticeRecordView", sender: self)
+        Async.main {
+            self.performSegueWithIdentifier("showPracticeRecordView", sender: self)
+        }
         DDLogDebug("準備進入PracticeRecordViewController")
     }
     
@@ -215,7 +219,9 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         }))
         warningAlert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
         
-        self.presentViewController(warningAlert, animated: true, completion: nil)
+        Async.main {
+            self.presentViewController(warningAlert, animated: true, completion: nil)
+        }
     }
     
     

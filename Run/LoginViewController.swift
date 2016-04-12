@@ -113,6 +113,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         }
         
         
+        // 注意：用戶即使刪除並重新安裝應用，UserAccount的Data依然會存在
         if let accountData = Locksmith.loadDataForUserAccount(BasicConfig.UserAccountID) {
             if let username = accountData["username"] {
                 if let password = accountData["password"] {
@@ -235,6 +236,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
             //self.performSegueWithIdentifier("showPracticeView", sender: self)
             self.performSegueWithIdentifier("showRaceView", sender: self)
         }*/
+        
         let noticeAlert = UIAlertController(title: "VIEW", message: "WHICH VIEW?", preferredStyle: .Alert)
         noticeAlert.addAction(UIAlertAction(title: "Practice", style: .Default, handler: { action in
             Async.main {
