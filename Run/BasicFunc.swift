@@ -46,6 +46,12 @@ class BasicFunc {
     func getAlertWithoutButton(title: String, message: String) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         // 將不會有按鈕出現（為阻止用戶繼續使用）
+        /*
+         let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+         if let url = settingsUrl {
+         UIApplication.sharedApplication().openURL(url)
+         }
+        */
         return alert
     }
     

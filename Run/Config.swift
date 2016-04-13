@@ -34,7 +34,7 @@ struct BasicConfig {
     
     
     // 將於用戶遇到錯誤時的彈窗中顯示
-    static let ContactAdminMessage = "Please contact teachers/helpers for more information."
+    static let ContactAdminMessage = "Please contact staffs nearby for more information."
 }
 
 

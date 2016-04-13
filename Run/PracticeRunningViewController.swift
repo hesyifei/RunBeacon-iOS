@@ -230,19 +230,18 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     
     
     // MARK: - Core Bluetooth func
-    var currentAlertView: UIAlertController!
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
         
         if peripheral.state != CBPeripheralManagerState.PoweredOn {
-            currentAlertView = BasicFunc().getAlertWithoutButton("Notice", message: "Please enable Bluetooth to continue.\n\n\(BasicConfig.ContactAdminMessage)")
-            Async.main {
-                self.presentViewController(self.currentAlertView, animated: true, completion: nil)
-            }
-        }else{
-            if let presentedAlertView = self.currentAlertView {
-                Async.main {
-                    presentedAlertView.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: "Notice", message: "Please enable Bluetooth to continue.\n\n\(BasicConfig.ContactAdminMessage)", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { action in
+                Async.main(after: 3.0) {
+                    // 在一定時間後再次檢測是否已開啟藍牙
+                    self.peripheralManagerDidUpdateState(self.bluetoothPeripheralManager!)
                 }
+            }))
+            Async.main {
+                self.presentViewController(alert, animated: true, completion: nil)
             }
         }
     }
