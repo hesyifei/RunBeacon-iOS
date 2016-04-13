@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AudioToolbox
+import CoreBluetooth
 import CoreLocation
 import Foundation
 import MapKit
@@ -19,7 +20,7 @@ import CRToast
 import KLCPopup
 import Locksmith
 
-class PracticeRunningViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
+class PracticeRunningViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, CLLocationManagerDelegate, CBPeripheralManagerDelegate {
     
     // MARK: - IBOutlet var
     @IBOutlet var tableView: UITableView!
@@ -32,6 +33,8 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var locationManager: CLLocationManager!
+    var bluetoothPeripheralManager: CBPeripheralManager?
+    
     
     var beaconRegion: CLBeaconRegion!
     
@@ -170,6 +173,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 }
             }
             
+            
+            // 參見：http://stackoverflow.com/a/31449624/2603230
+            let options = [CBCentralManagerOptionShowPowerAlertKey: 0]
+            bluetoothPeripheralManager = CBPeripheralManager(delegate: self, queue: nil, options: options)
+            bluetoothPeripheralManager?.delegate = self
+            
         }
         
     }
@@ -220,6 +229,25 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
     }
     
     
+    // MARK: - Core Bluetooth func
+    var currentAlertView: UIAlertController!
+    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
+        
+        if peripheral.state != CBPeripheralManagerState.PoweredOn {
+            currentAlertView = BasicFunc().getAlertWithoutButton("Notice", message: "Please enable Bluetooth to continue.\n\n\(BasicConfig.ContactAdminMessage)")
+            Async.main {
+                self.presentViewController(self.currentAlertView, animated: true, completion: nil)
+            }
+        }else{
+            if let presentedAlertView = self.currentAlertView {
+                Async.main {
+                    presentedAlertView.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    
     // MARK: - LocationManager func
     func startScanning() {
         locationManager.startRangingBeaconsInRegion(beaconRegion)
@@ -231,13 +259,6 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         DDLogInfo("停止掃描iBeacon")
     }
     
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if(status != .AuthorizedAlways){
-            DDLogError("定位服務未允許/未開啟，無法檢測iBeacon！")
-            BasicFunc().showEnableLocationAlert(self)
-        }
-    }
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
         let filteredBeacon = beacons.filter() { $0.proximity != .Unknown }      // 獲取所有距離非Unknown的Beacon

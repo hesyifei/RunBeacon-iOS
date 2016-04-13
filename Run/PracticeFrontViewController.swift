@@ -93,16 +93,18 @@ class PracticeFrontViewController: UIViewController, MKMapViewDelegate, CLLocati
         
         initCheckpoints()
         
-        
-        if(CLLocationManager.authorizationStatus() != .AuthorizedAlways){
-            DDLogError("定位服務未允許/未開啟，將提示用戶開啟後重啟App！")
-            BasicFunc().showEnableLocationAlert(self)
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         DDLogInfo("Practice Front View Controller 之 super.viewWillAppear() 已加載")
+        
+        
+        let locationStatus = CLLocationManager.authorizationStatus()
+        if(locationStatus != .AuthorizedAlways){
+            DDLogError("定位服務未允許，將提示用戶開啟後重啟App！")
+            BasicFunc().showEnableServicesAlert(self, services: ["Location Services"])
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

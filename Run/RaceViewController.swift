@@ -37,6 +37,7 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var passData = [String]()
     
     
+    // TODO: show alert when bluetooth is disabled (like "PhoneInBeacon")
     // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,7 +136,7 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         DDLogError("無法開啟相機")
         
         //BasicFunc().showAlert(self, title: "Error", message: "\(error.localizedDescription)\n\n\(BasicConfig.ContactAdminMessage)")
-        //BasicFunc().showEnableServicesAlert(self, services: ["Camera"])
+        BasicFunc().showEnableServicesAlert(self, services: ["Camera"])
     }
     
     
