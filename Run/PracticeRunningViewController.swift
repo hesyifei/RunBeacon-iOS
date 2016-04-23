@@ -79,7 +79,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         }else{
             DDLogDebug("此次是一次新練習")
             // 如果RunCheck內checkpointId為1即說明該點為起點、將會於cellForRowAtIndexPath做特殊處理
-            self.runChecks = [
+            /*self.runChecks = [
                 //RunCheck(checkpointId: 4, time: NSDate()),
                 //RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-60)),
                 //RunCheck(checkpointId: 7, time: NSDate().dateByAddingTimeInterval(-100)),
@@ -94,6 +94,9 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-580)),
                 RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-600)),
                 RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-610)),
+            ]*/
+            self.runChecks = [
+                RunCheck(checkpointId: 1, time: NSDate()),
             ]
         }
         
@@ -155,6 +158,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         initCheckpoints()
     }
     
+    // TODO: show alert if user dont have internet connection
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         DDLogInfo("Practice Running View Controller 之 super.viewWillAppear() 已加載")

@@ -100,17 +100,61 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         
         
         //let months = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-        let userAverageTime: [Double] = CheckpointFunc().getCheckpoints().map{ (eachCheckpoint) -> Double in
-            return Double(eachCheckpoint.id*((2)^eachCheckpoint.id))
+        /*let userAverageTime: [Double] = CheckpointFunc().getCheckpoints().map{ (eachCheckpoint) -> Double in
+            return Double(eachCheckpoint.id)
+        }*/
+        var userAverageTime = [Double]()
+        for (index, _) in CheckpointFunc().getCheckpoints().enumerate() {
+            if(index == 0){
+                userAverageTime.append(0)
+            }else{
+                userAverageTime.append(userAverageTime[index-1]+drand48()*3)
+            }
         }
         
-        let userAverageTimeDataSet = LineChartDataSet(yVals: getChartDataEntry(userAverageTime), label: "Your Average")
-        //userAverageTimeDataSet.circleColors = [UIColor.blackColor()]
-        userAverageTimeDataSet.colors = [UIColorConfig.DarkRed]
-        userAverageTimeDataSet.fillColor = UIColorConfig.DarkRed
+        
+        let userAverageTimeDataSet = LineChartDataSet(yVals: getChartDataEntry(userAverageTime), label: "Your Average Time")
+        userAverageTimeDataSet.colors = [UIColorConfig.GrassGreen]
+        userAverageTimeDataSet.fillColor = UIColorConfig.GrassGreen
         userAverageTimeDataSet.drawCirclesEnabled = false
-        userAverageTimeDataSet.drawCubicEnabled = true
+        //userAverageTimeDataSet.drawCubicEnabled = true
         userAverageTimeDataSet.drawFilledEnabled = true
+        
+        
+        
+        var allAverageTime = [Double]()
+        for (index, _) in CheckpointFunc().getCheckpoints().enumerate() {
+            if(index == 0){
+                allAverageTime.append(0)
+            }else{
+                allAverageTime.append(allAverageTime[index-1]+drand48()*5)
+            }
+        }
+        
+        
+        let allAverageTimeDataSet = LineChartDataSet(yVals: getChartDataEntry(allAverageTime), label: "Average Time among all")
+        allAverageTimeDataSet.colors = [UIColor.lightGrayColor()]
+        allAverageTimeDataSet.fillColor = UIColor.lightGrayColor()
+        allAverageTimeDataSet.drawCirclesEnabled = false
+        allAverageTimeDataSet.drawFilledEnabled = true
+        
+        
+        
+        var allBestTime = [Double]()
+        for (index, _) in CheckpointFunc().getCheckpoints().enumerate() {
+            if(index == 0){
+                allBestTime.append(0)
+            }else{
+                allBestTime.append(allBestTime[index-1]+drand48()*1.5)
+            }
+        }
+        
+        
+        let allBestTimeDataSet = LineChartDataSet(yVals: getChartDataEntry(allBestTime), label: "Fastest Time among all")
+        allBestTimeDataSet.colors = [UIColorConfig.DarkRed]
+        allBestTimeDataSet.fillColor = UIColorConfig.DarkRed
+        allBestTimeDataSet.drawCirclesEnabled = false
+        allBestTimeDataSet.drawFilledEnabled = true
         
         
         
@@ -118,7 +162,7 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
         let checkpointsName: [String] = CheckpointFunc().getCheckpoints().map{ (eachCheckpoint) -> String in
             return "\(eachCheckpoint.id)"
         }
-        let lineChartData = LineChartData(xVals: checkpointsName, dataSets: [userAverageTimeDataSet])
+        let lineChartData = LineChartData(xVals: checkpointsName, dataSets: [userAverageTimeDataSet, allAverageTimeDataSet, allBestTimeDataSet])
         chartView.data = lineChartData
     }
     
