@@ -145,7 +145,7 @@ class PracticeRecordViewController: UIViewController, UITableViewDelegate, UITab
             if(index == 0){
                 allBestTime.append(0)
             }else{
-                allBestTime.append(allBestTime[index-1]+drand48()*1.5)
+                allBestTime.append(allBestTime[index-1]+drand48()*1)
             }
         }
         

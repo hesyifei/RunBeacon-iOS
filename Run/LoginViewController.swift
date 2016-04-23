@@ -237,7 +237,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
             self.performSegueWithIdentifier("showRaceView", sender: self)
         }*/
         
-        let noticeAlert = UIAlertController(title: "VIEW", message: "WHICH VIEW?", preferredStyle: .Alert)
+        let noticeAlert = UIAlertController(title: "Please choose the mode you want to enter", message: "You have permission for both Practice Mode and Race Mode.", preferredStyle: .Alert)
         noticeAlert.addAction(UIAlertAction(title: "Practice", style: .Default, handler: { action in
             Async.main {
                 self.performSegueWithIdentifier("showPracticeView", sender: self)
