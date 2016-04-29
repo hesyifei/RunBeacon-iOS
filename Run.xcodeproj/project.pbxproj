@@ -27,6 +27,7 @@
 		EDB1DB781C9A8F8A00E3CF8B /* AudimatMonoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */; };
 		EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB791C9AC2C100E3CF8B /* Config.swift */; };
 		EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */; };
+		EDC6289D1CD37C8C00255CE3 /* PersonCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC6289C1CD37C8C00255CE3 /* PersonCheck.swift */; };
 		EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */; };
 		EDCAD0331CAD365500F4C674 /* PracticeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */; };
 		EDCAD03C1CAD6AF600F4C674 /* BasicFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */; };
@@ -90,6 +91,7 @@
 		EDB1DB771C9A8F8A00E3CF8B /* AudimatMonoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AudimatMonoBold.ttf; sourceTree = "<group>"; };
 		EDB1DB791C9AC2C100E3CF8B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		EDC6289C1CD37C8C00255CE3 /* PersonCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCheck.swift; sourceTree = "<group>"; };
 		EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecordViewController.swift; sourceTree = "<group>"; };
 		EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecord.swift; sourceTree = "<group>"; };
 		EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicFunc.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 				ED65D0271C9E433F009790B0 /* Path.swift */,
 				EDB1DB731C9A88CC00E3CF8B /* RunCheck.swift */,
 				EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */,
+				EDC6289C1CD37C8C00255CE3 /* PersonCheck.swift */,
 			);
 			name = "Data Classes";
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				EDCE6CAC1C9928A1004C8BD1 /* RunMapView.swift in Sources */,
 				EDB1DB6F1C9A5EB800E3CF8B /* DataLoadingViewController.swift in Sources */,
 				EDCE6CAA1C99253F004C8BD1 /* CustomLogFormatter.swift in Sources */,
+				EDC6289D1CD37C8C00255CE3 /* PersonCheck.swift in Sources */,
 				ED9FE8E01C991FE600DB731D /* PracticeFrontViewController.swift in Sources */,
 				EDB1DB711C9A631000E3CF8B /* CheckpointFunc.swift in Sources */,
 				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
