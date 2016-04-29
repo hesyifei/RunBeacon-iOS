@@ -14,6 +14,7 @@ import Alamofire
 import CocoaLumberjack
 import SwiftyJSON
 import MBProgressHUD
+import Locksmith
 
 class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVCaptureMetadataOutputObjectsDelegate {
     
@@ -34,7 +35,7 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     // MARK: - Data var
-    var passData = [String]()
+    var personChecks = [PersonCheck]()
     
     
     // TODO: show alert when bluetooth is disabled (like "PhoneInBeacon")
@@ -55,8 +56,18 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         
-        passData = ["haha", "wata"]
+        self.personChecks = [
+            PersonCheck(personId: 3, time: NSDate().dateByAddingTimeInterval(-460)),
+            PersonCheck(personId: 6, time: NSDate().dateByAddingTimeInterval(-520)),
+            PersonCheck(personId: 14, time: NSDate().dateByAddingTimeInterval(-580)),
+            PersonCheck(personId: 23, time: NSDate().dateByAddingTimeInterval(-600)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+        ]
         
+        
+        
+        let logoutNavButton = UIBarButtonItem(title: "Logout", style: .Done, target: self, action: #selector(self.logoutAction))
+        self.navigationItem.rightBarButtonItems = [logoutNavButton]
         
     }
     
@@ -182,17 +193,37 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
+    func logoutAction() {
+        let warningAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .Alert)
+        warningAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { action in
+            do {
+                try Locksmith.deleteDataForUserAccount(BasicConfig.UserAccountID)
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } catch let error as NSError {
+                DDLogError("無法刪除用戶登入數據：\(error)")
+                BasicFunc().showErrorAlert(self, error: error)
+            }
+        }))
+        warningAlert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+        
+        Async.main {
+            self.presentViewController(warningAlert, animated: true, completion: nil)
+        }
+    }
+    
+    
     // MARK: - Tableview func
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100.0
+        return 35.0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return passData.count
+        return personChecks.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -202,8 +233,13 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PassCell", forIndexPath: indexPath) as UITableViewCell
         
-        cell.textLabel!.text = "YAYA\(passData[indexPath.row])"
-        cell.detailTextLabel!.text = "WOHO"
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.NoStyle
+        formatter.timeStyle = .MediumStyle
+        
+        
+        cell.textLabel!.text = "#\(personChecks[indexPath.row].personId)"
+        cell.detailTextLabel!.text = "\(formatter.stringFromDate(personChecks[indexPath.row].time))"
         
         return cell
     }
