@@ -19,6 +19,8 @@ import Locksmith
 class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationManagerDelegate {
     
     // MARK: - IBOutlet var
+    @IBOutlet var appIconImageView: UIImageView!
+    
     @IBOutlet var loginView: UIView!
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
@@ -68,6 +70,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
         copyrightLabel.text = "2016 © He Yifei"
         copyrightLabel.textColor = UIColor.lightGrayColor()
         copyrightLabel.font = UIFont(name: copyrightLabel.font.fontName, size: 13.0)
+        
+        
+        appIconImageView.layer.cornerRadius = 7.0
+        appIconImageView.clipsToBounds = true
+        
         
         /*
         /*** 僅供測試、實際將使用下方viewWillAppear的函數 ***/

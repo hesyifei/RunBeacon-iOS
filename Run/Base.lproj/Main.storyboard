@@ -117,6 +117,13 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Cas-Pe-Jh6">
+                                <rect key="frame" x="275" y="489" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="SpY-dF-jXX"/>
+                                    <constraint firstAttribute="height" constant="50" id="chP-9y-tOb"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -126,11 +133,14 @@
                             <constraint firstItem="hKR-nP-7TR" firstAttribute="top" secondItem="hCh-ub-WAU" secondAttribute="bottom" id="Uwh-PG-JXQ"/>
                             <constraint firstItem="thk-7i-bPk" firstAttribute="centerX" secondItem="6v1-Mk-GGY" secondAttribute="centerX" id="eLS-tF-IWo"/>
                             <constraint firstItem="thk-7i-bPk" firstAttribute="width" secondItem="6v1-Mk-GGY" secondAttribute="width" id="iWy-Qr-cru"/>
+                            <constraint firstItem="thk-7i-bPk" firstAttribute="top" secondItem="Cas-Pe-Jh6" secondAttribute="bottom" constant="20" id="vR6-BY-9Dv"/>
+                            <constraint firstItem="Cas-Pe-Jh6" firstAttribute="centerX" secondItem="6v1-Mk-GGY" secondAttribute="centerX" id="zpX-Fk-xGB"/>
                             <constraint firstItem="hKR-nP-7TR" firstAttribute="height" secondItem="6v1-Mk-GGY" secondAttribute="height" multiplier="0.6" id="zts-Kn-brq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4Oo-Ui-Y6F"/>
                     <connections>
+                        <outlet property="appIconImageView" destination="Cas-Pe-Jh6" id="NGL-e1-50Y"/>
                         <outlet property="copyrightLabel" destination="thk-7i-bPk" id="uOl-PR-eXi"/>
                         <outlet property="loginButton" destination="AQf-5C-32R" id="TLr-iX-z9i"/>
                         <outlet property="loginView" destination="hKR-nP-7TR" id="lJj-fh-XaK"/>
@@ -415,6 +425,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Icon.png" width="1024" height="1024"/>
         <image name="ShutterIcon.png" width="146" height="146"/>
     </resources>
 </document>

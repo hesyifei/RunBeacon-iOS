@@ -28,6 +28,7 @@
 		EDB1DB7A1C9AC2C100E3CF8B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB791C9AC2C100E3CF8B /* Config.swift */; };
 		EDB1DB7C1C9AE27300E3CF8B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */; };
 		EDC6289D1CD37C8C00255CE3 /* PersonCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC6289C1CD37C8C00255CE3 /* PersonCheck.swift */; };
+		EDC6289F1CD3848B00255CE3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EDC6289E1CD3848B00255CE3 /* Icon.png */; };
 		EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */; };
 		EDCAD0331CAD365500F4C674 /* PracticeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */; };
 		EDCAD03C1CAD6AF600F4C674 /* BasicFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */; };
@@ -92,6 +93,7 @@
 		EDB1DB791C9AC2C100E3CF8B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EDB1DB7B1C9AE27300E3CF8B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EDC6289C1CD37C8C00255CE3 /* PersonCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonCheck.swift; sourceTree = "<group>"; };
+		EDC6289E1CD3848B00255CE3 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		EDCAD0301CACF86400F4C674 /* PracticeRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecordViewController.swift; sourceTree = "<group>"; };
 		EDCAD0321CAD365500F4C674 /* PracticeRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticeRecord.swift; sourceTree = "<group>"; };
 		EDCAD03B1CAD6AF600F4C674 /* BasicFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicFunc.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		ED2F5BAA1CBBCB9D001D4A7A /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				EDC6289E1CD3848B00255CE3 /* Icon.png */,
 				ED2F5BAB1CBBCD06001D4A7A /* ShutterIcon.png */,
 			);
 			name = Icons;
@@ -438,6 +441,7 @@
 				EDCE6CBC1C997705004C8BD1 /* Topsquare.ttf in Resources */,
 				ED9FE8E81C991FE600DB731D /* Assets.xcassets in Resources */,
 				ED9FE8E31C991FE600DB731D /* Main.storyboard in Resources */,
+				EDC6289F1CD3848B00255CE3 /* Icon.png in Resources */,
 				ED2F5BAC1CBBCD06001D4A7A /* ShutterIcon.png in Resources */,
 				EDDA75CD1CAE92FD007F3517 /* Hansen Shadow.ttf in Resources */,
 			);
