@@ -16,10 +16,15 @@ import SwiftyJSON
 import MBProgressHUD
 import Locksmith
 
-class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AVCaptureMetadataOutputObjectsDelegate {
+import UIKit
+class PassedNumberCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var numberLabel: UILabel!
+}
+
+class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
     // MARK: - IBOutlet var
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var passedNumberCollectionView: UICollectionView!
     @IBOutlet var cameraView: UIView!
     @IBOutlet var shutterButton: UIButton!
     
@@ -38,6 +43,38 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var personChecks = [PersonCheck]()
     
     
+    
+    // tell the collection view how many cells to make
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.personChecks.count
+    }
+    
+    // make a cell for each cell index path
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        // get a reference to our storyboard cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! PassedNumberCollectionViewCell
+        
+        // Use the outlet in our custom class to get a reference to the UILabel in the cell
+        cell.numberLabel.text = "\(self.personChecks[indexPath.item].personId)"
+        cell.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1) // make cell more visible in our example project
+        
+        cell.layer.borderColor = UIColor.lightGrayColor().CGColor
+        cell.layer.borderWidth = 0.5
+        cell.layer.cornerRadius = 2
+        
+        return cell
+    }
+    
+    // MARK: - UICollectionViewDelegate protocol
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        // handle tap events
+        print("You selected cell #\(indexPath.item)!")
+    }
+    
+    
+    
     // TODO: show alert when bluetooth is disabled (like "PhoneInBeacon")
     // MARK: - Override func
     override func viewDidLoad() {
@@ -48,8 +85,26 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.title = "Race"
         
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        
+        
+        
+        passedNumberCollectionView.delegate = self
+        passedNumberCollectionView.dataSource = self
+        
+        
+        passedNumberCollectionView.backgroundColor = UIColor.clearColor()
+        
+        passedNumberCollectionView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20)
+        
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.headerReferenceSize = CGSizeZero
+        layout.footerReferenceSize = CGSizeZero
+        layout.sectionInset = UIEdgeInsetsZero
+        layout.itemSize = CGSize(width: 40, height: 40)
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        passedNumberCollectionView?.collectionViewLayout = layout
         
         
         shutterButton.addTarget(self, action: #selector(self.shutterButtonAction), forControlEvents: .TouchUpInside)
@@ -61,6 +116,30 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
             PersonCheck(personId: 6, time: NSDate().dateByAddingTimeInterval(-520)),
             PersonCheck(personId: 14, time: NSDate().dateByAddingTimeInterval(-580)),
             PersonCheck(personId: 23, time: NSDate().dateByAddingTimeInterval(-600)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
+            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
             PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
         ]
         
@@ -210,37 +289,5 @@ class RaceViewController: UIViewController, UITableViewDataSource, UITableViewDe
         Async.main {
             self.presentViewController(warningAlert, animated: true, completion: nil)
         }
-    }
-    
-    
-    // MARK: - Tableview func
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 35.0
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return personChecks.count
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PassCell", forIndexPath: indexPath) as UITableViewCell
-        
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = NSDateFormatterStyle.NoStyle
-        formatter.timeStyle = .MediumStyle
-        
-        
-        cell.textLabel!.text = "#\(personChecks[indexPath.row].personId)"
-        cell.detailTextLabel!.text = "\(formatter.stringFromDate(personChecks[indexPath.row].time))"
-        
-        return cell
     }
 }

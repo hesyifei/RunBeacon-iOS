@@ -96,7 +96,12 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-610)),
             ]*/
             self.runChecks = [
-                RunCheck(checkpointId: 1, time: NSDate()),
+                RunCheck(checkpointId: 6, time: NSDate().dateByAddingTimeInterval(-34)),
+                RunCheck(checkpointId: 5, time: NSDate().dateByAddingTimeInterval(-62-34)),
+                RunCheck(checkpointId: 4, time: NSDate().dateByAddingTimeInterval(-37-62-34)),
+                RunCheck(checkpointId: 3, time: NSDate().dateByAddingTimeInterval(-41-37-62-34)),
+                RunCheck(checkpointId: 2, time: NSDate().dateByAddingTimeInterval(-77-41-37-62-34)),
+                RunCheck(checkpointId: 1, time: NSDate().dateByAddingTimeInterval(-24-77-41-37-62-34)),
             ]
         }
         
@@ -294,7 +299,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
                 
                 if(CheckpointFunc().getUploadCheckpointId(newRunCheck, runChecks: runChecks) == checkpointsData[checkpointsData.count-1].id){
                     DDLogInfo("用戶已到達最後一個Checkpoint、即將結束跑步及計時")
-                    finishPractice()
+                    showFinishPopup()
                     readSpeech(runChecks[0], isEnd: true)
                 }else{
                     showCheckpointPopup()
@@ -305,6 +310,30 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             }
         } else {
             // 一個iBeacon都沒有
+        }
+    }
+    
+    func addDataForDemoing(id: Int) {
+        let newRunCheck = RunCheck(checkpointId: id, time: NSDate())
+        
+        runChecks = [newRunCheck] + runChecks
+        
+        
+        tableView.beginUpdates()
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .None)
+        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Top)
+        tableView.endUpdates()
+        
+        BasicFunc().doVibration()
+        uploadRunCheckData(runChecks[0])
+        
+        if(CheckpointFunc().getUploadCheckpointId(newRunCheck, runChecks: runChecks) == checkpointsData[checkpointsData.count-1].id){
+            DDLogInfo("用戶已到達最後一個Checkpoint、即將結束跑步及計時")
+            showFinishPopup()
+            readSpeech(runChecks[0], isEnd: true)
+        }else{
+            showCheckpointPopup()
+            readSpeech(runChecks[0])
         }
     }
     
@@ -629,6 +658,7 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
         Async.main {
             self.presentViewController(warningAlert, animated: true, completion: nil)
         }
+        //addDataForDemoing(21)
     }
     
     func closeView() {
@@ -685,6 +715,60 @@ class PracticeRunningViewController: UIViewController, UITableViewDataSource, UI
             
             customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
             customView.backgroundLabel.text = "\(self.runChecks[0].checkpointId)"
+            
+            let timeDifference = self.getRunCheckTimeDifference(0, comparingIndex: 1)
+            customView.timeLabel.text = "\(self.secondsToFormattedTime(timeDifference))"
+            
+            
+            let startCheckpointId = CheckpointFunc().getUploadCheckpointId(self.runChecks[1], runChecks: self.runChecks)
+            let endCheckpointId = CheckpointFunc().getUploadCheckpointId(self.runChecks[0], runChecks: self.runChecks)
+            DDLogVerbose("彈窗準備獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離")
+            let distance = self.getDistance(start: startCheckpointId, end: endCheckpointId)
+            if(distance != -1){
+                DDLogVerbose("彈窗已獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離：\(distance)")
+                let speedText = self.getSpeedText(timeDifference, distance: distance)
+                DDLogVerbose("彈窗已獲取從\(startCheckpointId)到\(endCheckpointId)這段的速度：\(speedText)")
+                customView.speedLabel.text = speedText
+            }else{
+                DDLogWarn("彈窗無法獲取從\(startCheckpointId)到\(endCheckpointId)這段的距離及速度")
+                customView.speedLabel.text = ""
+            }
+            
+            
+            // TODO: change speed & time to target/average here
+            customView.leftBottomLargeLabel.text = "01:50"
+            customView.leftBottomSmallLabel.text = "Suggest Time"
+            customView.rightBottomLargeLabel.text = "7 m/s"
+            customView.rightBottomSmallLabel.text = "Suggest Speed"
+            }.main {
+                self.popupController = KLCPopup(contentView: customView)
+                self.popupController.shouldDismissOnContentTouch = false
+                self.popupController.shouldDismissOnBackgroundTouch = true
+                self.popupController.maskType = .Dimmed
+                self.popupController.showType = .SlideInFromBottom
+                self.popupController.dismissType = .SlideOutToBottom
+                
+                let layout = KLCPopupLayoutMake(.Center, .BelowCenter)
+                self.popupController.showWithLayout(layout, duration: 15.0)
+        }
+    }
+    
+    func showFinishPopup() {
+        
+        timer!.invalidate()
+        timer = nil
+        DDLogInfo("已停止timer計時器")
+        
+        
+        stopScanning()
+        
+        
+        var customView: CheckpointPopupView!
+        Async.background {
+            let screenSize: CGRect = UIScreen.mainScreen().bounds
+            
+            customView = CheckpointPopupView(frame: CGRectMake(0, 0, screenSize.width*0.85, screenSize.height*0.5))
+            customView.backgroundLabel.text = "✓"
             
             let timeDifference = self.getRunCheckTimeDifference(0, comparingIndex: 1)
             customView.timeLabel.text = "\(self.secondsToFormattedTime(timeDifference))"
