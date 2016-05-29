@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C5463887C9ECB8D68FC5FF82 /* Pods_Run.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A531DA8D076AE52183BEB5 /* Pods_Run.framework */; };
+		ED203AD51CF8826000FB6B0B /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED203AD41CF8826000FB6B0B /* UIButton.swift */; };
 		ED24EF221CAF8B6900F3BBC3 /* beep-low.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED24EF211CAF8B6900F3BBC3 /* beep-low.wav */; };
 		ED24EF251CAF97DC00F3BBC3 /* gun.wav in Resources */ = {isa = PBXBuildFile; fileRef = ED24EF241CAF97DC00F3BBC3 /* gun.wav */; };
 		ED2F5BAC1CBBCD06001D4A7A /* ShutterIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ED2F5BAB1CBBCD06001D4A7A /* ShutterIcon.png */; };
@@ -67,6 +68,7 @@
 		82A531DA8D076AE52183BEB5 /* Pods_Run.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Run.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD660E1835EF2DB530E01698 /* Pods-Run.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Run.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Run/Pods-Run.debug.xcconfig"; sourceTree = "<group>"; };
 		E2B5A2BC9D37DC77CA7DA0FA /* Pods-Run.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Run.release.xcconfig"; path = "Pods/Target Support Files/Pods-Run/Pods-Run.release.xcconfig"; sourceTree = "<group>"; };
+		ED203AD41CF8826000FB6B0B /* UIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		ED24EF211CAF8B6900F3BBC3 /* beep-low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "beep-low.wav"; sourceTree = "<group>"; };
 		ED24EF241CAF97DC00F3BBC3 /* gun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gun.wav; sourceTree = "<group>"; };
 		ED2F5BAB1CBBCD06001D4A7A /* ShutterIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ShutterIcon.png; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				EDDA75C71CAE6DD4007F3517 /* UIColor.swift */,
+				ED203AD41CF8826000FB6B0B /* UIButton.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				EDCE6CB01C9972B4004C8BD1 /* PracticeRunningViewController.swift in Sources */,
 				EDCAD03C1CAD6AF600F4C674 /* BasicFunc.swift in Sources */,
 				EDDA75C81CAE6DD4007F3517 /* UIColor.swift in Sources */,
+				ED203AD51CF8826000FB6B0B /* UIButton.swift in Sources */,
 				ED9FE8DE1C991FE600DB731D /* AppDelegate.swift in Sources */,
 				ED9FE8E61C991FE600DB731D /* Run.xcdatamodeld in Sources */,
 				EDCAD0311CACF86400F4C674 /* PracticeRecordViewController.swift in Sources */,

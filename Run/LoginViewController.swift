@@ -32,7 +32,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
     
     
     // MARK: - Basic var
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
+    
     var locationManager: CLLocationManager!
+    
+    
+    
     
     
     // MARK: - Override func
@@ -251,9 +257,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, CLLocationMana
             }
         }))
         noticeAlert.addAction(UIAlertAction(title: "Race", style: .Default, handler: { action in
-            Async.main {
-                self.performSegueWithIdentifier("showRaceView", sender: self)
+            
+            let actionSheetController: UIAlertController = UIAlertController(title: "Checkpoint ID", message: "Please enter your Checkpoint ID.", preferredStyle: .Alert)
+            
+            let nextAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
+                self.defaults.setObject(actionSheetController.textFields?[0].text, forKey: "checkpointId")
+                Async.main {
+                    self.performSegueWithIdentifier("showRaceView", sender: self)
+                }
             }
+            actionSheetController.addAction(nextAction)
+            actionSheetController.addTextFieldWithConfigurationHandler { textField -> Void in
+                textField.keyboardType = UIKeyboardType.NumberPad
+                print("USER CHECKPOINT: \(textField.text)")
+            }
+            
+            Async.main {
+                self.presentViewController(actionSheetController, animated: true, completion: nil)
+            }
+            
         }))
         
         Async.main {

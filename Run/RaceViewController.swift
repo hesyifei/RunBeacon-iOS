@@ -21,27 +21,60 @@ class PassedNumberCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var numberLabel: UILabel!
 }
 
-class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
     
     // MARK: - IBOutlet var
+    @IBOutlet var bottomToolBar: UIView!
+    @IBOutlet var timeLabel: UILabel!
+    
     @IBOutlet var passedNumberCollectionView: UICollectionView!
+    @IBOutlet var startButton: UIButton!
+    
+    @IBOutlet var endTextField: UITextField!
     @IBOutlet var cameraView: UIView!
     @IBOutlet var shutterButton: UIButton!
+    
+    
     
     
     // MARK: - Basic var
     let application = UIApplication.sharedApplication()
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
+    
     var captureSession: AVCaptureSession?
+    
+    
+    
+    var timer: NSTimer?
+    var timerStartTime: NSTimeInterval!
+    
+    
+    var timeLabelText = "" {
+        didSet {
+            timeLabel.text = timeLabelText
+            if let _ = timeBarButtonItem {
+                timeBarButtonItem.title = timeLabelText
+            }
+        }
+    }
+    
     
     
     // MARK: - UI Var
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
+    var timeBarButtonItem: UIBarButtonItem!
+    
+    
     
     // MARK: - Data var
     var personChecks = [PersonCheck]()
     
+    
+    var isStartCheckpoint = false
+    var isEndCheckpoint = false
     
     
     // tell the collection view how many cells to make
@@ -82,11 +115,6 @@ class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         DDLogInfo("Race View Controller 之 super.viewDidLoad() 已加載")
         
         
-        self.title = "Race"
-        
-        
-        
-        
         
         passedNumberCollectionView.delegate = self
         passedNumberCollectionView.dataSource = self
@@ -111,42 +139,139 @@ class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         
         
         
-        self.personChecks = [
-            PersonCheck(personId: 3, time: NSDate().dateByAddingTimeInterval(-460)),
-            PersonCheck(personId: 6, time: NSDate().dateByAddingTimeInterval(-520)),
-            PersonCheck(personId: 14, time: NSDate().dateByAddingTimeInterval(-580)),
-            PersonCheck(personId: 23, time: NSDate().dateByAddingTimeInterval(-600)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-            PersonCheck(personId: 60, time: NSDate().dateByAddingTimeInterval(-610)),
-        ]
+        /*self.personChecks = []
+        while personChecks.count < 45 {
+            var randomNumber: Int
+            repeat {
+                randomNumber = Int(BasicFunc().random(1...89))
+            } while personChecks.contains(PersonCheck(personId: randomNumber, time: NSDate().dateByAddingTimeInterval(-460)))
+            personChecks.append(PersonCheck(personId: randomNumber, time: NSDate().dateByAddingTimeInterval(-460)))
+        }*/
+        
+        
+        self.personChecks = []
         
         
         
         let logoutNavButton = UIBarButtonItem(title: "Logout", style: .Done, target: self, action: #selector(self.logoutAction))
         self.navigationItem.rightBarButtonItems = [logoutNavButton]
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        DDLogInfo("Race View Controller 之 super.viewWillAppear() 已加載")
+        
+        self.title = "Race"
+        
+        if let idString = defaults.stringForKey("checkpointId") {
+            if let idInt = Int(idString) {
+                
+                let checkpointsData = CheckpointFunc().getCheckpoints()
+                
+                if(idInt == checkpointsData[0].id){
+                    self.isStartCheckpoint = true
+                    self.isEndCheckpoint = false
+                }else if(idInt == checkpointsData[checkpointsData.count-1].id){
+                    self.isStartCheckpoint = false
+                    self.isEndCheckpoint = true
+                }else if( (idInt > checkpointsData[checkpointsData.count-1].id) || (idInt < checkpointsData[0].id) ){
+                    BasicFunc().showAlert(self, title: "Error", message: "Checkpoint ID (\(idInt)) is invalid!")
+                    self.logoutUser()
+                }else{
+                    self.isStartCheckpoint = false
+                    self.isEndCheckpoint = false
+                }
+                self.navigationItem.title = "Checkpoint \(idInt)"
+            }else{
+                BasicFunc().showAlert(self, title: "Error", message: "Checkpoint ID should be a number!")
+                self.logoutUser()
+            }
+        }else{
+            BasicFunc().showAlert(self, title: "Error", message: "Checkpoint ID is empty!")
+            self.logoutUser()
+        }
+        
+        
+        timeLabelText = "Time: 00:00"
+        
+        
+        bottomToolBar.backgroundColor = UIColor(red: 230.0/250.0, green: 230.0/250.0, blue: 230.0/250.0, alpha: 1.0)
+        
+        
+        startButton.layer.cornerRadius = 50.0
+        startButton.clipsToBounds = true
+        startButton.setTitle("Start", forState: .Normal)
+        startButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        startButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20.0)
+        startButton.setBackgroundColor(UIColorConfig.GrassGreen, forUIControlState: .Normal)
+        startButton.setBackgroundColor(UIColor.lightGrayColor(), forUIControlState: .Disabled)
+        startButton.addTarget(self, action: #selector(self.startButtonAction), forControlEvents: .TouchUpInside)
+        
+        
+        if(isStartCheckpoint){
+            startButton.hidden = false
+            passedNumberCollectionView.hidden = true
+        }else{
+            startButton.hidden = true
+            passedNumberCollectionView.hidden = false
+            
+            
+            timerStartTime = NSDate().dateByAddingTimeInterval(-290).timeIntervalSinceReferenceDate
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.calcTime), userInfo: nil, repeats: true)
+            NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
+            DDLogDebug("已開啟timer計時器")
+        }
+        
+        
+        let keyBoardToolBar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
+        keyBoardToolBar.barStyle = .Default
+        keyBoardToolBar.translucent = false
+        keyBoardToolBar.barTintColor = UIColor(colorLiteralRed: (247/255), green: (247/255), blue: (247/255), alpha: 1)     //http://stackoverflow.com/a/34290370/2603230
+        
+        
+        
+        timeBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: nil)
+        timeBarButtonItem.tintColor = UIColor.blackColor()
+        
+        let addButton = UIBarButtonItem(title: "Add", style: .Done, target: self, action: #selector(self.addPressed))
+        
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        
+        keyBoardToolBar.setItems([timeBarButtonItem, spaceButton, addButton], animated: true)
+        keyBoardToolBar.userInteractionEnabled = true
+        keyBoardToolBar.sizeToFit()
+        
+        
+        endTextField.inputAccessoryView = keyBoardToolBar
+        
+        endTextField.delegate = self
+        endTextField.textAlignment = .Center
+        endTextField.font = UIFont(name: "Futura-Medium", size: 200.0)
+        endTextField.keyboardType = .NumberPad
+        
+        Async.main {
+            self.endTextField.layer.addSublayer(self.getTextFieldBorder(self.endTextField))
+            self.endTextField.layer.masksToBounds = true
+        }
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleSingleTap(_:)))
+        tapRecognizer.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(tapRecognizer)
+        
+        
+        
+        if(isEndCheckpoint){
+            endTextField.becomeFirstResponder()
+            endTextField.hidden = false
+            cameraView.hidden = true
+        }else{
+            endTextField.hidden = true
+            cameraView.hidden = false
+        }
+        
+        
+        
         
     }
     
@@ -176,6 +301,15 @@ class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
         
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        DDLogInfo("Race View Controller 之 super.viewDidDisappear() 已加載")
+        
+        timer!.invalidate()
+        timer = nil
+        DDLogInfo("已停止timer計時器")
+    }
+    
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         
         coordinator.animateAlongsideTransition({ (UIViewControllerTransitionCoordinatorContext) -> Void in
@@ -195,6 +329,66 @@ class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     }
     
     
+    
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func addPressed() {
+        endTextField.text = ""
+    }
+    
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        let currentCharacterCount = textField.text?.characters.count ?? 0
+        if (range.length + range.location > currentCharacterCount){
+            return false
+        }
+        let newLength = currentCharacterCount + string.characters.count - range.length
+        return newLength <= 3
+    }
+    
+    
+    func getTextFieldBorder(textField: UITextField) -> CALayer {
+        let border = CALayer()
+        let borderWidth = CGFloat(2.0)
+        border.borderWidth = borderWidth
+        border.borderColor = UIColorConfig.GrassGreen.CGColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - borderWidth, width: textField.frame.size.width, height: textField.frame.size.height)
+        return border
+    }
+    
+    
+    func startButtonAction() {
+        startButton.enabled = false
+        
+        timerStartTime = NSDate().timeIntervalSinceReferenceDate
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(self.calcTime), userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
+        DDLogDebug("已開啟timer計時器")
+    }
+    
+    func calcTime() {
+        let timeDifference = NSDate.timeIntervalSinceReferenceDate() - timerStartTime
+        
+        let minuteAndSecond = PracticeRunningViewController().secondsToFormattedTime(timeDifference)
+        timeLabelText = "Time: \(minuteAndSecond)"
+    }
+    
+    
+    func addPassingData() {
+        self.personChecks.append(PersonCheck(personId: 93, time: NSDate().dateByAddingTimeInterval(-610)))
+        
+        let lastIndexPath = NSIndexPath(forItem: self.personChecks.count-1, inSection: 0)
+        
+        Async.main {
+            self.passedNumberCollectionView.insertItemsAtIndexPaths([lastIndexPath])
+            self.passedNumberCollectionView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: .Bottom, animated: true)
+        }
+    }
     
     // MARK: - Camera func
     
@@ -275,19 +469,23 @@ class RaceViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
     func logoutAction() {
         let warningAlert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .Alert)
         warningAlert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { action in
-            do {
-                try Locksmith.deleteDataForUserAccount(BasicConfig.UserAccountID)
-                
-                self.dismissViewControllerAnimated(true, completion: nil)
-            } catch let error as NSError {
-                DDLogError("無法刪除用戶登入數據：\(error)")
-                BasicFunc().showErrorAlert(self, error: error)
-            }
+            self.logoutUser()
         }))
         warningAlert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
         
         Async.main {
             self.presentViewController(warningAlert, animated: true, completion: nil)
+        }
+    }
+    
+    func logoutUser() {
+        do {
+            try Locksmith.deleteDataForUserAccount(BasicConfig.UserAccountID)
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } catch let error as NSError {
+            DDLogError("無法刪除用戶登入數據：\(error)")
+            BasicFunc().showErrorAlert(self, error: error)
         }
     }
 }

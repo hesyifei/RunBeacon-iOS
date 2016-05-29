@@ -67,4 +67,9 @@ class BasicFunc {
     func doVibration() {
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
+    
+    
+    func random(range: Range<UInt32>) -> UInt32 {
+        return range.startIndex + arc4random_uniform(range.endIndex - range.startIndex + 1)
+    }
 }
